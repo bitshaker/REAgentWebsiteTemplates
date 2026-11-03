@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+const designs = Object.values(
+  import.meta.glob('../../templates/*/template.json', {
+    eager: true,
+    import: 'default',
+  }),
+) as { id: string; name: string; description: string }[];
+---
+
+<Layout title="Choose your design" noindex>
+  <section class="section wrap">
+    <p class="eyebrow">The design collection</p>
+    <h1>
+      One foundation.
+      <br />
+      Your kind of home.
+    </h1>
+    <p>
+      Three directions. Shared pages, a simple journal, and a site that feels
+      like you.
+    </p>
+    <div class="cards">
+      {designs.map((d, i) => (
+        <article class="card">
+          <p class="number">0{i + 1} / THE COLLECTION</p>
+          <img
+            src="/images/architecture.svg"
+            alt="Illustrated architectural design preview"
+            width="900"
+            height="1000"
+            style={`height:250px;width:100%;object-fit:cover;filter:${i === 1 ? 'sepia(.7)' : i === 2 ? 'saturate(.5)' : 'none'}`}
+            loading="lazy"
+          />
+          <h2 style="margin-top:25px">{d.name}</h2>
+          <p>{d.description}</p>
+          <a class="button" href={`/preview/${d.id}/`}>
+            Explore {d.name} ↗
+          </a>
+          <p style="font-size:.8rem;margin-top:20px">
+            Choose this design:
+            <br />
+            <code>npm run create-site -- {d.id} ../my-agent-site</code>
+          </p>
+        </article>
+      ))}
+    </div>
+  </section>
+</Layout>

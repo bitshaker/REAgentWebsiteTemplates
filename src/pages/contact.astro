@@ -1,0 +1,44 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { agent, phoneHref } from '../lib/agent';
+---
+
+<Layout title="Let's talk about your next move">
+  <section class="section wrap split">
+    <div>
+      <p class="eyebrow">Start a conversation</p>
+      <h1>
+        Your next move.
+        <br />
+        Let's talk.
+      </h1>
+      <p>
+        Tell me where you are in the process and what you’re hoping for. We’ll
+        take it from there.
+      </p>
+    </div>
+    <dl class="contact-list">
+      <div>
+        <dt>Email</dt>
+        <dd>
+          <a href={`mailto:${agent.email}`}>{agent.email}</a>
+        </dd>
+      </div>
+      <div>
+        <dt>Call</dt>
+        <dd>
+          <a href={phoneHref}>{agent.phone}</a>
+        </dd>
+      </div>
+      <div>
+        <dt>Office</dt>
+        <dd>
+          {agent.address.street}
+          <br />
+          {agent.address.city}, {agent.address.region}{' '}
+          {agent.address.postalCode}
+        </dd>
+      </div>
+    </dl>
+  </section>
+</Layout>

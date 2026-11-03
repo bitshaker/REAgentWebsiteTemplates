@@ -1,0 +1,33 @@
+{
+  "demo": true,
+  "siteUrl": "https://example.com",
+  "name": "Alex Morgan",
+  "brand": "Morgan & Home",
+  "role": "Real estate agent",
+  "tagline": "A thoughtful move. A place of your own.",
+  "market": "Your local market",
+  "serviceAreas": [
+    "Your city",
+    "Your neighborhood",
+    "Your surrounding communities"
+  ],
+  "email": "hello@example.com",
+  "phone": "+1 (555) 010-0123",
+  "license": "YOUR LICENSE NUMBER",
+  "brokerage": "Your brokerage",
+  "address": {
+    "street": "Your office address",
+    "city": "Your city",
+    "region": "Your state",
+    "postalCode": "Your ZIP",
+    "country": "US"
+  },
+  "bio": "I believe a good move begins with a good conversation. My approach brings clear communication, thoughtful preparation, and personal attention to every step of buying or selling a home.",
+  "socialLinks": [],
+  "seoDescription": "Personal real estate guidance for buyers and sellers. Explore the process, meet your local agent, and plan your next move.",
+  "content": {
+    "scheduleEnabled": false,
+    "scheduledTopic": "A practical home-buying preparation checklist",
+    "voice": "Warm, clear, practical. Explain jargon and avoid hype."
+  }
+}

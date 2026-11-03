@@ -1,0 +1,7 @@
+{
+  "id": "modern",
+  "name": "Modern",
+  "description": "Bold green, clean geometry, and a confident, direct path to the next move.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

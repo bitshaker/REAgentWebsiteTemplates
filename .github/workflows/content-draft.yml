@@ -1,0 +1,58 @@
+name: Prepare a content draft
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: Educational article topic
+        required: true
+        type: string
+  schedule:
+    - cron: '0 16 * * 2'
+permissions:
+  contents: read
+concurrency:
+  group: content-draft
+  cancel-in-progress: false
+jobs:
+  draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Check opt-in and select topic
+        id: plan
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TOPIC: ${{ inputs.topic }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync,appendFileSync} from 'node:fs';
+          const a=JSON.parse(readFileSync('src/agent.config.json','utf8'));
+          const enabled=process.env.EVENT_NAME==='workflow_dispatch'||a.content.scheduleEnabled;
+          appendFileSync(process.env.GITHUB_OUTPUT,`enabled=${enabled}\n`);
+          JS
+      - name: Generate reviewed-later draft
+        if: steps.plan.outputs.enabled == 'true'
+        env:
+          AI_API_KEY: ${{ secrets.AI_API_KEY }}
+          AI_MODEL: ${{ vars.AI_MODEL }}
+          AI_BASE_URL: ${{ vars.AI_BASE_URL }}
+          INPUT_TOPIC: ${{ inputs.topic }}
+        run: |
+          node --input-type=module <<'JS'
+          import {readFileSync} from 'node:fs';
+          import {main} from './scripts/content.mjs';
+          const a=JSON.parse(readFileSync('src/agent.config.json','utf8'));
+          const topic=process.env.INPUT_TOPIC || `${a.content.scheduledTopic} ${new Date().toISOString().slice(0,10)}`;
+          await main(['generate',topic]);
+          JS
+      - uses: actions/upload-artifact@v4
+        if: steps.plan.outputs.enabled == 'true'
+        with:
+          name: content-drafts
+          path: src/content/blog/*.md
+          retention-days: 30

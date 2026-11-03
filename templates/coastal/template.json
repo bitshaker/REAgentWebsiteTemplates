@@ -1,0 +1,7 @@
+{
+  "id": "coastal",
+  "name": "Coastal",
+  "description": "Sun-washed color, generous space, and an easy editorial rhythm.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

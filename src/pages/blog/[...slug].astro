@@ -1,0 +1,38 @@
+---
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { publishedPosts } from '../../lib/posts';
+import { agent } from '../../lib/agent';
+export async function getStaticPaths() {
+  return (await publishedPosts()).map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Layout title={post.data.title} description={post.data.description} article>
+  <article class="section wrap">
+    <div class="prose">
+      <a href="/blog/">← Back to the journal</a>
+      <header class="page-head">
+        <p class="eyebrow">
+          <time datetime={post.data.date.toISOString()}>
+            {post.data.date.toISOString().slice(0, 10)}
+          </time>{' '}
+          · {post.data.author || agent.name}
+        </p>
+        <h1>{post.data.title}</h1>
+        <p>{post.data.description}</p>
+      </header>
+      <Content />
+      <p>
+        <a class="button" href="/contact/">
+          Talk about your next move ↗
+        </a>
+      </p>
+    </div>
+  </article>
+</Layout>

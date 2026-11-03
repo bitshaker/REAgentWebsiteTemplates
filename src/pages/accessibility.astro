@@ -1,0 +1,24 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { agent, phoneHref } from '../lib/agent';
+---
+
+<Layout title="Accessibility">
+  <section class="section wrap">
+    <div class="prose">
+      <h1>Accessibility</h1>
+      <p>
+        We aim to make this website usable with a keyboard, assistive
+        technology, and a range of screen sizes. The template includes semantic
+        landmarks, visible focus indicators, a skip link, and reduced-motion
+        support.
+      </p>
+      <p>
+        If you encounter a barrier, please contact{' '}
+        <a href={`mailto:${agent.email}`}>{agent.email}</a> or call{' '}
+        <a href={phoneHref}>{agent.phone}</a> and describe the page and issue.
+        This statement is an accessibility commitment, not a certification.
+      </p>
+    </div>
+  </section>
+</Layout>

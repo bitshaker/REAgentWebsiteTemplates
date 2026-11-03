@@ -1,0 +1,55 @@
+:root {
+  --paper: #f6f7f2;
+  --ink: #152d26;
+  --muted: #52665d;
+  --accent: #a34522;
+  --line: #c4cec6;
+  --display: Arial, Helvetica, sans-serif;
+}
+.modern-hero {
+  background: #173e31;
+  color: #f6f7f2;
+}
+.modern-hero .split {
+  gap: 0;
+  grid-template-columns: 1fr 1fr;
+  max-width: 1600px;
+  margin: auto;
+}
+.modern-copy {
+  padding: 80px 12%;
+}
+.modern-copy h1 {
+  font-weight: 700;
+  font-size: clamp(3.5rem, 6vw, 6rem);
+  letter-spacing: -0.07em;
+}
+.modern-copy h1 span {
+  color: #d1e59b;
+}
+.modern-copy p {
+  max-width: 390px;
+}
+.modern-hero .button {
+  background: #d1e59b;
+  color: #152d26;
+  border-color: #d1e59b;
+  margin-top: 20px;
+}
+.modern-image {
+  height: 690px;
+}
+.modern-intro {
+  border-bottom: 1px solid var(--line);
+}
+@media (max-width: 760px) {
+  .modern-hero .split {
+    grid-template-columns: 1fr;
+  }
+  .modern-image {
+    height: 360px;
+  }
+  .modern-copy {
+    padding: 55px 7%;
+  }
+}

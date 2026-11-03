@@ -1,0 +1,27 @@
+---
+import Layout from '../../layouts/Layout.astro';
+export function getStaticPaths() {
+  return ['coastal', 'editorial', 'modern'].map((template) => ({
+    params: { template },
+  }));
+}
+const homes = import.meta.glob('../../../templates/*/Home.astro', {
+  eager: true,
+  import: 'default',
+});
+const styles = import.meta.glob('../../../templates/*/theme.css', {
+  query: '?inline',
+  eager: true,
+  import: 'default',
+});
+const id = Astro.params.template!;
+const Home = homes[
+  `../../../templates/${id}/Home.astro`
+] as typeof import('../../../templates/coastal/Home.astro').default;
+const css = styles[`../../../templates/${id}/theme.css`] as string;
+---
+
+<Layout title={`${id} design preview`} noindex>
+  <style is:global set:html={css} />
+  <Home />
+</Layout>

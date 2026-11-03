@@ -1,0 +1,44 @@
+:root {
+  --paper: #f7f5ef;
+  --ink: #203f3d;
+  --muted: #526662;
+  --accent: #97653f;
+  --line: #c6d0c9;
+  --display: Georgia, serif;
+}
+.coastal-hero {
+  padding: 45px 0 75px;
+}
+.coastal-hero .split {
+  grid-template-columns: 1.05fr 1fr;
+}
+.coastal-hero h1 em {
+  font-weight: 400;
+  color: #71604c;
+}
+.coastal-hero .hero-frame {
+  height: 610px;
+  border-radius: 240px 240px 0 0;
+  overflow: hidden;
+}
+.coastal-note {
+  margin-top: 25px;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.coastal-about {
+  background: #e7ebe2;
+}
+.coastal-hero .intro {
+  max-width: 420px;
+  margin: 28px 0;
+}
+@media (max-width: 760px) {
+  .coastal-hero .split {
+    grid-template-columns: 1fr;
+  }
+  .coastal-hero .hero-frame {
+    height: 420px;
+  }
+}

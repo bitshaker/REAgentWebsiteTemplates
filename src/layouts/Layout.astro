@@ -1,0 +1,151 @@
+---
+import { agent, phoneHref } from '../lib/agent';
+import '../styles/base.css';
+import '../selected-template';
+interface Props {
+  title: string;
+  description?: string;
+  noindex?: boolean;
+  article?: boolean;
+}
+const {
+  title,
+  description = agent.seoDescription,
+  noindex = false,
+  article = false,
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, agent.siteUrl).href;
+const nav = [
+  ['About', '/about/'],
+  ['Buy', '/buyers/'],
+  ['Sell', '/sellers/'],
+  ['Journal', '/blog/'],
+  ['Get in touch ↗', '/contact/'],
+];
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'RealEstateAgent',
+  name: agent.name,
+  url: agent.siteUrl,
+  telephone: agent.phone,
+  email: agent.email,
+  description: agent.seoDescription,
+  areaServed: agent.serviceAreas,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: agent.address.street,
+    addressLocality: agent.address.city,
+    addressRegion: agent.address.region,
+    postalCode: agent.address.postalCode,
+    addressCountry: agent.address.country,
+  },
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | {agent.brand}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <meta
+      name="robots"
+      content={noindex || agent.demo ? 'noindex, nofollow' : 'index, follow'}
+    />
+    <meta property="og:title" content={`${title} | ${agent.brand}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:type" content={article ? 'article' : 'website'} />
+    <meta
+      property="og:image"
+      content={new URL('/images/social-card.png', agent.siteUrl).href}
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${agent.brand} journal`}
+      href="/rss.xml"
+    />
+    {!agent.demo && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(schema).replace(/</g, '\u003c')}
+      />
+    )}
+  </head>
+  <body>
+    <a class="skip" href="#main">
+      Skip to content
+    </a>
+    {agent.demo && (
+      <div class="demo">
+        Demonstration website · Sample identity and content{' '}
+        <a href="/designs/">Explore the designs ↗</a>
+      </div>
+    )}
+    <header class="wrap">
+      <nav class="site-nav" aria-label="Main navigation">
+        <a class="brand" href="/">
+          {agent.brand}
+          <span aria-hidden="true"> /</span>
+        </a>
+        <div class="nav-links">
+          {nav.map(([label, href]) => (
+            <a
+              href={href}
+              aria-current={Astro.url.pathname === href ? 'page' : undefined}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      </nav>
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div>
+            <a class="brand" href="/">
+              {agent.brand}
+            </a>
+            <p>{agent.tagline}</p>
+          </div>
+          <div>
+            <strong>{agent.name}</strong>
+            <br />
+            {agent.brokerage}
+            <br />
+            License: {agent.license}
+          </div>
+          <div>
+            <a href={phoneHref}>{agent.phone}</a>
+            <br />
+            <a href={`mailto:${agent.email}`}>{agent.email}</a>
+            <br />
+            {agent.address.street}
+            <br />
+            {agent.address.city}, {agent.address.region}{' '}
+            {agent.address.postalCode}
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>
+            © {new Date().getFullYear()} {agent.brand}. Equal Housing
+            Opportunity.
+          </span>
+          <span>
+            <a href="/privacy/">Privacy</a> ·{' '}
+            <a href="/accessibility/">Accessibility</a>
+          </span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { agent } from '../lib/agent';
+---
+
+<Layout title="Privacy">
+  <section class="section wrap">
+    <div class="prose">
+      <h1>Privacy</h1>
+      <p>
+        This starter does not include analytics, tracking cookies, newsletter
+        subscriptions, or a contact form. Telephone and email links open your
+        chosen application.
+      </p>
+      <p>
+        If you contact {agent.name}, the information you send may be processed
+        by the email and hosting providers used by the business. Contact{' '}
+        <a href={`mailto:${agent.email}`}>{agent.email}</a> with privacy
+        questions.
+      </p>
+      <p>
+        Hosting providers may retain technical access logs. Before launching,
+        the site owner must replace this starter notice with an accurate policy
+        covering actual business practices, providers, retention, and applicable
+        rights.
+      </p>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,55 @@
+---
+import { agent } from '../../src/lib/agent';
+import Services from '../../src/components/Services.astro';
+---
+
+<section class="modern-hero">
+  <div class="split">
+    <div class="modern-copy">
+      <p class="eyebrow">Your next move starts here.</p>
+      <h1>
+        Local insight.
+        <br />
+        <span>
+          Forward
+          <br />
+          momentum.
+        </span>
+      </h1>
+      <p>
+        Buying or selling in {agent.market}? Get a clear plan, practical
+        answers, and guidance built around you.
+      </p>
+      <a class="button" href="/contact/">
+        Make your next move ↗
+      </a>
+    </div>
+    <div class="modern-image">
+      <img
+        class="hero-art"
+        src="/images/architecture.svg"
+        alt="Illustrated modern home with garden, courtyard, and sunlit windows"
+        width="900"
+        height="1000"
+        fetchpriority="high"
+      />
+    </div>
+  </div>
+</section>
+<section class="section modern-intro">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">Hello, I'm {agent.name}.</p>
+      <h2>
+        Clear advice.
+        <br />
+        Personal attention.
+      </h2>
+    </div>
+    <div>
+      <p>{agent.bio}</p>
+      <a href="/about/">More about my approach ↗</a>
+    </div>
+  </div>
+</section>
+<Services />

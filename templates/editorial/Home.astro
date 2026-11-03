@@ -1,0 +1,50 @@
+---
+import { agent } from '../../src/lib/agent';
+import Services from '../../src/components/Services.astro';
+---
+
+<section class="editorial-hero wrap">
+  <p class="eyebrow">The art of moving well · {agent.market}</p>
+  <div class="editorial-heading">
+    <h1>
+      Good places.
+      <br />
+      New beginnings.
+    </h1>
+    <p class="eyebrow">
+      Real estate,
+      <br />
+      with perspective.
+    </p>
+  </div>
+  <div class="editorial-image">
+    <img
+      class="hero-art"
+      src="/images/architecture.svg"
+      alt="Architectural illustration of a garden courtyard and contemporary home"
+      width="900"
+      height="1000"
+      fetchpriority="high"
+    />
+  </div>
+  <div class="editorial-caption">
+    <span>
+      {agent.name} / {agent.role}
+    </span>
+    <a href="/contact/">Begin a conversation ↗</a>
+  </div>
+</section>
+<section class="section editorial-story">
+  <div class="wrap split">
+    <h2>
+      Your next chapter,
+      <br />
+      considered carefully.
+    </h2>
+    <div>
+      <p>{agent.bio}</p>
+      <a href="/about/">Meet your agent ↗</a>
+    </div>
+  </div>
+</section>
+<Services />
