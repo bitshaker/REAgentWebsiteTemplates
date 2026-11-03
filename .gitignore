@@ -6,3 +6,6 @@ dist/
 !.env.example
 .DS_Store
 coverage/
+
+# Hostinger CLI account-specific link state
+.hostinger/

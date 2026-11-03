@@ -53,7 +53,7 @@ New to GitHub or hosting? Start with [the owner guide](docs/OWNER-GUIDE.md). Usi
 - Canonical URLs, page descriptions, Open Graph, sitemap, robots, and factual RealEstateAgent structured data after demo mode is disabled.
 - Responsive layouts, semantic landmarks, keyboard focus, skip link, reduced-motion support, and self-hosted assets/system fonts.
 - On-demand Node draft commands, optional AI API generation, and an opt-in weekly GitHub Actions draft artifact.
-- CI checks/build artifacts and deployment documentation for Hostinger.
+- CI checks/build artifacts and Hostinger MCP/CLI setup, deployment, and maintenance runbooks.
 
 ## Content commands
 
@@ -79,6 +79,6 @@ npm run build
 npm run verify:launch
 ```
 
-Upload the **contents** of `dist/` to the domain’s Hostinger document root, or use a compatible Hostinger GitHub build integration. The deployed site needs no Node process. [Deployment and rollback](docs/HOSTINGER.md) · [Launch checklist](docs/LAUNCH-CHECKLIST.md) · [Architecture and adding designs](docs/ARCHITECTURE.md).
+Prefer Hostinger’s official MCP connection (`https://mcp.hostinger.com`, browser OAuth) so your software agent can discover hosting resources and perform supported setup, deployment, and maintenance. Local agents can also deploy `dist/` using the official Hostinger CLI. File Manager upload and compatible GitHub build integrations remain alternatives. The deployed site needs no Node process. [Deployment and rollback](docs/HOSTINGER.md) · [Launch checklist](docs/LAUNCH-CHECKLIST.md) · [Architecture and adding designs](docs/ARCHITECTURE.md).
 
 MIT licensed. No IDX/MLS integration, hosted CMS, live property feed, email delivery, analytics, or lead database is bundled. Contact uses working phone/email links. Accounts, purchases, domain ownership, and provider authorization remain with the owner.

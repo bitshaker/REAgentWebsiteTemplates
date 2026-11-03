@@ -15,6 +15,8 @@ Gather missing identity/market/domain facts in one concise question set. Inspect
 
 Ask the owner to complete account signup, payments, MFA, CAPTCHA, and provider permissions when necessary. Never ask them to paste passwords or authentication tokens into chat. Use authenticated CLIs or provider interfaces. Keep API keys in local ignored .env or GitHub Secrets; never PUBLIC_ variables or config JSON.
 
+For Hostinger setup and maintenance, prefer a connected official MCP server or the official CLI. Follow docs/HOSTINGER.md to discover supported operations, inspect the existing account/website, deploy under the owner’s authorization, and verify the result. Remote MCP endpoint: https://mcp.hostinger.com (browser OAuth). Never commit tokens, client credentials, or .hostinger/ account link state. Use manual upload only as a fallback or owner preference.
+
 Export exactly one design with npm run create-site -- ID DESTINATION. Never copy .git, node_modules, or unused templates into an owner repo. Default their repo to private. Do not use the catalog’s entire GitHub template for a lean site.
 
 Match the selected design’s typography, palette, spacing, and responsive behavior. Preserve accessible navigation, focus indicators, alt text, skip link, and landmarks. Do not claim WCAG compliance from an automated check alone. Inspect changes at mobile and desktop sizes when browser tooling exists.
