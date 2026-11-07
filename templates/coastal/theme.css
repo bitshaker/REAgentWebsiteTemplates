@@ -42,3 +42,32 @@
     height: 420px;
   }
 }
+
+[data-design='coastal'] {
+  --page-tint: color-mix(in srgb, var(--line) 48%, var(--paper));
+}
+[data-design='coastal'] .design-hero-image img {
+  border-radius: 46% 46% 0 0 / 48% 48% 0 0;
+}
+[data-design='coastal'][data-page='sellers'] .design-hero-image img {
+  border-radius: 0 46% 0 0 / 0 48% 0 0;
+}
+[data-design='coastal'][data-page='blog'] .design-hero-image img,
+[data-design='coastal'][data-page='article'] .design-hero-image img {
+  border-radius: 48% 0 0 0;
+}
+[data-design='coastal'] .design-steps li {
+  border: 0;
+  border-radius: 6rem 6rem 0 0;
+  padding-top: clamp(26px, 6vw, 68px);
+}
+[data-design='coastal'] .design-feature {
+  border-radius: 0 5rem 0 0;
+  overflow: hidden;
+}
+@media (max-width: 760px) {
+  [data-design='coastal'] .design-steps li {
+    border-radius: 1.8rem 1.8rem 0 0;
+    padding-top: 23px;
+  }
+}

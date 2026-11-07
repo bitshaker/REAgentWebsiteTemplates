@@ -1,40 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import DesignPage from '../components/DesignPage.astro';
+import { design } from '../selected-template';
 ---
 
-<Layout title="Find a place that fits your life">
-  <section class="section wrap">
-    <div class="prose">
-      <p class="eyebrow">For buyers</p>
-      <h1>
-        A clearer path
-        <br />
-        to your next home.
-      </h1>
-      <p>
-        From your first questions to the final walkthrough, understand your
-        options before you decide.
-      </p>
-      <h2>01 / Make a plan</h2>
-      <p>
-        Discuss your goals, timing, financing conversations, and the features
-        that matter to you.
-      </p>
-      <h2>02 / Explore and compare</h2>
-      <p>
-        Evaluate properties against your priorities, ask useful questions, and
-        understand the tradeoffs.
-      </p>
-      <h2>03 / Offer to closing</h2>
-      <p>
-        Get guidance through the offer, due diligence, and closing process.
-        Local practices, timelines, and contract terms vary.
-      </p>
-      <p>
-        <a class="button" href="/contact/">
-          Let’s start with a conversation ↗
-        </a>
-      </p>
-    </div>
-  </section>
+<Layout title="Buy a home">
+  <DesignPage {design} page="buyers" />
 </Layout>

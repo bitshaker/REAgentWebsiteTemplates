@@ -1,0 +1,7 @@
+{
+  "id": "open-house",
+  "name": "The Open House",
+  "description": "An interactive architectural cutaway with a purpose for every room.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

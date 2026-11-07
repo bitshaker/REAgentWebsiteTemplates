@@ -1,6 +1,13 @@
 ---
+import { sitePath } from '../../src/lib/site';
+import AgentPortrait from '../../src/components/AgentPortrait.astro';
 import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
 import Services from '../../src/components/Services.astro';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
 ---
 
 <section class="editorial-hero wrap">
@@ -17,10 +24,10 @@ import Services from '../../src/components/Services.astro';
       with perspective.
     </p>
   </div>
-  <div class="editorial-image">
+  <div class="editorial-image scroll-art">
     <img
       class="hero-art"
-      src="/images/architecture.svg"
+      src={sitePath('/images/architecture.svg')}
       alt="Architectural illustration of a garden courtyard and contemporary home"
       width="900"
       height="1000"
@@ -31,7 +38,7 @@ import Services from '../../src/components/Services.astro';
     <span>
       {agent.name} / {agent.role}
     </span>
-    <a href="/contact/">Begin a conversation ↗</a>
+    <a href={designHref('/contact/', previewBase)}>Begin a conversation ↗</a>
   </div>
 </section>
 <section class="section editorial-story">
@@ -42,9 +49,10 @@ import Services from '../../src/components/Services.astro';
       considered carefully.
     </h2>
     <div>
+      <AgentPortrait />
       <p>{agent.bio}</p>
-      <a href="/about/">Meet your agent ↗</a>
+      <a href={designHref('/about/', previewBase)}>Meet your agent ↗</a>
     </div>
   </div>
 </section>
-<Services />
+<Services {previewBase} />

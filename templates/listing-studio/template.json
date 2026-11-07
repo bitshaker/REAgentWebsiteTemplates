@@ -1,0 +1,7 @@
+{
+  "id": "listing-studio",
+  "name": "The Listing Studio",
+  "description": "A sample property campaign with an editorial reveal.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

@@ -1,0 +1,18 @@
+:root {
+  --paper: #f4efe6;
+  --ink: #17312a;
+  --muted: #496057;
+  --accent: #13614d;
+  --line: #b6c8bd;
+  --display: Arial, sans-serif;
+}
+
+[data-design='workshop-editorial'] .design-hero {
+  border-block: 2px solid var(--ink);
+}
+[data-design='workshop-editorial'] .design-hero h1 {
+  font-weight: 800;
+}
+[data-design='workshop-editorial'] .design-hero h1 em {
+  color: var(--accent);
+}

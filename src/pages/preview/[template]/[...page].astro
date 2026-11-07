@@ -1,0 +1,99 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Layout from '../../../layouts/Layout.astro';
+import DesignPage from '../../../components/DesignPage.astro';
+import {
+  pageKeys,
+  type DesignPages,
+  type PageKey,
+} from '../../../lib/design-pages';
+import { publishedPosts } from '../../../lib/posts';
+
+interface Props {
+  name: string;
+  key?: PageKey;
+  posts?: CollectionEntry<'blog'>[];
+  post?: CollectionEntry<'blog'>;
+}
+
+export async function getStaticPaths() {
+  const manifests = import.meta.glob('../../../../templates/*/template.json', {
+    eager: true,
+    import: 'default',
+  }) as Record<string, { id: string; name: string }>;
+  const designFiles = import.meta.glob(
+    '../../../../templates/*/{Home.astro,pages.ts}',
+  );
+  const themeFiles = import.meta.glob('../../../../templates/*/theme.css', {
+    query: '?inline',
+  });
+  const posts = await publishedPosts();
+  return Object.values(manifests)
+    .filter(
+      ({ id }) =>
+        `../../../../templates/${id}/theme.css` in themeFiles &&
+        ['Home.astro', 'pages.ts'].every(
+          (file) => `../../../../templates/${id}/${file}` in designFiles,
+        ),
+    )
+    .flatMap(({ id, name }) => [
+      { params: { template: id, page: undefined }, props: { name } },
+      ...pageKeys.map((key) => ({
+        params: { template: id, page: key },
+        props: { name, key, posts: key === 'blog' ? posts : undefined },
+      })),
+      ...posts.map((post) => ({
+        params: { template: id, page: `blog/${post.id}` },
+        props: { name, key: 'blog' as const, post },
+      })),
+    ]);
+}
+
+const homes = import.meta.glob('../../../../templates/*/Home.astro', {
+  eager: true,
+  import: 'default',
+});
+const styles = import.meta.glob('../../../../templates/*/theme.css', {
+  query: '?inline',
+  eager: true,
+  import: 'default',
+});
+const designs = import.meta.glob('../../../../templates/*/pages.ts', {
+  eager: true,
+  import: 'default',
+}) as Record<string, DesignPages>;
+const { template } = Astro.params;
+const folder = `../../../../templates/${template}`;
+const Home = homes[
+  `${folder}/Home.astro`
+] as typeof import('../../../../templates/coastal/Home.astro').default;
+const css = styles[`${folder}/theme.css`] as string;
+const design = designs[`${folder}/pages.ts`]!;
+const previewBase = `/preview/${template}`;
+const { name, key, posts, post } = Astro.props;
+const Content = post ? (await render(post)).Content : null;
+const title =
+  post?.data.title ??
+  (key === 'contact'
+    ? 'Contact'
+    : key
+      ? `${design.pages[key].title} ${design.pages[key].emphasis}`
+      : 'Home');
+---
+
+<Layout
+  title={`${title} | ${name} preview`}
+  description={post?.data.description}
+  article={Boolean(post)}
+  {previewBase}
+  theme={css}
+  noindex
+>
+  {key ? (
+    <DesignPage {design} page={key} {previewBase} {posts} {post}>
+      {Content && <Content />}
+    </DesignPage>
+  ) : (
+    <Home {previewBase} />
+  )}
+</Layout>

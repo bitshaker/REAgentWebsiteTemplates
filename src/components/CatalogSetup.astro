@@ -1,0 +1,227 @@
+---
+import Layout from '../layouts/Layout.astro';
+import catalog from '../catalog.config.json';
+import { sitePath } from '../lib/site';
+import { agentPrompt } from '../lib/onboarding';
+interface Props {
+  design?: { id: string; name: string };
+}
+const { design } = Astro.props;
+const prompt = agentPrompt(design?.id);
+---
+
+<Layout
+  title={design ? `Start with ${design.name}` : 'Your site, from here'}
+  noindex
+  catalog
+>
+  <section class="section wrap setup">
+    <p class="eyebrow">From a sample to a site of your own</p>
+    <h1>
+      {design ? `Make ${design.name}` : 'Your next chapter.'}
+      <br />
+      {design ? 'your own.' : 'Your own website.'}
+    </h1>
+    <p class="lead">
+      Choose a design. Let your software agent handle the setup. Your website
+      lives in your own repository and hosting account, with everything you need
+      to keep it going.
+    </p>
+    <p>
+      <a href={sitePath('/designs/')}>
+        ← {design ? 'Compare other designs' : 'Browse all designs'}
+      </a>
+    </p>
+    <ol class="steps">
+      <li>
+        <h2>Pick your design</h2>
+        <p>
+          {design
+            ? `${design.name} is selected. Download its starter below: shared pages, blog tools, setup guides and only this design.`
+            : 'Explore the home, buyer, seller, about, journal and contact pages. Choose “Use this design” to get its starter and a tailored agent prompt.'}
+        </p>
+        {design && (
+          <p>
+            <a
+              class="button"
+              href={sitePath(`/downloads/${design.id}.zip`)}
+              download
+            >
+              Download {design.name} starter ↓
+            </a>
+          </p>
+        )}
+        <p>
+          You do not need to fork the whole catalog. Once your agent creates
+          your site, this template repository is no longer required.
+        </p>
+      </li>
+      <li>
+        <h2>Bring your own software agent</h2>
+        <p>
+          Use an agent that can edit files, run commands and connect to hosting.
+          Give it the prompt below and the starter download.
+        </p>
+        {catalog.grokBotUrl ? (
+          <p>
+            <a class="button" href={catalog.grokBotUrl}>
+              Set up the Grok bot ↗
+            </a>
+          </p>
+        ) : (
+          <p class="coming">
+            Grok bot setup · Coming soon. The setup prompt works with your own
+            software agent today.
+          </p>
+        )}
+      </li>
+      <li>
+        <h2>Create your GitHub home</h2>
+        <p>
+          Already have GitHub? Reuse your account. Otherwise{' '}
+          <a href="https://github.com/signup">create an account</a>, verify your
+          email and enable two-factor authentication. Complete sign-in and
+          recovery steps yourself. Your agent checks the authenticated account
+          and creates a new private repository containing just your website.
+        </p>
+      </li>
+      <li>
+        <h2>Choose hosting you own</h2>
+        <p>
+          Tell your agent about existing hosting and your domain first. If you
+          need hosting,{' '}
+          <a href={catalog.hostingerUrl}>
+            visit Hostinger using our referral link ↗
+          </a>
+          . Referral code: <strong>{catalog.hostingerCode}</strong>.
+        </p>
+        <p>
+          This is a referral link. Check the offer, eligibility, renewal pricing
+          and final total at checkout; discounts are subject to Hostinger’s
+          current terms. Complete purchases yourself. Your agent should verify
+          support for static site deployment before you choose a plan.
+        </p>
+      </li>
+      <li>
+        <h2>Connect Hostinger to your agent</h2>
+        <p>
+          Add a remote MCP connection in your assistant with the URL{' '}
+          <code>https://mcp.hostinger.com</code>, then complete browser OAuth.
+          Or use Hostinger’s guided Connector. Your agent discovers the
+          available hosting and deployment tools and checks your account before
+          making changes.
+        </p>
+        <p>
+          <a href="https://www.hostinger.com/support/11079316-hostinger-api-mcp-server/">
+            Official Hostinger MCP instructions ↗
+          </a>
+          . Never paste passwords or authentication tokens into the chat.
+        </p>
+      </li>
+      <li>
+        <h2>Personalize, review, launch</h2>
+        <p>
+          Share your public business facts and licensed imagery. Your agent
+          configures the site, previews it, runs launch checks, and deploys to
+          your confirmed domain after your review. It keeps deployment and
+          rollback instructions in your repository.
+        </p>
+        <p>
+          From then on, ask your own agent to update copy, add draft articles or
+          publish changes from your own repository. No ongoing catalog
+          connection is needed.
+        </p>
+      </li>
+    </ol>
+    <section class="handoff" aria-labelledby="prompt-heading">
+      <p class="eyebrow">Ready to begin</p>
+      <h2 id="prompt-heading">Give this to your agent</h2>
+      <p>
+        {design
+          ? `This prompt selects ${design.name} and includes its starter URL.`
+          : 'For a prompt with your exact design and download, choose “Use this design” in the catalog.'}
+      </p>
+      <button type="button" class="button" data-copy-prompt>
+        Copy setup prompt
+      </button>
+      <p role="status" id="copy-status" aria-live="polite"></p>
+      <label for="agent-prompt">Setup instructions</label>
+      <textarea id="agent-prompt" readonly rows="18">{prompt}</textarea>
+      <p>
+        <a href={`${catalog.repositoryUrl}/blob/main/docs/GET-STARTED.md`}>
+          Read the full agent setup guide on GitHub ↗
+        </a>
+      </p>
+    </section>
+  </section>
+</Layout>
+<script>
+  document
+    .querySelector('[data-copy-prompt]')
+    ?.addEventListener('click', async () => {
+      const field =
+        document.querySelector<HTMLTextAreaElement>('#agent-prompt');
+      const status = document.querySelector('#copy-status');
+      if (!field || !status) return;
+      try {
+        await navigator.clipboard.writeText(field.value);
+        status.textContent = 'Copied. Paste this into your software agent.';
+      } catch {
+        field.focus();
+        field.select();
+        status.textContent = 'Select and copy the highlighted instructions.';
+      }
+    });
+</script>
+<style>
+  .setup {
+    max-width: 1000px;
+    padding: 70px 5%;
+  }
+  .lead {
+    max-width: 720px;
+    font-size: 1.2rem;
+  }
+  .steps {
+    padding-left: 1.5rem;
+    margin-top: 50px;
+  }
+  .steps li {
+    padding: 0 0 28px 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .steps h2 {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+  }
+  .steps p {
+    max-width: 730px;
+  }
+  .coming {
+    padding: 18px;
+    border: 1px solid var(--line);
+  }
+  .handoff {
+    padding-block: 30px;
+  }
+  textarea {
+    display: block;
+    width: 100%;
+    padding: 20px;
+    font: 0.9rem/1.6 monospace;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    margin-top: 12px;
+  }
+  code,
+  a {
+    overflow-wrap: anywhere;
+  }
+  button {
+    cursor: pointer;
+  }
+  #copy-status {
+    min-height: 1.6em;
+  }
+</style>

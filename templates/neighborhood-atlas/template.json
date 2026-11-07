@@ -1,0 +1,7 @@
+{
+  "id": "neighborhood-atlas",
+  "name": "The Neighborhood Atlas",
+  "description": "An illustrated map for exploring the places an agent serves.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

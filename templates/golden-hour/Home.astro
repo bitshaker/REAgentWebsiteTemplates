@@ -1,0 +1,274 @@
+---
+import AgentPortrait from '../../src/components/AgentPortrait.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import Services from '../../src/components/Services.astro';
+import clip from './media/light.mp4?url';
+import still from './media/light.jpg?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+---
+
+<section class="film" data-golden-film>
+  <div class="screen">
+    <img class="backdrop" src={still} alt="" fetchpriority="high" />
+    <video
+      data-src={clip}
+      class="backdrop"
+      muted
+      playsinline
+      preload="none"
+      aria-hidden="true"
+      tabindex="-1"
+    ></video>
+    <div class="wash"></div>
+    <div class="titles wrap">
+      <p class="eyebrow">
+        Golden Hour <span> / </span> A film about home
+      </p>
+      <h1>
+        Picture yourself <em>home.</em>
+      </h1>
+      <p>Personal real estate guidance in {agent.market}.</p>
+      <div class="links">
+        <a class="button" href={designHref('/buyers/', previewBase)}>
+          Find a home ↗
+        </a>
+        <a class="button secondary" href={designHref('/sellers/', previewBase)}>
+          Sell a home ↗
+        </a>
+      </div>
+    </div>
+    <div class="film-controls wrap">
+      <a href="#golden-intro">Meet your agent ↓</a>
+      <button type="button" hidden>
+        Pause film motion
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="golden-intro" class="intro section">
+  <div class="wrap intro-layout">
+    <AgentPortrait />
+    <div class="intro-copy">
+      <p class="eyebrow">A personal introduction</p>
+      <h2>Meet {agent.name}.</h2>
+      <p>{agent.bio}</p>
+      <a class="button" href={designHref('/contact/', previewBase)}>
+        Let’s talk ↗
+      </a>
+      <a class="about" href={designHref('/about/', previewBase)}>
+        More about me
+      </a>
+    </div>
+  </div>
+</section>
+<Services {previewBase} />
+
+<script>
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  for (const section of document.querySelectorAll<HTMLElement>(
+    '[data-golden-film]',
+  )) {
+    const video = section.querySelector('video');
+    const button = section.querySelector('button');
+    if (!video?.dataset.src || !button) continue;
+    const source = video.dataset.src;
+    let paused = false;
+    let failed = false;
+    let frame = 0;
+
+    const update = () => {
+      frame = 0;
+      if (
+        !section.classList.contains('scrub') ||
+        !Number.isFinite(video.duration) ||
+        video.seeking
+      )
+        return;
+      const bounds = section.getBoundingClientRect();
+      const range =
+        section.offsetHeight -
+        (section.querySelector('.screen')?.clientHeight ?? 0);
+      if (range <= 0) return;
+      const progress = Math.min(1, Math.max(0, -bounds.top / range));
+      const time = progress * Math.max(0, video.duration - 0.08);
+      if (Math.abs(video.currentTime - time) >= 0.04) video.currentTime = time;
+    };
+    const queue = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    const sync = () => {
+      const available = !reduced.matches && !failed;
+      button.hidden = !available;
+      button.textContent = paused ? 'Resume film motion' : 'Pause film motion';
+      section.classList.toggle('scrub', available && !paused);
+      // Keep the scroll track in place while the visitor pauses the film.
+      section.classList.toggle('track', available);
+      if (available && !video.getAttribute('src')) {
+        video.preload = 'auto';
+        video.src = source;
+      }
+      if (available && !paused) queue();
+    };
+    video.addEventListener('loadeddata', () => {
+      video.classList.add('ready');
+      queue();
+    });
+    video.addEventListener('seeked', queue);
+    video.addEventListener('error', () => {
+      failed = true;
+      sync();
+    });
+    button.addEventListener('click', () => {
+      paused = !paused;
+      sync();
+    });
+    reduced.addEventListener('change', sync);
+    window.addEventListener('scroll', queue, { passive: true });
+    window.addEventListener('resize', queue);
+    sync();
+  }
+</script>
+
+<style>
+  .film {
+    background: var(--scrim);
+    color: var(--paper);
+  }
+  .film.track {
+    min-height: 165svh;
+  }
+  .screen {
+    position: relative;
+    min-height: max(540px, 78svh);
+    isolation: isolate;
+    display: grid;
+    align-content: center;
+    overflow: hidden;
+    padding: 64px 0 100px;
+  }
+  .track .screen {
+    position: sticky;
+    top: 0;
+  }
+  .backdrop,
+  .wash {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  img.backdrop {
+    z-index: -3;
+  }
+  video {
+    opacity: 0;
+    z-index: -2;
+  }
+  .track video.ready {
+    opacity: 1;
+  }
+  .wash {
+    z-index: -1;
+    background: linear-gradient(
+      90deg,
+      var(--scrim),
+      color-mix(in srgb, var(--scrim) 63%, transparent) 70%,
+      color-mix(in srgb, var(--scrim) 35%, transparent)
+    );
+  }
+  .titles,
+  .film-controls {
+    width: 100%;
+  }
+  .titles > .eyebrow,
+  em {
+    color: var(--signal);
+  }
+  h1 {
+    max-width: 9ch;
+    margin-bottom: 18px;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .links .button {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+  }
+  .links .secondary {
+    background: var(--scrim);
+    color: var(--paper);
+  }
+  .film-controls {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    padding-block: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 16px;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.85rem;
+  }
+  .film-controls a,
+  button {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+  button[hidden] {
+    display: none;
+  }
+  button {
+    background: var(--scrim);
+    color: var(--paper);
+    border: 1px solid var(--paper);
+    font: inherit;
+    padding: 4px 12px;
+    cursor: pointer;
+  }
+  .film :focus-visible {
+    outline-color: var(--signal);
+  }
+  .intro {
+    background: var(--wash);
+  }
+  @media (min-width: 761px) {
+    .intro-layout:has(> :global(.agent-portrait)) {
+      display: grid;
+      grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+      align-items: center;
+      gap: 8%;
+    }
+  }
+  .intro-copy {
+    max-width: 570px;
+  }
+  .about {
+    display: inline-block;
+    margin: 12px;
+  }
+  @media (max-width: 760px) {
+    .film.track {
+      min-height: 135svh;
+    }
+    .screen {
+      min-height: max(495px, 74svh);
+      padding-block: 44px 116px;
+    }
+    .wash {
+      background: color-mix(in srgb, var(--scrim) 75%, transparent);
+    }
+  }
+</style>

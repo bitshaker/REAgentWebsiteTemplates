@@ -1,6 +1,13 @@
 ---
+import { sitePath } from '../../src/lib/site';
+import AgentPortrait from '../../src/components/AgentPortrait.astro';
 import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
 import Services from '../../src/components/Services.astro';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
 ---
 
 <section class="modern-hero">
@@ -20,14 +27,14 @@ import Services from '../../src/components/Services.astro';
         Buying or selling in {agent.market}? Get a clear plan, practical
         answers, and guidance built around you.
       </p>
-      <a class="button" href="/contact/">
+      <a class="button" href={designHref('/contact/', previewBase)}>
         Make your next move ↗
       </a>
     </div>
-    <div class="modern-image">
+    <div class="modern-image scroll-art">
       <img
         class="hero-art"
-        src="/images/architecture.svg"
+        src={sitePath('/images/architecture.svg')}
         alt="Illustrated modern home with garden, courtyard, and sunlit windows"
         width="900"
         height="1000"
@@ -47,9 +54,10 @@ import Services from '../../src/components/Services.astro';
       </h2>
     </div>
     <div>
+      <AgentPortrait />
       <p>{agent.bio}</p>
-      <a href="/about/">More about my approach ↗</a>
+      <a href={designHref('/about/', previewBase)}>More about my approach ↗</a>
     </div>
   </div>
 </section>
-<Services />
+<Services {previewBase} />

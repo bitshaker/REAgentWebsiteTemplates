@@ -1,27 +1,42 @@
 ---
+import CatalogLinks from '../components/CatalogLinks.astro';
+import { sitePath, siteOrigin } from '../lib/site';
 import { agent, phoneHref } from '../lib/agent';
+import { designHref } from '../lib/design-pages';
 import '../styles/base.css';
-import '../selected-template';
+import { theme as defaultTheme } from '../selected-template';
 interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
   article?: boolean;
+  previewBase?: string;
+  theme?: string;
+  catalog?: boolean;
 }
 const {
   title,
   description = agent.seoDescription,
   noindex = false,
   article = false,
+  previewBase = '',
+  theme = defaultTheme,
+  catalog = false,
 } = Astro.props;
-const canonical = new URL(Astro.url.pathname, agent.siteUrl).href;
-const nav = [
-  ['About', '/about/'],
-  ['Buy', '/buyers/'],
-  ['Sell', '/sellers/'],
-  ['Journal', '/blog/'],
-  ['Get in touch ↗', '/contact/'],
-];
+const canonical = new URL(Astro.url.pathname, siteOrigin).href;
+const siteBrand = catalog ? 'The Real Estate Design Collection' : agent.brand;
+const nav = catalog
+  ? [
+      ['Designs', '/designs/'],
+      ['Get started ↗', '/start/'],
+    ]
+  : [
+      ['About', '/about/'],
+      ['Buy', '/buyers/'],
+      ['Sell', '/sellers/'],
+      ['Journal', '/blog/'],
+      ['Get in touch ↗', '/contact/'],
+    ];
 const schema = {
   '@context': 'https://schema.org',
   '@type': 'RealEstateAgent',
@@ -45,30 +60,31 @@ const schema = {
 <!doctype html>
 <html lang="en">
   <head>
+    <style is:global set:html={theme} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title} | {agent.brand}</title>
+    <title>{title} | {siteBrand}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta
       name="robots"
       content={noindex || agent.demo ? 'noindex, nofollow' : 'index, follow'}
     />
-    <meta property="og:title" content={`${title} | ${agent.brand}`} />
+    <meta property="og:title" content={`${title} | ${siteBrand}`} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:type" content={article ? 'article' : 'website'} />
     <meta
       property="og:image"
-      content={new URL('/images/social-card.png', agent.siteUrl).href}
+      content={new URL(sitePath('/images/social-card.png'), siteOrigin).href}
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={sitePath('/favicon.svg')} />
     <link
       rel="alternate"
       type="application/rss+xml"
       title={`${agent.brand} journal`}
-      href="/rss.xml"
+      href={sitePath('/rss.xml')}
     />
     {!agent.demo && (
       <script
@@ -84,20 +100,24 @@ const schema = {
     {agent.demo && (
       <div class="demo">
         Demonstration website · Sample identity and content{' '}
-        <a href="/designs/">Explore the designs ↗</a>
+        <CatalogLinks {previewBase} />
       </div>
     )}
     <header class="wrap">
       <nav class="site-nav" aria-label="Main navigation">
-        <a class="brand" href="/">
-          {agent.brand}
+        <a class="brand" href={designHref('/', previewBase)}>
+          {siteBrand}
           <span aria-hidden="true"> /</span>
         </a>
         <div class="nav-links">
           {nav.map(([label, href]) => (
             <a
-              href={href}
-              aria-current={Astro.url.pathname === href ? 'page' : undefined}
+              href={designHref(href, previewBase)}
+              aria-current={
+                Astro.url.pathname === designHref(href, previewBase)
+                  ? 'page'
+                  : undefined
+              }
             >
               {label}
             </a>
@@ -108,44 +128,56 @@ const schema = {
     <main id="main">
       <slot />
     </main>
-    <footer class="site-footer">
-      <div class="wrap">
-        <div class="footer-top">
-          <div>
-            <a class="brand" href="/">
-              {agent.brand}
-            </a>
-            <p>{agent.tagline}</p>
+    {catalog ? (
+      <footer class="site-footer">
+        <div class="wrap">
+          <p>One design. Your repository. A site of your own.</p>
+          <p>
+            Sample sites use a demonstration identity.{' '}
+            <a href={sitePath('/start/')}>Start your own site ↗</a>
+          </p>
+        </div>
+      </footer>
+    ) : (
+      <footer class="site-footer">
+        <div class="wrap">
+          <div class="footer-top">
+            <div>
+              <a class="brand" href={designHref('/', previewBase)}>
+                {agent.brand}
+              </a>
+              <p>{agent.tagline}</p>
+            </div>
+            <div>
+              <strong>{agent.name}</strong>
+              <br />
+              {agent.brokerage}
+              <br />
+              License: {agent.license}
+            </div>
+            <div>
+              <a href={phoneHref}>{agent.phone}</a>
+              <br />
+              <a href={`mailto:${agent.email}`}>{agent.email}</a>
+              <br />
+              {agent.address.street}
+              <br />
+              {agent.address.city}, {agent.address.region}{' '}
+              {agent.address.postalCode}
+            </div>
           </div>
-          <div>
-            <strong>{agent.name}</strong>
-            <br />
-            {agent.brokerage}
-            <br />
-            License: {agent.license}
-          </div>
-          <div>
-            <a href={phoneHref}>{agent.phone}</a>
-            <br />
-            <a href={`mailto:${agent.email}`}>{agent.email}</a>
-            <br />
-            {agent.address.street}
-            <br />
-            {agent.address.city}, {agent.address.region}{' '}
-            {agent.address.postalCode}
+          <div class="footer-bottom">
+            <span>
+              © {new Date().getFullYear()} {agent.brand}. Equal Housing
+              Opportunity.
+            </span>
+            <span>
+              <a href={sitePath('/privacy/')}>Privacy</a> ·{' '}
+              <a href={sitePath('/accessibility/')}>Accessibility</a>
+            </span>
           </div>
         </div>
-        <div class="footer-bottom">
-          <span>
-            © {new Date().getFullYear()} {agent.brand}. Equal Housing
-            Opportunity.
-          </span>
-          <span>
-            <a href="/privacy/">Privacy</a> ·{' '}
-            <a href="/accessibility/">Accessibility</a>
-          </span>
-        </div>
-      </div>
-    </footer>
+      </footer>
+    )}
   </body>
 </html>

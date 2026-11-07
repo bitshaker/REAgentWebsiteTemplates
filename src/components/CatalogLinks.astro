@@ -1,0 +1,21 @@
+---
+import { sitePath } from '../lib/site';
+const { previewBase = '' } = Astro.props;
+const id = previewBase.split('/')[2];
+---
+
+<nav class="catalog-links" aria-label="Design collection">
+  <a href={sitePath('/designs/')}>Explore the designs ↗</a> ·
+  <a href={sitePath(id ? `/start/${id}/` : '/start/')}>
+    {id ? 'Use this design' : 'Make it yours'} ↗
+  </a>
+</nav>
+<style>
+  .catalog-links {
+    display: inline;
+  }
+  .catalog-links a {
+    display: inline-block;
+    padding: 8px 4px;
+  }
+</style>

@@ -1,0 +1,7 @@
+{
+  "id": "golden-hour",
+  "name": "Golden Hour",
+  "description": "A scroll-driven short film and a personal introduction.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

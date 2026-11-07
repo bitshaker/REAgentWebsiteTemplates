@@ -1,0 +1,17 @@
+:root {
+  --paper: #1c130c;
+  --ink: #fff1d9;
+  --muted: #dbc4a7;
+  --accent: #f1b765;
+  --line: #73563b;
+  --display: Georgia, serif;
+}
+
+[data-design='workshop-golden-hour'] .design-hero {
+  --hero-ratio: 1.7;
+  background: linear-gradient(135deg, #39241a, var(--paper) 75%);
+  padding-inline: clamp(16px, 3vw, 42px);
+}
+[data-design='workshop-golden-hour'] .design-hero h1 em {
+  color: var(--accent);
+}

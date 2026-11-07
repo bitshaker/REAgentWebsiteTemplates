@@ -1,0 +1,347 @@
+---
+import { sitePath } from '../lib/site';
+import type { CollectionEntry } from 'astro:content';
+import { agent, phoneHref } from '../lib/agent';
+import {
+  designHref,
+  type DesignPages,
+  type PageKey,
+} from '../lib/design-pages';
+import { guides } from '../lib/move-guides';
+import './design-pages.css';
+
+interface Props {
+  design: DesignPages;
+  page: PageKey;
+  previewBase?: string;
+  posts?: CollectionEntry<'blog'>[];
+  post?: CollectionEntry<'blog'>;
+}
+const { design, page, previewBase = '', posts = [], post } = Astro.props;
+const direction =
+  page === 'contact'
+    ? (design.pages.contact ?? {
+        kicker: 'Start a conversation',
+        title: 'Your next move.',
+        emphasis: 'Let’s talk.',
+        art: design.pages.about.art,
+      })
+    : design.pages[page];
+const art = direction.art;
+const guide =
+  page === 'buyers' || page === 'sellers' ? guides[page] : undefined;
+const portrait = page === 'about' ? agent.portraitUrl : '';
+const intro =
+  post?.data.description ??
+  guide?.intro ??
+  (page === 'about'
+    ? agent.bio
+    : page === 'contact'
+      ? 'Tell me where you are in the process and what you’re hoping for. We’ll take it from there.'
+      : 'Useful ideas and good questions to bring to your next real estate decision.');
+const spotlightArt = design.pages[page === 'buyers' ? 'blog' : 'about'].art;
+const action = guide?.action ?? 'Start a conversation';
+const [featured, ...remaining] = posts;
+const journal = designHref('/blog/', previewBase);
+const dateLabel = (date: Date) =>
+  date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+const imageCaption = {
+  buyers: '01 / The first look',
+  sellers: '02 / A fresh perspective',
+  about: '03 / A place to begin',
+  blog: '04 / From the journal',
+  contact: '05 / Let’s connect',
+};
+---
+
+<div
+  class="designed-page"
+  data-design={design.id}
+  data-page={post ? 'article' : page}
+>
+  <section class="design-hero">
+    <div class="design-hero-copy">
+      {post && (
+        <a class="design-back" href={journal}>
+          ← Back to the journal
+        </a>
+      )}
+      <p class="eyebrow design-kicker">
+        {post ? (
+          <>
+            <time datetime={post.data.date.toISOString()}>
+              {dateLabel(post.data.date)}
+            </time>{' '}
+            · {post.data.author || agent.name}
+          </>
+        ) : page === 'about' ? (
+          `${direction.kicker} · ${agent.name}`
+        ) : (
+          direction.kicker
+        )}
+      </p>
+      <h1>
+        {post ? (
+          post.data.title
+        ) : (
+          <>
+            {direction.title} <em>{direction.emphasis}</em>
+          </>
+        )}
+      </h1>
+      <p class="design-lede">{intro}</p>
+      {page === 'contact' && (
+        <dl class="design-contact">
+          <div>
+            <dt class="eyebrow">Email</dt>
+            <dd>
+              <a href={`mailto:${agent.email}`}>{agent.email}</a>
+            </dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Call</dt>
+            <dd>
+              <a href={phoneHref}>{agent.phone}</a>
+            </dd>
+          </div>
+          <div>
+            <dt class="eyebrow">Office</dt>
+            <dd>
+              {agent.address.street}
+              <br />
+              {agent.address.city}, {agent.address.region}{' '}
+              {agent.address.postalCode}
+            </dd>
+          </div>
+        </dl>
+      )}
+      {!post && (guide || page === 'about') && (
+        <div class="design-actions">
+          <a class="button" href={designHref('/contact/', previewBase)}>
+            {action} ↗
+          </a>
+          <a href={guide ? '#move-guide' : '#agent-profile'}>
+            {guide ? 'See the steps ↓' : 'Get to know me ↓'}
+          </a>
+        </div>
+      )}
+      {page === 'blog' && !post && featured && (
+        <a class="design-back" href="#journal-entries">
+          Browse the journal ↓
+        </a>
+      )}
+    </div>
+    <figure class="design-hero-image">
+      <img
+        src={art.src}
+        alt={art.alt}
+        width="768"
+        height="512"
+        fetchpriority="high"
+      />
+      <figcaption class="eyebrow">
+        {imageCaption[page]} <span>Illustrative scene</span>
+      </figcaption>
+    </figure>
+  </section>
+
+  {guide && (
+    <>
+      <section id="move-guide" class="design-section wrap">
+        <div class="design-section-heading">
+          <p class="eyebrow">
+            {page === 'buyers' ? 'The buyer’s guide' : 'The seller’s guide'}
+          </p>
+          <h2>{guide.heading}.</h2>
+        </div>
+        <ol class="design-steps">
+          {guide.steps.map(({ title, text }, i) => (
+            <li>
+              <span class="design-number">0{i + 1}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </li>
+          ))}
+        </ol>
+        <div class="design-feature design-spotlight">
+          <img
+            src={spotlightArt.src}
+            alt={spotlightArt.alt}
+            width="768"
+            height="512"
+            loading="lazy"
+          />
+          <div>
+            <p class="eyebrow">{guide.spotlight.label}</p>
+            <h3>{guide.spotlight.title}</h3>
+            <ul>
+              {guide.spotlight.notes.map((note) => (
+                <li>{note}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <section class="design-questions">
+        <div class="wrap design-questions-grid">
+          <div>
+            <p class="eyebrow">Good questions to ask</p>
+            <h2>Before we begin.</h2>
+          </div>
+          <div>
+            {guide.questions.map(({ question, answer }) => (
+              <details>
+                <summary>{question}</summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )}
+
+  {page === 'about' && (
+    <section id="agent-profile" class="design-section wrap design-profile">
+      <div class="design-section-heading">
+        <p class="eyebrow">
+          {agent.role} · {agent.market}
+        </p>
+        <h2>Meet {agent.name}.</h2>
+        <p>{agent.tagline}</p>
+        {portrait && (
+          <img
+            class="design-portrait"
+            src={sitePath(portrait)}
+            alt={agent.name}
+            width="400"
+            height="500"
+            loading="lazy"
+          />
+        )}
+      </div>
+      <div class="design-profile-details">
+        <div>
+          <h3>Built around your priorities.</h3>
+          <p>
+            Every move has its own timeline and questions. We’ll start with what
+            matters to you, then map out the next steps together.
+          </p>
+        </div>
+        {agent.serviceAreas.length > 0 && (
+          <div>
+            <h3>Where I work.</h3>
+            <ul>
+              {agent.serviceAreas.map((area) => (
+                <li>{area}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        <p class="design-credentials">
+          {agent.brokerage} · License: {agent.license}
+        </p>
+      </div>
+    </section>
+  )}
+
+  {page === 'blog' && !post && (
+    <section id="journal-entries" class="design-section wrap">
+      <div class="design-section-heading">
+        <p class="eyebrow">The journal</p>
+        <h2>
+          {featured
+            ? 'Latest from the journal.'
+            : 'Good things take a little time.'}
+        </h2>
+      </div>
+      {featured ? (
+        <>
+          <article class="design-feature">
+            <img
+              src={design.pages.buyers.art.src}
+              alt=""
+              width="768"
+              height="512"
+              loading="lazy"
+            />
+            <div>
+              <p class="eyebrow">
+                <time datetime={featured.data.date.toISOString()}>
+                  {dateLabel(featured.data.date)}
+                </time>
+              </p>
+              <h3>
+                <a href={`${journal}${featured.id}/`}>{featured.data.title}</a>
+              </h3>
+              <p>{featured.data.description}</p>
+              <a class="button" href={`${journal}${featured.id}/`}>
+                Read the featured article ↗
+              </a>
+            </div>
+          </article>
+          {remaining.length > 0 && (
+            <ul class="design-archive">
+              {remaining.map((entry) => (
+                <li>
+                  <article>
+                    <p class="eyebrow">
+                      <time datetime={entry.data.date.toISOString()}>
+                        {dateLabel(entry.data.date)}
+                      </time>
+                    </p>
+                    <h3>
+                      <a href={`${journal}${entry.id}/`}>{entry.data.title}</a>
+                    </h3>
+                    <p>{entry.data.description}</p>
+                  </article>
+                </li>
+              ))}
+            </ul>
+          )}
+        </>
+      ) : (
+        <p>New journal entries are on the way.</p>
+      )}
+    </section>
+  )}
+
+  {post && (
+    <article class="design-section wrap">
+      <div class="prose article-copy">
+        <slot />
+      </div>
+    </article>
+  )}
+
+  {page !== 'contact' && (
+    <aside class="design-next" aria-label="Next steps">
+      <div class="wrap design-next-grid">
+        <div>
+          <p class="eyebrow">
+            {agent.name} · {agent.role}
+          </p>
+          <h2>What’s your next move?</h2>
+        </div>
+        <div class="design-actions">
+          <a class="button" href={designHref('/contact/', previewBase)}>
+            Get in touch ↗
+          </a>
+          <a
+            href={designHref(
+              page === 'buyers' ? '/sellers/' : '/buyers/',
+              previewBase,
+            )}
+          >
+            {page === 'buyers' ? 'Explore selling' : 'Explore buying'} ↗
+          </a>
+        </div>
+      </div>
+    </aside>
+  )}
+</div>

@@ -1,0 +1,263 @@
+---
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import AgentInvitation from '../../src/components/AgentInvitation.astro';
+import film from './media/door.mp4?url';
+import door from './media/door.jpg?url';
+import inside from './media/inside.jpg?url';
+import outside from './media/buyers.webp?url';
+
+const paths = [
+  {
+    id: 'buy',
+    label: 'I’m buying',
+    title: 'Find a place that feels like yours.',
+    text: 'Set your priorities, tour with purpose, and understand what goes into an offer.',
+    steps: '01 Priorities   /   02 Tours   /   03 Offer',
+    href: '/buyers/',
+  },
+  {
+    id: 'sell',
+    label: 'I’m selling',
+    title: 'Get ready for what’s next.',
+    text: 'Work through pricing, preparation, and launch with a plan that fits your timing.',
+    steps: '01 Pricing   /   02 Preparation   /   03 Launch',
+    href: '/sellers/',
+  },
+];
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+---
+
+<section class="threshold">
+  <div class="scene scroll-art" aria-hidden="true">
+    <img src={door} class="door" alt="" fetchpriority="high" />
+    <img src={inside} class="inside" alt="" />
+    <img src={outside} class="outside" alt="" loading="lazy" />
+    <video
+      data-threshold-film={film}
+      muted
+      playsinline
+      preload="none"
+      tabindex="-1"
+    ></video>
+    <span class="frame"></span>
+    <span class="scene-caption eyebrow">
+      The Threshold <span>01 / 02</span>
+    </span>
+  </div>
+  <div class="entry">
+    <p class="eyebrow">{agent.market} · Real estate</p>
+    <h1>
+      Every move
+      <br /> starts <em>here.</em>
+    </h1>
+    <fieldset>
+      <legend>What brings you here?</legend>
+      <div class="choices">
+        {paths.map(({ id, label }) => (
+          <label>
+            <input type="radio" name="threshold-path" value={id} />
+            {label}
+          </label>
+        ))}
+      </div>
+    </fieldset>
+    <div class="welcome">
+      <p>{agent.tagline}</p>
+      <a href={designHref('/contact/', previewBase)}>
+        Talk with {agent.name} ↗
+      </a>
+    </div>
+    {paths.map(({ id, title, text, href, steps }) => (
+      <div class:list={['path', id]}>
+        <p class="eyebrow">{steps}</p>
+        <h2>{title}</h2>
+        <p>{text}</p>
+        <a href={designHref(href, previewBase)}>
+          Explore the {id === 'buy' ? 'buyer' : 'seller'} guide ↗
+        </a>
+      </div>
+    ))}
+  </div>
+</section>
+<AgentInvitation {previewBase} />
+
+<script>
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  for (const video of document.querySelectorAll<HTMLVideoElement>(
+    'video[data-threshold-film]',
+  )) {
+    const hero = video.closest('.threshold');
+    let timer = 0;
+    const stop = () => {
+      clearTimeout(timer);
+      video.pause();
+      video.classList.remove('playing');
+    };
+    reduce.addEventListener('change', stop);
+    video.addEventListener('ended', stop);
+    hero?.addEventListener('change', async (event) => {
+      stop();
+      if (
+        !(event.target instanceof HTMLInputElement) ||
+        event.target.value !== 'buy' ||
+        reduce.matches ||
+        !video.dataset.thresholdFilm
+      )
+        return;
+      video.src ||= video.dataset.thresholdFilm;
+      video.currentTime = 0;
+      try {
+        await video.play();
+        if (event.target.checked && !reduce.matches) {
+          video.classList.add('playing');
+          timer = window.setTimeout(stop, 4000);
+        } else stop();
+      } catch {
+        stop();
+      }
+    });
+  }
+</script>
+
+<style>
+  .threshold {
+    display: grid;
+    grid-template-columns: 1.18fr 1fr;
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .scene {
+    position: relative;
+    min-height: 620px;
+    isolation: isolate;
+    overflow: hidden;
+    background: var(--scrim);
+  }
+  .scene img,
+  video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition:
+      opacity 0.65s,
+      transform 1s;
+  }
+  .inside,
+  .outside,
+  video {
+    opacity: 0;
+  }
+  .threshold:has([value='buy']:checked) .inside,
+  video.playing {
+    opacity: 1;
+  }
+  .threshold:has([value='sell']:checked) .outside {
+    opacity: 1;
+  }
+  .frame {
+    position: absolute;
+    inset: 24px;
+    border: 1px solid var(--signal);
+    pointer-events: none;
+  }
+  .scene-caption {
+    position: absolute;
+    inset: auto 24px 24px;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    background: var(--scrim);
+    padding: 9px 14px;
+  }
+  .entry {
+    padding: clamp(26px, 5vw, 88px);
+    align-self: center;
+  }
+  .entry > .eyebrow,
+  .path > .eyebrow,
+  em {
+    color: var(--signal);
+  }
+  h1 {
+    font-size: clamp(3rem, 6.4vw, 7rem);
+    margin-bottom: 28px;
+  }
+  h2 {
+    font-size: clamp(1.6rem, 2.7vw, 3rem);
+    margin-bottom: 12px;
+  }
+  fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  legend {
+    font-size: 0.85rem;
+    margin-bottom: 8px;
+  }
+  .choices {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  label {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 14px;
+    min-height: 44px;
+    border: 1px solid var(--signal);
+    cursor: pointer;
+  }
+  label:has(:checked) {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  label:has(:focus-visible),
+  .entry a:focus-visible {
+    outline: 3px solid var(--signal);
+    outline-offset: 4px;
+  }
+  input {
+    accent-color: var(--ink);
+  }
+  .path,
+  .threshold:has(:checked) .welcome {
+    display: none;
+  }
+  .threshold:has([value='buy']:checked) .buy,
+  .threshold:has([value='sell']:checked) .sell {
+    display: block;
+    animation: enter 0.4s ease-out both;
+  }
+  @keyframes enter {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  @media (max-width: 760px) {
+    .threshold {
+      grid-template-columns: 1fr;
+    }
+    .scene {
+      min-height: clamp(230px, 66vw, 430px);
+    }
+    .frame,
+    .scene-caption {
+      inset-inline: 12px;
+    }
+    .frame {
+      inset-block: 12px;
+    }
+    .scene-caption {
+      bottom: 12px;
+    }
+  }
+</style>

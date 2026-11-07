@@ -1,6 +1,13 @@
 ---
+import { sitePath } from '../../src/lib/site';
+import AgentPortrait from '../../src/components/AgentPortrait.astro';
 import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
 import Services from '../../src/components/Services.astro';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
 ---
 
 <section class="coastal-hero">
@@ -20,17 +27,17 @@ import Services from '../../src/components/Services.astro';
         A home is more than your next address. Find your way forward with
         personal guidance, a clear plan, and someone in your corner.
       </p>
-      <a class="button" href="/contact/">
+      <a class="button" href={designHref('/contact/', previewBase)}>
         Let's talk about your next chapter ↗
       </a>
       <p class="coastal-note">
         {agent.name} · {agent.role}
       </p>
     </div>
-    <div class="hero-frame">
+    <div class="hero-frame scroll-art">
       <img
         class="hero-art"
-        src="/images/architecture.svg"
+        src={sitePath('/images/architecture.svg')}
         alt="Illustration of a sunlit home framed by garden planting"
         width="900"
         height="1000"
@@ -51,9 +58,12 @@ import Services from '../../src/components/Services.astro';
         <br />
         thoughtful guidance.
       </h2>
+      <AgentPortrait />
       <p>{agent.bio}</p>
-      <a href="/about/">Get to know {agent.name} ↗</a>
+      <a href={designHref('/about/', previewBase)}>
+        Get to know {agent.name} ↗
+      </a>
     </div>
   </div>
 </section>
-<Services />
+<Services {previewBase} />

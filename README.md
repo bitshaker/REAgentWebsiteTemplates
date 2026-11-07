@@ -1,23 +1,39 @@
 # REAgentWebsiteTemplates
 
-Agent-friendly Astro websites for independent real estate professionals. Three designs, one shared content model, and a clean export containing only your chosen design.
+Agent-friendly Astro websites for independent real estate professionals. Thirteen designs, one shared content model, and a clean export containing only your chosen design.
 
 **Status:** working starter, with demo identity and sample content. No hosting account or live agent website is created automatically.
 
+## Browse and start your own site
+
+[Browse all sample sites](https://bitshaker.github.io/REAgentWebsiteTemplates/) · [Get started with your own agent](https://bitshaker.github.io/REAgentWebsiteTemplates/start/)
+
+Choose **Use this design** for a single-design starter ZIP and a copyable software-agent setup prompt. Your agent helps with GitHub, your own private repository, Hostinger hosting and MCP connection, personalization and launch. After export, the site is independent of this catalog. [Full setup guide](docs/GET-STARTED.md) · [Catalog hosting](docs/GITHUB-PAGES.md).
+
 ## Choose a design
 
-| Design    | Direction                                                             |
-| --------- | --------------------------------------------------------------------- |
-| Coastal   | Warm ivory, sage, serif typography, arched architectural illustration |
-| Editorial | Warm paper, oversized headlines, architectural journal layout         |
-| Modern    | Deep green, bold typography, split-screen composition                 |
+| Design                                        | Direction                                                                  |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| Coastal                                       | Warm ivory, sage, serif typography, arched architectural illustration      |
+| Editorial                                     | Warm paper, oversized headlines, architectural journal layout              |
+| Modern                                        | Deep green, bold typography, split-screen composition                      |
+| The Threshold (`threshold`)                   | A front door opens into a buyer path; sellers get a separate plan          |
+| The Neighborhood Atlas (`neighborhood-atlas`) | Illustrated map, interactive service-area index, cobalt and parchment      |
+| Golden Hour (`golden-hour`)                   | Scroll-driven interior film, plum and honey, and an agent introduction     |
+| The Open House (`open-house`)                 | Illustrated cutaway with selectable rooms, lavender and citron             |
+| The Listing Studio (`listing-studio`)         | Editorial property campaign, sample floor plan, blush and moss             |
+| Blueprint (`blueprint`)                       | Mint drafting grid, animated house elevation, and buyer/seller plan sheets |
+| Constellation (`constellation`)               | Night-sky palette, morphing star shapes, and glass panels                  |
+| Four Doors (`four-doors`)                     | Four expanding photographic entryways                                      |
+| Workshop Editorial (`workshop-editorial`)     | Oversized magazine type, rotating photos, and stacked features             |
+| Workshop Golden Hour (`workshop-golden-hour`) | Lake footage and four chapters from sunrise to twilight                    |
 
 ```sh
 npm ci
 npm run dev
 ```
 
-Open the local URL printed by Astro, then visit `/designs/` for full-page previews. Illustrations are original SVG assets included under the repository license; replace them with your own licensed property photography if desired. No fabricated listings, reviews, or sales claims are included.
+Open the local URL printed by Astro, then visit `/designs/` for home, buyer, seller, about, journal, and contact previews. Every design includes generated cover art for its buyer, seller, about, and journal pages. Select homepages also use original illustrations or licensed stock footage. See each design’s `media/CREDITS.md` where applicable and replace sample imagery with your own licensed media as desired. No fabricated listings, reviews, or sales claims are included.
 
 ## Start a lightweight site
 
@@ -33,9 +49,9 @@ npm ci
 npm run dev
 ```
 
-Replace `coastal` with `editorial` or `modern`. The exporter copies shared functionality and exactly one design. It excludes this repository’s history, dependencies, catalog, preview routes, and unused designs. GitHub’s “Use this template” button copies the entire catalog; use the exporter for a lean agent site.
+Replace `coastal` with any design ID from the table. The exporter copies shared functionality and exactly one design. It excludes this repository’s history, dependencies, catalog, preview routes, and unused designs. GitHub’s “Use this template” button copies the entire catalog; use the exporter for a lean agent site.
 
-Edit **`src/agent.config.json`** for identity, brokerage, license, contact details, service areas, canonical URL, and content preferences. This is public site information, not secrets.
+Edit **`src/agent.config.json`** for identity, brokerage, license, contact details, service areas, canonical URL, and content preferences. This is public site information, not secrets. Change the palette at the top of `src/design/theme.css`. Replace page cover art and edit its alt text in `src/design/pages.ts`. To add your actual headshot to the homepage and About page, put it under `public/images/` and set `portraitUrl` (for example, `/images/headshot.jpg`). The generated demo portrait disappears when demo mode is off.
 
 ```sh
 git init -b main

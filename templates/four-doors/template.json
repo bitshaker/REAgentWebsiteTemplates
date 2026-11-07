@@ -1,0 +1,7 @@
+{
+  "id": "four-doors",
+  "name": "Four Doors",
+  "description": "Four expanding photo panels lead to four ways to explore the site.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

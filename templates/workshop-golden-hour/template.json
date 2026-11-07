@@ -1,0 +1,7 @@
+{
+  "id": "workshop-golden-hour",
+  "name": "Workshop Golden Hour",
+  "description": "A cinematic lake opening and four chapters that move from sunrise to twilight.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

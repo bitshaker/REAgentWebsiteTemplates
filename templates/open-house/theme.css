@@ -1,0 +1,47 @@
+:root {
+  --paper: #fcfaf5;
+  --ink: #292b57;
+  --muted: color-mix(in srgb, var(--ink) 85%, var(--paper));
+  --accent: #514292;
+  --line: color-mix(in srgb, var(--ink) 28%, var(--paper));
+  --signal: #dceb72;
+  --wash: #ddd5fc;
+  --display: system-ui, sans-serif;
+  --scrim: color-mix(in srgb, var(--ink) 92%, black);
+}
+
+[data-design='open-house'] .design-hero h1 {
+  font-weight: 850;
+}
+[data-design='open-house'] .design-hero h1 em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+[data-design='open-house'] .design-kicker {
+  display: inline-block;
+  padding: 6px 9px;
+  background: var(--page-signal);
+}
+[data-design='open-house'] .design-hero-image {
+  border: 1px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  background: var(--page-tint);
+}
+[data-design='open-house'] .design-hero-image figcaption {
+  border-top: 1px solid var(--ink);
+  border-bottom: 0;
+  padding-inline: 10px;
+}
+[data-design='open-house'] .design-steps li {
+  border: 1px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+}
+[data-design='open-house'] .design-number {
+  font: 800 0.95rem/1 system-ui;
+  background: var(--page-signal);
+  padding: 10px;
+}
+[data-design='open-house'] .design-feature {
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+}

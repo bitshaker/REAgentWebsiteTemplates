@@ -183,19 +183,6 @@ h3 {
   object-fit: cover;
   min-height: 400px;
 }
-.contact-list {
-  display: grid;
-  gap: 20px;
-}
-.contact-list dt {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.contact-list dd {
-  margin: 0;
-  font-size: 1.3rem;
-}
 .article-list {
   list-style: none;
   padding: 0;
@@ -227,12 +214,17 @@ h3 {
   .site-nav {
     align-items: flex-start;
     flex-direction: column;
-    padding: 24px 0;
-    gap: 18px;
+    padding: 14px 0 10px;
+    gap: 6px;
   }
   .nav-links {
     flex-wrap: wrap;
-    gap: 16px;
+    gap: 4px 16px;
+  }
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
   .hero-art {
     min-height: 280px;
@@ -257,4 +249,55 @@ h3 {
 }
 code {
   overflow-wrap: anywhere;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  main h1 {
+    animation: heading-enter 550ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  .button {
+    transition: box-shadow 180ms ease;
+  }
+  .button:hover {
+    box-shadow:
+      0 0 0 2px var(--paper),
+      0 0 0 3px currentColor;
+  }
+  @supports (animation-timeline: view()) {
+    .scroll-art {
+      animation: artwork-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 95%;
+    }
+    main > section:not(:first-child) h2,
+    main .card,
+    .design-hero-image,
+    .design-contact {
+      animation: heading-enter linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 85%;
+    }
+  }
+}
+
+@keyframes heading-enter {
+  from {
+    opacity: 0.78;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes artwork-enter {
+  from {
+    opacity: 0.84;
+    scale: 0.965;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
 }

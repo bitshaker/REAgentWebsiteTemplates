@@ -1,34 +1,9 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { agent } from '../lib/agent';
+import DesignPage from '../components/DesignPage.astro';
+import { design } from '../selected-template';
 ---
 
-<Layout title="A personal approach to your next move">
-  <section class="section wrap">
-    <div class="prose">
-      <p class="eyebrow">Meet {agent.name}</p>
-      <h1>
-        Good guidance starts
-        <br />
-        with listening.
-      </h1>
-      <p>{agent.bio}</p>
-      <h2>Built around your priorities.</h2>
-      <p>
-        Every move has its own timeline, questions, and possibilities. We begin
-        with what matters to you, then map out the next steps together.
-      </p>
-      <h2>Where I work.</h2>
-      <ul>
-        {agent.serviceAreas.map((area) => (
-          <li>{area}</li>
-        ))}
-      </ul>
-      <p>
-        <a class="button" href="/contact/">
-          Let’s start with a conversation ↗
-        </a>
-      </p>
-    </div>
-  </section>
+<Layout title="About your agent">
+  <DesignPage {design} page="about" />
 </Layout>

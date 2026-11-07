@@ -1,5 +1,10 @@
 ---
 import { agent } from '../lib/agent';
+import { designHref } from '../lib/design-pages';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
 ---
 
 <section class="section">
@@ -14,7 +19,7 @@ import { agent } from '../lib/agent';
           Define your priorities, understand the process, and move from browsing
           to a considered decision.
         </p>
-        <a href="/buyers/">A guide for buyers ↗</a>
+        <a href={designHref('/buyers/', previewBase)}>A guide for buyers ↗</a>
       </article>
       <article class="card">
         <p class="number">02 / SELL</p>
@@ -23,7 +28,7 @@ import { agent } from '../lib/agent';
           From preparation to closing, build a selling strategy around your
           property and your next chapter.
         </p>
-        <a href="/sellers/">A guide for sellers ↗</a>
+        <a href={designHref('/sellers/', previewBase)}>A guide for sellers ↗</a>
       </article>
       <article class="card">
         <p class="number">03 / EXPLORE</p>
@@ -32,7 +37,7 @@ import { agent } from '../lib/agent';
           Practical ideas and useful questions for your real estate journey in{' '}
           {agent.market}.
         </p>
-        <a href="/blog/">Read the journal ↗</a>
+        <a href={designHref('/blog/', previewBase)}>Read the journal ↗</a>
       </article>
     </div>
   </div>

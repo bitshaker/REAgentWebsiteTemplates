@@ -1,0 +1,59 @@
+---
+import { sitePath } from '../lib/site';
+import { agent } from '../lib/agent';
+import demoPortrait from '../assets/demo-agent-portrait.jpg?url';
+
+interface Props {
+  wide?: boolean;
+}
+const { wide = false } = Astro.props;
+const isSample = agent.demo && !agent.portraitUrl;
+const portrait = agent.portraitUrl || (isSample ? demoPortrait : '');
+---
+
+{portrait ? (
+  <figure class:list={['agent-portrait', { wide }]}>
+    <img
+      src={sitePath(portrait)}
+      alt={isSample ? 'AI-generated sample portrait' : agent.name}
+      width="720"
+      height="900"
+      loading="lazy"
+    />
+    {isSample && <figcaption>Sample portrait</figcaption>}
+  </figure>
+) : (
+  <slot />
+)}
+
+<style>
+  .agent-portrait {
+    position: relative;
+    width: min(100%, 280px);
+    margin: 0 0 20px;
+    border: 1px solid var(--line);
+  }
+  .agent-portrait img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 32%;
+  }
+  .wide {
+    width: 100%;
+    margin: 0;
+  }
+  .wide img {
+    aspect-ratio: 1.65;
+    object-position: center top;
+  }
+  figcaption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 5px 10px;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 0.75rem;
+  }
+</style>

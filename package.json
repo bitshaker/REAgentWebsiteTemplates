@@ -18,7 +18,9 @@
     "content:publish": "node scripts/content.mjs publish",
     "verify:launch": "node scripts/verify-launch.mjs",
     "format": "prettier --write .",
-    "test:exports": "node tests/export-builds.mjs"
+    "test:exports": "node tests/export-builds.mjs",
+    "build:catalog": "astro build && node scripts/package-catalog.mjs",
+    "verify:catalog": "node scripts/verify-catalog.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

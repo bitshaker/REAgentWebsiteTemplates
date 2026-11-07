@@ -49,3 +49,63 @@
     height: 340px;
   }
 }
+
+[data-design='editorial'] .design-hero {
+  grid-template-columns: minmax(0, 1fr);
+  border-top: 1px solid var(--ink);
+}
+[data-design='editorial'] .design-hero-image {
+  order: 0;
+}
+[data-design='editorial'] .design-hero-image img {
+  aspect-ratio: 2.5;
+}
+[data-design='editorial'] .design-hero h1 {
+  max-width: 17ch;
+}
+[data-design='editorial'] .design-steps {
+  gap: 0;
+  border-block: 1px solid var(--ink);
+}
+[data-design='editorial'] .design-steps li {
+  background: none;
+  border: 0;
+}
+[data-design='editorial'] .design-steps li + li {
+  border-inline-start: 1px solid var(--line);
+}
+[data-design='editorial'] .design-feature {
+  background: none;
+  border-width: 1px 0;
+}
+@media (min-width: 761px) {
+  [data-design='editorial']:is(
+      [data-page='buyers'],
+      [data-page='sellers'],
+      [data-page='blog']
+    )
+    .design-hero-copy {
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 10px 40px;
+  }
+  [data-design='editorial'] .design-kicker {
+    grid-column: 1 / -1;
+  }
+  [data-design='editorial'] .design-hero h1 {
+    margin: 0;
+  }
+  [data-design='editorial'] .design-lede {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 760px) {
+  [data-design='editorial'] .design-steps li + li {
+    border-inline-start: 0;
+    border-top: 1px solid var(--line);
+  }
+  [data-design='editorial'] .design-hero-image img {
+    aspect-ratio: 1.45;
+  }
+}

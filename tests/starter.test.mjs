@@ -1,3 +1,4 @@
+import { designIds } from '../scripts/catalog.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, access, rm } from 'node:fs/promises';
@@ -8,7 +9,7 @@ import { slugify, markdown, generateArticle } from '../scripts/content.mjs';
 test('exports exactly one independent design and refuses overwrites', async () => {
   const temp = await mkdtemp(join(tmpdir(), 'reagent-test-'));
   try {
-    for (const theme of ['coastal', 'editorial', 'modern']) {
+    for (const theme of await designIds()) {
       const target = join(temp, theme);
       await createSite(theme, target);
       assert.equal(
@@ -18,6 +19,26 @@ test('exports exactly one independent design and refuses overwrites', async () =
         theme,
       );
       await assert.rejects(access(join(target, 'templates')));
+      for (const file of [
+        '.git',
+        'node_modules',
+        'src/pages/start',
+        'src/catalog.config.json',
+        'src/lib/onboarding.ts',
+        'src/components/CatalogSetup.astro',
+        '.github/workflows/pages.yml',
+        'scripts/package-catalog.mjs',
+      ])
+        await assert.rejects(access(join(target, file)));
+      assert.match(
+        await readFile(join(target, 'src/pages/index.astro'), 'utf8'),
+        /<Home/,
+      );
+      assert.doesNotMatch(
+        await readFile(join(target, 'src/layouts/Layout.astro'), 'utf8'),
+        /CatalogLinks/,
+      );
+      await assert.rejects(access(join(target, 'src/design/preview.jpg')));
       await assert.rejects(access(join(target, 'src/pages/preview')));
       assert.match(
         await readFile(join(target, 'src/design/Home.astro'), 'utf8'),

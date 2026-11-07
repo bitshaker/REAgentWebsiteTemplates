@@ -1,4 +1,5 @@
 ---
+import { sitePath } from '../lib/site';
 import Layout from '../layouts/Layout.astro';
 ---
 
@@ -6,7 +7,7 @@ import Layout from '../layouts/Layout.astro';
   <section class="section wrap">
     <h1>A different direction.</h1>
     <p>That page could not be found.</p>
-    <a class="button" href="/">
+    <a class="button" href={sitePath('/')}>
       Return home
     </a>
   </section>

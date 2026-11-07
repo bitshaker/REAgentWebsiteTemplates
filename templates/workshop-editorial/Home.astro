@@ -1,0 +1,185 @@
+---
+import AgentPortrait from '../../src/components/AgentPortrait.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import buyers from './media/interior-view.webp?url';
+import sellers from './media/med-villa-dusk.webp?url';
+import about from './media/calculator.webp?url';
+import blog from './media/dashboard.webp?url';
+
+import homeMast from './media/kitchen.webp?url';
+
+import saleMast from './media/modern-dusk-lit.webp?url';
+
+import chapterMast from './media/construction.webp?url';
+
+import ideaMast from './media/team.webp?url';
+
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+const features = [
+  {
+    word: 'home',
+    title: 'Find your next home.',
+    page: 'buyers',
+    label: 'Buyer guide',
+    image: buyers,
+    mast: homeMast,
+  },
+  {
+    word: 'sale',
+    title: 'Prepare for your next sale.',
+    page: 'sellers',
+    label: 'Seller guide',
+    image: sellers,
+    mast: saleMast,
+  },
+  {
+    word: 'chapter',
+    title: `Meet ${agent.name}.`,
+    page: 'about',
+    label: 'About',
+    image: about,
+    mast: chapterMast,
+  },
+  {
+    word: 'idea',
+    title: 'Take a fresh look.',
+    page: 'blog',
+    label: 'Journal',
+    image: blog,
+    mast: ideaMast,
+  },
+];
+---
+
+<section class="section wrap editorial-opening">
+  <p class="eyebrow">{agent.market} / The real estate edition</p>
+  <h1 aria-label="Your next move starts here.">
+    <span aria-hidden="true">
+      Your next
+      <span class="masthead">
+        {features.map(({ word, mast }) => (
+          <span class="masthead-frame">
+            <img src={mast} alt="" />
+            <em>{word}</em>
+          </span>
+        ))}
+      </span>
+      starts here.
+    </span>
+  </h1>
+  <p class="byline">
+    {agent.name} / {agent.role}
+  </p>
+</section>
+<section class="section wrap features" aria-labelledby="editorial-contents">
+  <h2 id="editorial-contents">In this edition</h2>
+  {features.map(({ title, page, label, image }, i) => (
+    <article class="feature" style={`--card: ${i}`}>
+      <div>
+        <p class="eyebrow">
+          0{i + 1} / {label}
+        </p>
+        <h3>{title}</h3>
+        {page === 'about' && <AgentPortrait />}
+        <a href={designHref(`/${page}/`, previewBase)}>{label} ↗</a>
+      </div>
+      <img src={image} alt="" loading="lazy" />
+    </article>
+  ))}
+</section>
+
+<style>
+  .editorial-opening {
+    border-block: 1px solid var(--line);
+  }
+  h1 {
+    font-size: clamp(3.25rem, 10vw, 10rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.085em;
+  }
+  .masthead {
+    display: grid;
+  }
+  .masthead-frame {
+    grid-area: 1 / 1;
+    display: flex;
+    align-items: center;
+    gap: 0.22em;
+    min-height: 1.08em;
+    visibility: hidden;
+    color: var(--accent);
+  }
+  .masthead-frame:first-child {
+    visibility: visible;
+  }
+  .masthead img {
+    width: 1.45em;
+    height: 0.75em;
+    object-fit: cover;
+    border-radius: 99px;
+  }
+  .byline {
+    border-top: 1px solid var(--line);
+    padding-top: 14px;
+  }
+  .feature {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 20px;
+    padding: clamp(20px, 4vw, 48px);
+    background: #e2ede1;
+    border: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .feature:focus-within {
+    z-index: 1;
+  }
+  .feature h3 {
+    font-weight: 700;
+  }
+  .feature img {
+    width: 100%;
+    aspect-ratio: 1.65;
+    object-fit: cover;
+  }
+  @media (min-width: 761px) and (min-height: 700px) {
+    .feature {
+      position: sticky;
+      top: calc(30px + var(--card) * 20px);
+    }
+  }
+  @media (max-width: 760px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+  }
+  .masthead-frame.is-visible {
+    visibility: visible;
+  }
+  .masthead.is-playing .masthead-frame:not(.is-visible) {
+    visibility: hidden;
+  }
+</style>
+
+<script>
+  const masthead = document.querySelector('.masthead');
+  const frames = masthead?.querySelectorAll('.masthead-frame');
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  if (masthead && frames?.length && !motion.matches) {
+    let i = 0;
+    masthead.classList.add('is-playing');
+    frames[i].classList.add('is-visible');
+    const timer = window.setInterval(() => {
+      frames[i].classList.remove('is-visible');
+      i = (i + 1) % frames.length;
+      frames[i].classList.add('is-visible');
+      if (i === frames.length - 1) window.clearInterval(timer);
+    }, 1200);
+  }
+</script>

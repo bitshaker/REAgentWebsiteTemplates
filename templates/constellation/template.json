@@ -1,0 +1,7 @@
+{
+  "id": "constellation",
+  "name": "Constellation",
+  "description": "A mint-green star field, animated constellations and glass panels.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

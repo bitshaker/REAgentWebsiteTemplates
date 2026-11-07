@@ -1,0 +1,376 @@
+:where(.designed-page) {
+  --page-tint: var(--wash, color-mix(in srgb, var(--accent) 11%, var(--paper)));
+  --page-signal: var(--signal, var(--page-tint));
+  --page-width: min(90%, 1320px);
+  --page-gap: clamp(18px, 4vw, 64px);
+  --page-space: clamp(44px, 8vw, 112px);
+}
+.designed-page [id] {
+  scroll-margin-top: 20px;
+}
+.design-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  align-items: center;
+  gap: var(--page-gap);
+  width: var(--page-width);
+  margin-inline: auto;
+  padding-block: clamp(22px, 5vw, 70px);
+}
+.design-hero-copy {
+  min-width: 0;
+}
+.design-hero h1 {
+  font-size: clamp(2.65rem, 6vw, 6.25rem);
+  line-height: 0.98;
+  margin-bottom: 22px;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+.design-hero h1 em {
+  color: var(--accent);
+  font-weight: inherit;
+}
+.design-lede {
+  max-width: 46ch;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+}
+.design-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.design-actions > a,
+.design-back {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+.design-back {
+  font-size: 0.9rem;
+}
+.design-hero-image {
+  min-width: 0;
+  margin: 0;
+}
+.design-hero-image img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: var(--hero-ratio, 1.35);
+  object-fit: cover;
+}
+.design-hero-image figcaption {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  padding-block: 10px;
+  margin: 0;
+  font-size: 0.64rem;
+  border-bottom: 1px solid var(--line);
+}
+:where(.designed-page[data-page='sellers']) .design-hero {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+}
+:where(.designed-page[data-page='sellers']) .design-hero-image {
+  order: -1;
+}
+.designed-page[data-page='about'] .design-hero {
+  --hero-ratio: 1.2;
+}
+.designed-page[data-page='blog'] .design-hero {
+  --hero-ratio: 1.6;
+}
+.designed-page[data-page='article'] .design-hero {
+  --hero-ratio: 1.8;
+}
+.designed-page[data-page='article'] .design-hero h1 {
+  font-size: clamp(2.5rem, 5.2vw, 5.2rem);
+}
+.design-section {
+  padding-block: var(--page-space);
+}
+.design-section-heading {
+  max-width: 690px;
+}
+.design-section-heading h2,
+.design-questions h2,
+.design-next h2 {
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+.design-steps {
+  margin: 26px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2vw, 28px);
+}
+.design-steps li {
+  padding: clamp(18px, 3vw, 36px);
+  background: var(--page-tint);
+  border-top: 2px solid var(--accent);
+}
+.design-number {
+  display: inline-block;
+  margin-bottom: 28px;
+  font: 400 clamp(1.45rem, 3vw, 2.7rem)/1 var(--display);
+}
+.design-steps h3,
+.design-profile h3,
+.design-archive h3 {
+  font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+  margin-bottom: 10px;
+}
+.design-steps p,
+.design-next h2 {
+  margin-bottom: 0;
+}
+.design-questions,
+.design-next {
+  background: var(--page-tint);
+  border-block: 1px solid var(--line);
+  padding-block: clamp(30px, 5vw, 72px);
+}
+.design-questions-grid,
+.design-next-grid,
+.design-profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: var(--page-gap);
+}
+.design-next-grid {
+  align-items: center;
+}
+.design-next .eyebrow {
+  margin-bottom: 10px;
+}
+.design-questions details {
+  border-block-start: 1px solid var(--line);
+}
+.design-questions details:last-child {
+  border-block-end: 1px solid var(--line);
+}
+.design-questions summary {
+  cursor: pointer;
+  padding: 13px 2px;
+  font-weight: 700;
+}
+.design-questions details p {
+  margin-bottom: 16px;
+}
+.design-profile-details > div {
+  padding-block: 20px;
+  border-top: 1px solid var(--line);
+}
+.design-profile-details > div > :last-child {
+  margin-bottom: 0;
+}
+.design-profile-details ul {
+  padding-left: 20px;
+}
+.design-portrait {
+  width: min(100%, 320px);
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+}
+.design-credentials {
+  font-size: 0.85rem;
+  padding: 12px;
+  background: var(--page-tint);
+}
+.design-feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  background: var(--page-tint);
+  border: 1px solid var(--line);
+}
+.design-feature img {
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  object-fit: cover;
+}
+.design-feature > div {
+  align-self: center;
+  padding: clamp(20px, 4vw, 58px);
+}
+.design-feature h3 {
+  font-size: clamp(1.65rem, 3.3vw, 3.5rem);
+  margin-bottom: 12px;
+}
+.design-archive {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--page-gap);
+  padding: 0;
+  margin: var(--page-gap) 0 0;
+  list-style: none;
+}
+.design-archive li {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.article-copy > :first-child {
+  margin-top: 0;
+}
+.article-copy img {
+  height: auto;
+}
+.article-copy pre {
+  overflow-x: auto;
+}
+@media (max-width: 760px) {
+  .designed-page .design-hero,
+  :where(.designed-page[data-page='sellers']) .design-hero,
+  .design-questions-grid,
+  .design-next-grid,
+  .design-profile,
+  .design-feature,
+  .design-archive,
+  .design-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  :where(.designed-page[data-page='sellers']) .design-hero-image {
+    order: 0;
+  }
+  .design-hero-image img {
+    max-height: 400px;
+  }
+  .design-hero h1 {
+    margin-bottom: 16px;
+  }
+  .design-steps li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    column-gap: 16px;
+    align-items: baseline;
+  }
+  .design-number {
+    margin-bottom: 0;
+    grid-row: span 2;
+  }
+  .design-feature img {
+    height: auto;
+    max-height: 310px;
+  }
+}
+
+/* Sellers see a chronological work plan; buyers can compare three stages side by side. */
+@media (min-width: 761px) {
+  [data-page='sellers'] .design-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+  [data-page='sellers'] .design-steps li {
+    display: grid;
+    grid-template-columns: minmax(54px, 0.22fr) minmax(150px, 0.7fr) minmax(
+        0,
+        1fr
+      );
+    align-items: baseline;
+    gap: 12px 26px;
+    border-radius: 0;
+  }
+  [data-page='sellers'] .design-number {
+    margin: 0;
+    justify-self: start;
+  }
+}
+
+.design-spotlight {
+  margin-top: clamp(32px, 6vw, 80px);
+}
+.design-spotlight ul {
+  margin: 15px 0 0;
+  padding-inline-start: 20px;
+}
+.design-spotlight li + li {
+  margin-top: 8px;
+}
+@media (min-width: 761px) {
+  [data-page='sellers'] .design-spotlight img {
+    order: 1;
+  }
+}
+
+/* Give the cover room on phones, with the headline and image in the first view. */
+@media (max-width: 760px) {
+  :is(
+      [data-design='coastal'],
+      [data-design='editorial'],
+      [data-design='threshold'],
+      [data-design='open-house'],
+      [data-design='listing-studio']
+    )
+    .design-hero {
+    gap: 12px;
+  }
+  :is(
+      [data-design='coastal'],
+      [data-design='editorial'],
+      [data-design='threshold'],
+      [data-design='open-house'],
+      [data-design='listing-studio']
+    )
+    .design-hero-copy {
+    display: contents;
+  }
+  :is(
+      [data-design='coastal'],
+      [data-design='editorial'],
+      [data-design='threshold'],
+      [data-design='open-house'],
+      [data-design='listing-studio']
+    )
+    .design-hero
+    :is(.design-kicker, h1, .design-lede) {
+    margin-bottom: 0;
+  }
+  :is(
+      [data-design='coastal'],
+      [data-design='editorial'],
+      [data-design='threshold'],
+      [data-design='open-house'],
+      [data-design='listing-studio']
+    )
+    .design-hero-image {
+    order: 1;
+  }
+  :is(
+      [data-design='coastal'],
+      [data-design='editorial'],
+      [data-design='threshold'],
+      [data-design='open-house'],
+      [data-design='listing-studio']
+    )
+    .design-hero
+    :is(.design-lede, .design-actions, a[href='#journal-entries']) {
+    order: 2;
+  }
+}
+
+.design-contact {
+  margin-block: 24px 0;
+  border-top: 1px solid currentColor;
+}
+.design-contact > div {
+  display: grid;
+  grid-template-columns: minmax(4rem, 1fr) minmax(0, 3fr);
+  align-items: baseline;
+  gap: 12px;
+  padding-block: 8px;
+  border-bottom: 1px solid currentColor;
+}
+.design-contact dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.design-contact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

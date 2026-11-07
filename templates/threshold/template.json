@@ -1,0 +1,7 @@
+{
+  "id": "threshold",
+  "name": "The Threshold",
+  "description": "An opening door and two paths through the same home.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}
