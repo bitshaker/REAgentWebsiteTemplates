@@ -38,6 +38,11 @@ const heroImages = import.meta.glob('../../templates/*/media/hero.jpg', {
   query: '?url',
   import: 'default',
 }) as Record<string, string>;
+const pagePreviews = import.meta.glob('../../catalog-previews/*/*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+}) as Record<string, string>;
 ---
 
 <Layout title="Choose your design" noindex catalog>
@@ -116,8 +121,22 @@ const heroImages = import.meta.glob('../../templates/*/media/hero.jpg', {
                 contact: 'Contact',
               }).map(([page, label]) => (
                 <a href={sitePath(`/preview/${d.id}/${page}/`)}>
-                  {label}
-                  <span aria-hidden="true">↗</span>
+                  <img
+                    src={
+                      pagePreviews[
+                        `../../catalog-previews/${d.id}/${page}.webp`
+                      ]
+                    }
+                    alt=""
+                    width="640"
+                    height="400"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span class="page-sample-label">
+                    {label}
+                    <span aria-hidden="true">↗</span>
+                  </span>
                 </a>
               ))}
             </nav>
@@ -252,27 +271,37 @@ const heroImages = import.meta.glob('../../templates/*/media/hero.jpg', {
   .page-samples {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    gap: 12px;
     padding: 4px 0 0;
   }
   .page-samples a {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    min-height: 44px;
-    padding: 10px 14px;
+    display: block;
+    min-width: 0;
+    overflow: hidden;
     border: 1px solid var(--line);
     text-decoration: none;
     font-size: 0.8rem;
     background: #ffffff30;
   }
+  .page-samples img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.6;
+    object-fit: cover;
+    border-bottom: 1px solid var(--line);
+  }
+  .page-sample-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 44px;
+    padding: 10px 12px;
+  }
   .page-samples a:hover {
     border-color: var(--ink);
     background: #ffffff70;
-  }
-  .page-samples a:last-child {
-    grid-column: 1/-1;
   }
   .card {
     padding: 0;

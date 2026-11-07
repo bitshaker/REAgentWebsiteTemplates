@@ -102,6 +102,7 @@ const schema = {
     class:list={{
       'collection-site': collection,
       'home-view': collection && isHome,
+      'has-call-bar': !catalog,
     }}
   >
     {collection && (
@@ -142,6 +143,12 @@ const schema = {
             </a>
           ))}
         </div>
+        {!catalog && (
+          <a class="nav-call" href={phoneHref}>
+            <span>Call</span>
+            <strong>{agent.phone}</strong>
+          </a>
+        )}
         {collection && (
           <details class="mobile-menu">
             <summary>Menu</summary>
@@ -185,7 +192,9 @@ const schema = {
               License: {agent.license}
             </div>
             <div>
-              <a href={phoneHref}>{agent.phone}</a>
+              <a class="footer-call" href={phoneHref}>
+                Call {agent.phone}
+              </a>
               <br />
               <a href={`mailto:${agent.email}`}>{agent.email}</a>
               <br />
@@ -207,6 +216,19 @@ const schema = {
           </div>
         </div>
       </footer>
+    )}
+    {!catalog && (
+      <aside class="mobile-call-bar" aria-label="Call your agent">
+        <p>
+          Questions about
+          <br />
+          your move?
+        </p>
+        <a href={phoneHref}>
+          <span>Call {agent.name}</span>
+          <strong>{agent.phone}</strong>
+        </a>
+      </aside>
     )}
   </body>
 </html>

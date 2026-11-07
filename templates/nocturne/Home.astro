@@ -1,7 +1,7 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import film from './media/film.mp4?url';
 import poster from './media/poster.jpg?url';
@@ -21,23 +21,31 @@ const { previewBase = '' } = Astro.props;
       <CinematicMedia src={film} poster={poster} />
     </div>
     <div class="nocturne-hero-copy" data-reveal>
-      <p class="n-label">{agent.market} / Real estate</p>
       <h1 id="nocturne-title">
         The art of
         <br />
         <em>coming home.</em>
       </h1>
-      <a class="n-link" href={designHref('/about/', previewBase)}>
-        Discover our approach <span>↗</span>
+      <p class="nocturne-call-reason">
+        Buying or selling in {agent.market}? A considered move begins with the
+        right questions.
+      </p>
+      <a class="n-link" href={phoneHref}>
+        Call to discuss your priorities <span>↗</span>
       </a>
     </div>
     <div class="nocturne-hero-foot">
-      <span>{agent.name}</span>
+      <span>Buying &amp; selling</span>
       <span>Homes &amp; the lives within them</span>
       <span>Scroll to explore ↓</span>
     </div>
   </section>
-  <HomeAgent {previewBase} design="nocturne" />
+  <HomeAgent
+    {previewBase}
+    design="nocturne"
+    invitation="Before choosing a home or a list date, ask what deserves a closer look: condition, preparation, timing, or the terms that matter to you."
+    callLabel="Discuss the details by phone"
+  />
   <section class="nocturne-intro n-wrap" data-reveal>
     <p class="n-label">01 / A considered perspective</p>
     <div>
@@ -45,9 +53,9 @@ const { previewBase = '' } = Astro.props;
         Some places simply <em>stay with you.</em>
       </h2>
       <p>
-        A home is more than its walls. It is the setting for everyday rituals,
-        new chapters, and everything in between. Let’s find the one that feels
-        like yours.
+        A beautiful first impression is a starting point. How does the home work
+        for you? What needs a closer look? Talk through your priorities before
+        deciding which homes to explore.
       </p>
       <a class="n-link" href={designHref('/buyers/', previewBase)}>
         The buying journey <span>↗</span>
@@ -81,8 +89,16 @@ const { previewBase = '' } = Astro.props;
       </h2>
       <img src={two} alt="" loading="lazy" />
       <p>
-        Thoughtful guidance for the places and possibilities that matter most.
+        Before a decision, ask about the details behind the first impression.
       </p>
+      <ul class="nocturne-considerations">
+        <li>Condition: what needs a professional inspection?</li>
+        <li>Preparation: what should happen before listing?</li>
+        <li>Terms: what matters alongside the price?</li>
+      </ul>
+      <a class="n-link" href={phoneHref}>
+        Call with a question about the details ↗
+      </a>
     </div>
   </section>
   <section class="nocturne-services" aria-labelledby="n-services" data-reveal>
@@ -97,13 +113,19 @@ const { previewBase = '' } = Astro.props;
         <a href={designHref('/buyers/', previewBase)}>
           <span>01</span>
           <h3>Buying</h3>
-          <p>Explore the path to a place that feels right.</p>
+          <p>
+            Discuss your search criteria, tour questions, and the tradeoffs
+            behind an offer.
+          </p>
           <b>Explore buying ↗</b>
         </a>
         <a href={designHref('/sellers/', previewBase)}>
           <span>02</span>
           <h3>Selling</h3>
-          <p>Prepare for your next chapter with intention.</p>
+          <p>
+            Ask about preparation, presentation, and the terms to consider
+            alongside price.
+          </p>
           <b>Explore selling ↗</b>
         </a>
       </div>
@@ -139,8 +161,12 @@ const { previewBase = '' } = Astro.props;
       <br />
       <em>for what’s next.</em>
     </h2>
-    <a class="n-link" href={designHref('/contact/', previewBase)}>
-      Start a conversation <span>↗</span>
+    <p class="nocturne-call-note">
+      What needs a closer look before you decide? Bring it to a conversation
+      with {agent.name}.
+    </p>
+    <a class="n-link" href={phoneHref}>
+      Call {agent.phone} · consider the next step <span>↗</span>
     </a>
   </section>
 </div>

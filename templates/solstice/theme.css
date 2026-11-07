@@ -124,7 +124,7 @@ body {
 }
 .solstice-arch-copy > p:not(.solstice-label) {
   max-width: 400px;
-  color: #74796c;
+  color: #5f6857;
   margin: 35px 0;
 }
 .solstice-arch {
@@ -298,4 +298,35 @@ body {
   .solstice-paths a span:first-child {
     grid-column: 1/-1;
   }
+}
+
+:root {
+  --call-radius: 999px;
+  --muted: #626a59;
+}
+.solstice-overlay {
+  background: linear-gradient(180deg, #20291eb8, #20291e88 45%, #20291eb8);
+}
+.solstice-timing {
+  text-align: left;
+  color: var(--ink);
+  margin: 32px 0;
+}
+.solstice-timing div {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding: 14px 0;
+  font-size: 0.9rem;
+}
+.solstice-timing dt {
+  font-weight: 600;
+}
+.solstice-timing dd {
+  margin: 0;
+}
+.solstice-end .solstice-call-note {
+  margin: 0 auto 30px;
+  max-width: 45ch;
 }

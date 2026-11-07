@@ -1,7 +1,7 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import film from './media/film.mp4?url';
 import poster from './media/poster.jpg?url';
@@ -19,14 +19,16 @@ const chapters = [
     label: 'Buying',
     image: one,
     href: '/buyers/',
-    description: 'A thoughtful path to a home that feels right.',
+    description:
+      'Compare your must-haves, possible areas, and the questions to ask before touring.',
   },
   {
     title: 'Make your move',
     label: 'Selling',
     image: two,
     href: '/sellers/',
-    description: 'A clear perspective for the chapter ahead.',
+    description:
+      'Weigh preparation, timing, and the details to discuss before choosing a list date.',
   },
   {
     title: 'A personal connection',
@@ -40,7 +42,8 @@ const chapters = [
     label: 'Journal',
     image: four,
     href: '/blog/',
-    description: 'Ideas and perspectives for life at home.',
+    description:
+      'Prepare for the decisions ahead with practical reading and questions to bring to a call.',
   },
 ];
 ---
@@ -51,23 +54,28 @@ const chapters = [
       <CinematicMedia src={film} poster={poster} />
     </div>
     <div class="p-hero-copy" data-reveal>
-      <p class="p-label">
-        {agent.name} / {agent.market}
-      </p>
       <h1 id="p-title">
         Live
         <br />
         beautifully.
       </h1>
-      <p>A fresh perspective on finding your place.</p>
-      <a href={designHref('/about/', previewBase)}>Discover more ↗</a>
+      <p class="p-call-reason">
+        Buying, selling, or weighing both in {agent.market}? Put your options in
+        perspective.
+      </p>
+      <a href={phoneHref}>Call to compare your next steps ↗</a>
     </div>
     <div class="p-hero-bottom">
       <span>Real estate, thoughtfully considered</span>
       <span>Scroll to explore ↓</span>
     </div>
   </section>
-  <HomeAgent {previewBase} design="panorama" />
+  <HomeAgent
+    {previewBase}
+    design="panorama"
+    invitation="More than one route in mind? Call with the options you’re comparing, the dates that matter, and the questions that could change your decision."
+    callLabel="Talk through your options"
+  />
   <section class="p-intro" data-reveal>
     <p class="p-label">A new perspective / 01</p>
     <h2>
@@ -77,8 +85,9 @@ const chapters = [
     </h2>
     <div>
       <p>
-        From a first conversation to the next set of keys, every move is
-        personal. Discover a more considered way to navigate yours.
+        Compare a move against what matters to you: daily life, preparation, and
+        timing. Start with the buying or selling guide, then call to discuss the
+        questions specific to your plans.
       </p>
       <a href={designHref('/about/', previewBase)}>Our approach ↗</a>
     </div>
@@ -129,8 +138,9 @@ const chapters = [
         start here.
       </h2>
       <p>
-        With your priorities as the starting point, {agent.name} is here to help
-        you navigate the possibilities.
+        Two areas to explore? A sale and purchase to coordinate? Write down what
+        you know, what you’re assuming, and what you need to ask. Bring that
+        list to a conversation with {agent.name}.
       </p>
       <a href={designHref('/about/', previewBase)}>Meet {agent.name} ↗</a>
     </div>
@@ -142,7 +152,10 @@ const chapters = [
       <br />
       about home.
     </h2>
-    <a href={designHref('/contact/', previewBase)}>Get in touch ↗</a>
+    <p class="p-call-note">
+      Your options. Your timing. The questions between them.
+    </p>
+    <a href={phoneHref}>Call {agent.phone} · put the options side by side ↗</a>
   </section>
 </div>
 <script>
@@ -179,8 +192,13 @@ const chapters = [
       }
       gallery.setAttribute('data-scroll-ready', '');
       travel = track.scrollWidth - track.clientWidth;
+      const callBar = document.querySelector<HTMLElement>('.mobile-call-bar');
+      const callSpace =
+        callBar && getComputedStyle(callBar).display !== 'none'
+          ? callBar.offsetHeight + 16
+          : 0;
       // Short viewports get the complete stacked gallery instead of clipped content.
-      if (travel <= 1 || stage.offsetHeight > innerHeight + 2) {
+      if (travel <= 1 || stage.offsetHeight > innerHeight - callSpace + 2) {
         disable();
         return;
       }

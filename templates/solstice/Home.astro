@@ -1,6 +1,6 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import hero from './media/hero.jpg?url';
@@ -22,22 +22,26 @@ const href = (path: string) => designHref(path, previewBase);
     <CinematicMedia src={film} poster={poster} />
     <div class="solstice-overlay"></div>
     <div class="solstice-hero-copy" data-reveal>
-      <p class="solstice-label">A sense of place / {agent.market}</p>
       <h1>
         Live beautifully,
         <br />
         <em>wherever you are.</em>
       </h1>
-      <p>Real estate for the life you imagine.</p>
-      <a class="solstice-pill light" href="#solstice-welcome">
-        Discover the story <span>↓</span>
+      <p>Buying or selling in {agent.market}? Let’s talk about your timing.</p>
+      <a class="solstice-pill light" href={phoneHref}>
+        Call about your next chapter <span>↗</span>
       </a>
     </div>
     <span class="solstice-hero-caption">
       A study in living · Illustrative film
     </span>
   </section>
-  <HomeAgent {previewBase} design="solstice" />
+  <HomeAgent
+    {previewBase}
+    design="solstice"
+    invitation="Have a season in mind, or a move to coordinate? Bring the dates you know and the pieces you’re still working out."
+    callLabel="Talk about your timing"
+  />
   <section class="solstice-welcome" id="solstice-welcome" data-reveal>
     <p class="solstice-label">A warmer welcome</p>
     <h2>
@@ -47,10 +51,24 @@ const href = (path: string) => designHref(path, previewBase);
     </h2>
     <div class="solstice-welcome-bottom">
       <p>
-        It begins with a conversation. Whether you’re finding a new home or
-        preparing for what comes next, {agent.name} is here to help you navigate
-        the journey with intention.
+        A move has more than one moving part. If you’re buying, selling, or
+        considering both, talk with {agent.name} about which decisions depend on
+        each other and what you need to learn before setting a date.
       </p>
+      <dl class="solstice-timing">
+        <div>
+          <dt>Your dates</dt>
+          <dd>What’s fixed, and what can flex?</dd>
+        </div>
+        <div>
+          <dt>Your current home</dt>
+          <dd>Is there a sale to plan?</dd>
+        </div>
+        <div>
+          <dt>Your next place</dt>
+          <dd>What needs to be ready first?</dd>
+        </div>
+      </dl>
       <a class="solstice-pill" href={href('/about/')}>
         Our approach <span>↗</span>
       </a>
@@ -65,8 +83,9 @@ const href = (path: string) => designHref(path, previewBase);
         <em>more life.</em>
       </h2>
       <p>
-        A quiet morning. An open door. The feeling of belonging somewhere. The
-        details that matter are different for everyone; let’s discover yours.
+        What would make daily life easier in your next home? Name your
+        essentials, the areas you’re considering, and when a move might fit. Use
+        those priorities to begin your search.
       </p>
       <a class="solstice-pill" href={href('/buyers/')}>
         Explore buying <span>↗</span>
@@ -128,18 +147,18 @@ const href = (path: string) => designHref(path, previewBase);
     </h2>
     <div>
       <a href={href('/buyers/')}>
-        <span>01 / Find a place</span>
+        <span>01 / Set your priorities</span>
         <strong>Buying a home</strong>
         <span>↗</span>
       </a>
       <a href={href('/sellers/')}>
-        <span>02 / Make a move</span>
+        <span>02 / Prepare before listing</span>
         <strong>Selling a home</strong>
         <span>↗</span>
       </a>
-      <a href={href('/blog/')}>
-        <span>03 / Take a moment</span>
-        <strong>Read the journal</strong>
+      <a href={phoneHref}>
+        <span>03 / Put the pieces together</span>
+        <strong>Call about buying and selling</strong>
         <span>↗</span>
       </a>
     </div>
@@ -151,8 +170,11 @@ const href = (path: string) => designHref(path, previewBase);
       <br />
       <em>somewhere beautiful.</em>
     </h2>
-    <a class="solstice-pill light" href={href('/contact/')}>
-      Start a conversation <span>↗</span>
+    <p class="solstice-call-note">
+      Buying, selling, or doing both? Call with your timing questions.
+    </p>
+    <a class="solstice-pill light" href={phoneHref}>
+      Call {agent.phone} <span>↗</span>
     </a>
   </section>
 </div>

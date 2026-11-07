@@ -1,5 +1,5 @@
 ---
-import { sitePath } from '../lib/site';
+import AgentPortrait from './AgentPortrait.astro';
 import type { CollectionEntry } from 'astro:content';
 import { agent, phoneHref } from '../lib/agent';
 import {
@@ -30,17 +30,16 @@ const direction =
 const art = direction.art;
 const guide =
   page === 'buyers' || page === 'sellers' ? guides[page] : undefined;
-const portrait = page === 'about' ? agent.portraitUrl : '';
 const intro =
   post?.data.description ??
   guide?.intro ??
   (page === 'about'
     ? agent.bio
     : page === 'contact'
-      ? 'Tell me where you are in the process and what you’re hoping for. We’ll take it from there.'
+      ? `Call ${agent.name} about buying or selling in ${agent.market}. Ask about your search, preparation before listing, or the timing of a move. Bring the questions you have, even if your plans are still taking shape.`
       : 'Useful ideas and good questions to bring to your next real estate decision.');
 const spotlightArt = design.pages[page === 'buyers' ? 'blog' : 'about'].art;
-const action = guide?.action ?? 'Start a conversation';
+const action = guide?.action ?? 'Call about working together';
 const [featured, ...remaining] = posts;
 const journal = designHref('/blog/', previewBase);
 const dateLabel = (date: Date) =>
@@ -98,15 +97,15 @@ const imageCaption = {
       {page === 'contact' && (
         <dl class="design-contact">
           <div>
-            <dt class="eyebrow">Email</dt>
+            <dt class="eyebrow">Call {agent.name}</dt>
             <dd>
-              <a href={`mailto:${agent.email}`}>{agent.email}</a>
+              <a href={phoneHref}>{agent.phone}</a>
             </dd>
           </div>
           <div>
-            <dt class="eyebrow">Call</dt>
+            <dt class="eyebrow">Prefer email?</dt>
             <dd>
-              <a href={phoneHref}>{agent.phone}</a>
+              <a href={`mailto:${agent.email}`}>{agent.email}</a>
             </dd>
           </div>
           <div>
@@ -122,7 +121,7 @@ const imageCaption = {
       )}
       {!post && (guide || page === 'about') && (
         <div class="design-actions">
-          <a class="button" href={designHref('/contact/', previewBase)}>
+          <a class="button" href={phoneHref}>
             {action} ↗
           </a>
           <a href={guide ? '#move-guide' : '#agent-profile'}>
@@ -214,16 +213,7 @@ const imageCaption = {
         </p>
         <h2>Meet {agent.name}.</h2>
         <p>{agent.tagline}</p>
-        {portrait && (
-          <img
-            class="design-portrait"
-            src={sitePath(portrait)}
-            alt={agent.name}
-            width="400"
-            height="500"
-            loading="lazy"
-          />
-        )}
+        <AgentPortrait />
       </div>
       <div class="design-profile-details">
         <div>
@@ -326,11 +316,24 @@ const imageCaption = {
           <p class="eyebrow">
             {agent.name} · {agent.role}
           </p>
-          <h2>What’s your next move?</h2>
+          <h2>
+            {page === 'buyers'
+              ? 'What matters in your next home?'
+              : page === 'sellers'
+                ? 'What should happen before you list?'
+                : 'What’s your next move?'}
+          </h2>
+          <p>
+            {page === 'buyers'
+              ? 'Call with your priorities, possible timing, and the areas you’re considering.'
+              : page === 'sellers'
+                ? 'Call with your possible move date and the preparation questions on your list.'
+                : `Ask ${agent.name} about the process, your priorities, or working together.`}
+          </p>
         </div>
         <div class="design-actions">
-          <a class="button" href={designHref('/contact/', previewBase)}>
-            Get in touch ↗
+          <a class="button" href={phoneHref}>
+            Call {agent.phone} ↗
           </a>
           <a
             href={designHref(

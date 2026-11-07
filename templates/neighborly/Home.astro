@@ -1,6 +1,6 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import hero from './media/hero.jpg?url';
@@ -19,18 +19,18 @@ const { previewBase = '' } = Astro.props;
 <div class="neighborly-home collection-home">
   <section class="n-hero">
     <div class="n-hero-copy">
-      <p class="n-kicker">A little more at home in {agent.market}</p>
+      <p class="n-kicker">A good place to start</p>
       <h1>
         Let’s find
         <br />
         your <em>place.</em>
       </h1>
       <p>
-        Good moves start with good people. Let’s make your next chapter feel
-        like you.
+        Buying your first home, making a change, or thinking about selling?
+        Bring your questions about the next step.
       </p>
-      <a class="n-button" href={designHref('/contact/', previewBase)}>
-        Say hello <span>↗</span>
+      <a class="n-button" href={phoneHref}>
+        Call with your first question <span>↗</span>
       </a>
     </div>
     <div class="n-hero-media">
@@ -42,13 +42,16 @@ const { previewBase = '' } = Astro.props;
       </span>
     </div>
     <div class="n-hero-footer">
-      <span>
-        {agent.name} / {agent.role}
-      </span>
+      <span>Buying &amp; selling / {agent.market}</span>
       <span>Scroll for the good stuff ↓</span>
     </div>
   </section>
-  <HomeAgent {previewBase} design="neighborly" />
+  <HomeAgent
+    {previewBase}
+    design="neighborly"
+    invitation="Not sure where to start? Ask about the buying or selling process, the areas you’re considering, or what to prepare first."
+    callLabel="Call and ask away"
+  />
   <section class="n-intro n-wrap" data-reveal>
     <p class="n-kicker">Hey, neighbor ✳</p>
     <h2>
@@ -59,8 +62,9 @@ const { previewBase = '' } = Astro.props;
     <div class="n-intro-row">
       <img src={hero} alt="" loading="lazy" />
       <p>
-        Whether you’re dreaming, searching, or getting ready to sell, you
-        deserve a thoughtful partner and a plan that fits your life.
+        “Where do I begin?” is a useful first question. So is “What should I do
+        before I sell?” You don’t need a finished plan to ask about your next
+        step.
       </p>
       <a
         class="n-round"
@@ -130,16 +134,32 @@ const { previewBase = '' } = Astro.props;
       </span>
     </div>
     <div data-reveal>
-      <p class="n-kicker">A few good reads</p>
+      <p class="n-kicker">A few good questions</p>
       <h2>
-        Thoughts for
+        Wondering
         <br />
-        <em>the journey.</em>
+        <em>where to start?</em>
       </h2>
       <p>
-        Questions, ideas, and practical guidance for wherever you are in the
-        process.
+        What comes before a home tour? What should you gather before listing?
+        Explore the guides, then call with the part you want to talk through.
       </p>
+      <div class="n-questions">
+        <details>
+          <summary>What helps before a first tour?</summary>
+          <p>
+            A few must-haves, the areas you’re considering, and questions about
+            the search process.
+          </p>
+        </details>
+        <details>
+          <summary>Should I start getting my home ready?</summary>
+          <p>
+            Write down your possible move dates and the prep tasks you’re unsure
+            about. Ask what to consider before taking on a project.
+          </p>
+        </details>
+      </div>
       <a
         class="n-button n-button-dark"
         href={designHref('/blog/', previewBase)}
@@ -155,7 +175,10 @@ const { previewBase = '' } = Astro.props;
       <br />
       <em>your move.</em>
     </h2>
-    <a href={designHref('/contact/', previewBase)}>Get in touch ↗</a>
+    <p class="n-call-note">One question is enough to begin. What’s yours?</p>
+    <a href={phoneHref}>
+      Call {agent.name} · {agent.phone} ↗
+    </a>
     <span>✳</span>
   </section>
 </div>

@@ -1,7 +1,7 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import film from './media/film.mp4?url';
 import poster from './media/poster.jpg?url';
@@ -30,19 +30,26 @@ const initials = agent.name
       {initials}
     </span>
     <div class="m-hero-copy" data-reveal>
-      <p class="m-label">Real estate / {agent.market}</p>
       <h1 id="m-title">
         A place for
         <br />
         <em>your story.</em>
       </h1>
-      <a href={designHref('/about/', previewBase)}>A personal approach ↗</a>
+      <p class="m-call-reason">
+        Buying or selling in {agent.market}, with your priorities at the center.
+      </p>
+      <a href={phoneHref}>Call about your next move ↗</a>
     </div>
     <p class="m-hero-bottom">
       A considered way home <span>Scroll to explore ↓</span>
     </p>
   </section>
-  <HomeAgent {previewBase} design="monogram" />
+  <HomeAgent
+    {previewBase}
+    design="monogram"
+    invitation="Choosing an agent is personal, too. Call to ask about the approach, discuss your priorities, and decide what you need from the person guiding your move."
+    callLabel="Get to know your agent by phone"
+  />
   <section class="m-statement" data-reveal>
     <p class="m-label">01 / Our point of view</p>
     <h2>
@@ -52,10 +59,15 @@ const initials = agent.name
     </h2>
     <div>
       <p>
-        Home is where the details of life come together. Whether you are
-        searching for a new place or preparing to leave one, your next move
-        deserves a thoughtful approach.
+        A home search or sale starts with your circumstances. What needs to
+        change? What would you like to keep? Bring both to a conversation with{' '}
+        {agent.name}, along with any questions about working together.
       </p>
+      <ul class="m-fit-questions">
+        <li>How would we communicate?</li>
+        <li>What would the first steps involve?</li>
+        <li>Which services fit my plans?</li>
+      </ul>
       <a href={designHref('/about/', previewBase)}>
         Get to know {agent.name} ↗
       </a>
@@ -104,14 +116,20 @@ const initials = agent.name
         <img src={three} alt="" loading="lazy" />
         <span>01 / Discover</span>
         <h3>Buying a home</h3>
-        <p>Find a place for the life you want to lead.</p>
+        <p>
+          Talk through your must-haves, the areas you’re considering, and
+          questions before touring.
+        </p>
         <b>Explore buying ↗</b>
       </a>
       <a href={designHref('/sellers/', previewBase)}>
         <img src={four} alt="" loading="lazy" />
         <span>02 / Begin again</span>
         <h3>Selling a home</h3>
-        <p>Make your next move with a clear plan.</p>
+        <p>
+          Discuss your timing, preparation questions, and what matters beyond
+          the asking price.
+        </p>
         <b>Explore selling ↗</b>
       </a>
     </div>
@@ -123,7 +141,11 @@ const initials = agent.name
       <br />
       <em>what comes next.</em>
     </h2>
-    <a href={designHref('/contact/', previewBase)}>Start a conversation ↗</a>
+    <p class="m-call-note">
+      Ask about communication, the process, and how your priorities would shape
+      the work.
+    </p>
+    <a href={phoneHref}>Call {agent.phone} · talk about working together ↗</a>
     <span aria-hidden="true">{initials}</span>
   </section>
 </div>

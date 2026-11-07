@@ -6,8 +6,10 @@ import { designHref } from '../lib/design-pages';
 interface Props {
   previewBase?: string;
   design: string;
+  invitation: string;
+  callLabel: string;
 }
-const { previewBase = '', design } = Astro.props;
+const { previewBase = '', design, invitation, callLabel } = Astro.props;
 const hasPortrait = Boolean(agent.portraitUrl || agent.demo);
 ---
 
@@ -29,12 +31,19 @@ const hasPortrait = Boolean(agent.portraitUrl || agent.demo);
       </p>
       <h2 id="home-agent-name">Meet {agent.name}.</h2>
       <p class="home-agent-bio">{agent.bio}</p>
+      {agent.serviceAreas.length > 0 && (
+        <p class="home-agent-areas">Serving {agent.serviceAreas.join(' · ')}</p>
+      )}
       <p class="home-agent-credentials">
         {agent.brokerage} · License: {agent.license}
       </p>
+      <p class="home-agent-invitation">{invitation}</p>
       <div class="home-agent-actions">
         <a class="home-agent-call" href={phoneHref}>
-          Call {agent.phone}
+          <span>
+            {callLabel}
+            <small>{agent.phone}</small>
+          </span>
         </a>
         <a class="home-agent-about" href={designHref('/about/', previewBase)}>
           More about {agent.name} ↗
@@ -90,6 +99,20 @@ const hasPortrait = Boolean(agent.portraitUrl || agent.demo);
     font-size: 0.8rem;
     overflow-wrap: anywhere;
   }
+  .home-agent-areas {
+    font-size: 0.8rem;
+    margin-block: 0 12px;
+  }
+  .home-agent-invitation {
+    max-width: 55ch;
+    margin-block: 24px 18px;
+    line-height: 1.6;
+  }
+  .home-agent-call small {
+    display: block;
+    font-size: 0.8rem;
+    margin-top: 3px;
+  }
   .home-agent-actions {
     display: flex;
     flex-wrap: wrap;
@@ -126,13 +149,52 @@ const hasPortrait = Boolean(agent.portraitUrl || agent.demo);
   [data-agent-design='solstice'] .home-agent-call {
     border-radius: 999px;
   }
+  [data-agent-design='forma'] .home-agent-copy {
+    border-left: 1px solid var(--line);
+    padding-left: clamp(20px, 4vw, 56px);
+  }
+  [data-agent-design='neighborly'] {
+    background: #eedccb;
+  }
+  [data-agent-design='still'] .home-agent-photo {
+    order: 2;
+  }
+  [data-agent-design='still'].has-portrait .home-agent-inner {
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 280px);
+  }
+  [data-agent-design='solstice'] .home-agent-copy {
+    text-align: center;
+  }
+  [data-agent-design='solstice'] .home-agent-actions {
+    justify-content: center;
+  }
+  [data-agent-design='nocturne'] {
+    --paper: #171815;
+    --ink: #eee9dc;
+    --line: #60594a;
+  }
+  [data-agent-design='monogram'] .home-agent-inner {
+    border-block: 1px solid var(--line);
+    padding-block: 36px;
+  }
+  [data-agent-design='panorama'] .home-agent-photo :global(img) {
+    filter: saturate(0.8);
+  }
+  [data-agent-design='atelier'] .home-agent-photo {
+    align-self: start;
+    margin-top: 24px;
+  }
   @media (max-width: 600px) {
-    .has-portrait .home-agent-inner {
+    .has-portrait .home-agent-inner,
+    [data-agent-design='still'].has-portrait .home-agent-inner {
       grid-template-columns: minmax(0, 1fr);
       gap: 28px;
     }
     .home-agent-photo {
-      width: min(70%, 240px);
+      width: min(55%, 180px);
+    }
+    [data-agent-design='still'] .home-agent-photo {
+      order: 0;
     }
   }
 </style>

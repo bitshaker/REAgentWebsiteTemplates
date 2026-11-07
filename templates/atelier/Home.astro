@@ -1,6 +1,6 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import hero from './media/hero.jpg?url';
@@ -22,7 +22,7 @@ const { previewBase = '' } = Astro.props;
     <div class="a-hero-overlay"></div>
     <div class="a-hero-meta">
       <span>{agent.market}</span>
-      <span>Real estate / A personal perspective</span>
+      <span>For buyers &amp; sellers</span>
     </div>
     <h1>
       The art of
@@ -30,11 +30,16 @@ const { previewBase = '' } = Astro.props;
       <em>being home.</em>
     </h1>
     <div class="a-hero-foot">
-      <span>With {agent.name}</span>
-      <a href="#a-story">Discover ↓</a>
+      <span>Start with the way you want to live.</span>
+      <a href={phoneHref}>Call about your next move ↗</a>
     </div>
   </section>
-  <HomeAgent {previewBase} design="atelier" />
+  <HomeAgent
+    {previewBase}
+    design="atelier"
+    invitation="How should your next home work for you? What should you prepare before leaving this one? Bring those everyday details to a conversation."
+    callLabel="Call to shape your next move"
+  />
   <section class="a-story a-wrap" id="a-story">
     <div class="a-story-label">
       <p>01 / THE APPROACH</p>
@@ -48,9 +53,9 @@ const { previewBase = '' } = Astro.props;
       </h2>
       <div class="a-story-bottom">
         <p>
-          Finding or selling a home is a personal endeavor. A clear perspective
-          and attentive guidance can help you make your next move with
-          intention.
+          Start with the details of daily life: the room you need, the routines
+          you want to keep, or the timing of a sale. Talk with {agent.name}
+          about how those priorities shape what you do next in {agent.market}.
         </p>
         <a href={designHref('/about/', previewBase)}>
           The person behind the practice ↗
@@ -88,6 +93,9 @@ const { previewBase = '' } = Astro.props;
             <br />
             <em>to belong.</em>
           </h3>
+          <p>
+            Turn daily routines and must-haves into questions for your search.
+          </p>
           <b>↗</b>
         </div>
       </a>
@@ -100,6 +108,10 @@ const { previewBase = '' } = Astro.props;
             <br />
             <em>for what’s next.</em>
           </h3>
+          <p>
+            Think through preparation, presentation, and the timing of your next
+            chapter.
+          </p>
           <b>↗</b>
         </div>
       </a>
@@ -128,8 +140,19 @@ const { previewBase = '' } = Astro.props;
       <br />
       <em>something move.</em>
     </h2>
-    <a href={designHref('/contact/', previewBase)}>
-      Get in touch <span>↗</span>
+    <div class="a-conversation-notes">
+      <p>
+        <span>Keep</span> What works about home today?
+      </p>
+      <p>
+        <span>Change</span> What would you like to be different?
+      </p>
+      <p>
+        <span>Ask</span> What do you need to know before moving?
+      </p>
+    </div>
+    <a href={phoneHref}>
+      Call {agent.phone} · begin with your priorities <span>↗</span>
     </a>
   </section>
 </div>

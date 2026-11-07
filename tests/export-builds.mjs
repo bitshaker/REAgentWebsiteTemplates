@@ -38,6 +38,7 @@ try {
           );
           config.demo = false;
           config.siteUrl = 'https://sample-agent.test';
+          config.phone = '+1 (202) 555-0142';
           await writeFile(
             join(target, 'src/agent.config.json'),
             JSON.stringify(config),
@@ -57,6 +58,20 @@ try {
             home,
             /Demonstration website|AI-generated sample portrait/,
           );
+          // Exercise owner configuration through every rendered call path,
+          // including the hero and mobile bar in a catalog-free export.
+          assert.doesNotMatch(home, /class="agent-presence"/);
+          assert.match(home, /class="mobile-call-bar"/);
+          assert.match(home, /class="nav-call"/);
+          assert.doesNotMatch(home, /555\) 010-0123|tel:\+15550100123/);
+          const hero = home.slice(
+            home.indexOf('collection-home'),
+            home.indexOf('id="meet-agent"'),
+          );
+          assert.doesNotMatch(hero, /agent-portrait|Sample portrait/);
+          assert.match(hero, /href="tel:\+12025550142"/);
+          for (const [, destination] of home.matchAll(/href="(tel:[^"]+)"/g))
+            assert.equal(destination, 'tel:+12025550142');
           for (const page of [
             'buyers',
             'sellers',
@@ -72,6 +87,7 @@ try {
             assert.match(html, new RegExp(`data-design="${theme}"`));
             assert.match(html, /<img[^>]+fetchpriority="high"/);
             assert.doesNotMatch(html, /href="\/preview\//);
+            assert.match(html, /href="tel:\+12025550142"/);
             if (page === 'contact') {
               assert.match(html, /<a href="mailto:/);
               assert.match(html, /<a href="tel:/);

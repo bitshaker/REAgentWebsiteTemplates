@@ -265,3 +265,30 @@
   bottom: 90px;
   pointer-events: none;
 }
+
+.p-film:after {
+  background: linear-gradient(90deg, #122826d9, #12282688);
+}
+.p-hero-copy .p-call-reason {
+  max-width: 43ch;
+}
+.p-card a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+.p-close .p-call-note {
+  max-width: 42ch;
+}
+/* The persistent phone bar occupies part of the mobile stage. */
+@media (max-width: 1000px) {
+  .p-chapters[data-scroll-ready] .p-chapters-stage {
+    min-height: calc(100svh - 96px);
+  }
+}
+
+@media (max-width: 700px) {
+  .p-hero-bottom {
+    display: none;
+  }
+}

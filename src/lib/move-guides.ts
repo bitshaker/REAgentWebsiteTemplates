@@ -2,7 +2,7 @@ export const guides = {
   buyers: {
     intro:
       'A home has to work for the way you live. Start with a plan for what to look for, how to compare it, and when you feel ready to decide.',
-    action: 'Talk through your search',
+    action: 'Call to talk through your search',
     heading: 'From first questions to keys',
     spotlight: {
       label: 'Take this on a tour',
@@ -43,7 +43,7 @@ export const guides = {
   sellers: {
     intro:
       'Decide what is worth doing before you list, how to present the home, and which terms matter most when it is time to compare offers.',
-    action: 'Plan a first walkthrough',
+    action: 'Call about preparing to sell',
     heading: 'From preparation to closing',
     spotlight: {
       label: 'Before the first walkthrough',

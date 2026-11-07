@@ -309,3 +309,33 @@ body {
     padding: 100px 6%;
   }
 }
+
+:root {
+  --muted: #60675c;
+}
+.still-hero-shade {
+  background:
+    linear-gradient(0deg, #101911d9, #10191130 80%),
+    linear-gradient(180deg, #0007, transparent 50%);
+}
+.still-hero-bottom > div {
+  max-width: min(70%, 420px);
+}
+.still-hero-bottom > div p {
+  max-width: 38ch;
+}
+.still-text-link {
+  min-height: 48px;
+  padding-top: 12px;
+}
+.still-track figcaption {
+  gap: 20px;
+  align-items: start;
+}
+.still-track figcaption > span:first-child {
+  max-width: 28ch;
+}
+.still-end .still-call-note {
+  max-width: 48ch;
+  margin: 0 auto 25px;
+}

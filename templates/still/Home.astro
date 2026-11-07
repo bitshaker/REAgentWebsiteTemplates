@@ -1,6 +1,6 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import hero from './media/hero.jpg?url';
@@ -16,6 +16,12 @@ interface Props {
 const { previewBase = '' } = Astro.props;
 const href = (path: string) => designHref(path, previewBase);
 const scenes = [detail1, detail2, detail3, detail4];
+const prompts = [
+  'How would an ordinary day work here?',
+  'What belongs on your must-have list?',
+  'What would you want to inspect?',
+  'What would make a move worthwhile?',
+];
 ---
 
 <div class="still-home collection-home">
@@ -23,16 +29,20 @@ const scenes = [detail1, detail2, detail3, detail4];
     <img src={hero} alt="" class="still-hero-image" fetchpriority="high" />
     <div class="still-hero-shade"></div>
     <div class="still-hero-copy" data-reveal>
-      <p class="still-label">A more considered way to move / {agent.market}</p>
       <h1>
         Room to
         <br />
         <em>be yourself.</em>
       </h1>
       <div class="still-hero-bottom">
-        <p>
-          Thoughtful real estate, guided by what makes a place feel like yours.
-        </p>
+        <div>
+          <p>
+            Buying or selling in {agent.market}? Start with what matters to you.
+          </p>
+          <a class="still-text-link" href={phoneHref}>
+            Call to talk it through ↗
+          </a>
+        </div>
         <a
           class="still-circle"
           href="#still-intro"
@@ -44,7 +54,12 @@ const scenes = [detail1, detail2, detail3, detail4];
     </div>
     <span class="still-vertical">A study in living · 01</span>
   </section>
-  <HomeAgent {previewBase} design="still" />
+  <HomeAgent
+    {previewBase}
+    design="still"
+    invitation="If the next step feels unclear, bring one question: what should you consider before you search, list, or choose a date?"
+    callLabel="Call about what matters to you"
+  />
   <section id="still-intro" class="still-intro" data-reveal>
     <p class="still-label">01 / A little perspective</p>
     <div>
@@ -54,9 +69,10 @@ const scenes = [detail1, detail2, detail3, detail4];
         <em>an address.</em>
       </h2>
       <p>
-        It’s the light at the end of the day. The familiar corner. The
-        possibilities you can already imagine. Wherever you are in your journey,
-        let’s make space for what matters to you.
+        It’s how an ordinary day works. Before a search, name the things your
+        next home needs to do better. Before a sale, name the dates and
+        decisions that matter. Those details give a conversation a place to
+        begin.
       </p>
       <a class="still-text-link" href={href('/about/')}>
         Meet {agent.name} <span>↗</span>
@@ -66,7 +82,7 @@ const scenes = [detail1, detail2, detail3, detail4];
   <section class="still-gallery" aria-labelledby="still-gallery-title">
     <div class="still-gallery-head" data-reveal>
       <div>
-        <p class="still-label">02 / A study in living</p>
+        <p class="still-label">02 / Questions worth a closer look</p>
         <h2 id="still-gallery-title">
           The beauty of
           <br />
@@ -74,8 +90,8 @@ const scenes = [detail1, detail2, detail3, detail4];
         </h2>
       </div>
       <p>
-        Form, texture, light. A collection of illustrative scenes to inspire the
-        way we think about home.
+        Use these illustrative scenes to think about your own priorities. Which
+        details would you want to discuss before a move?
       </p>
     </div>
     <div class="still-track" tabindex="0" aria-label="Editorial image gallery">
@@ -83,7 +99,9 @@ const scenes = [detail1, detail2, detail3, detail4];
         <figure>
           <img src={scene} alt="" loading="lazy" />
           <figcaption>
-            <span>0{i + 1} / A study in living</span>
+            <span>
+              0{i + 1} / {prompts[i]}
+            </span>
             <span>Illustrative scene</span>
           </figcaption>
         </figure>
@@ -115,8 +133,9 @@ const scenes = [detail1, detail2, detail3, detail4];
         <em>start with care.</em>
       </h2>
       <p>
-        Buying or selling is personal. You deserve a clear conversation, room to
-        ask questions, and guidance shaped around your next chapter.
+        You may be weighing two homes, a possible list date, or whether to move
+        at all. Call {agent.name} to discuss the tradeoffs and the questions you
+        still need answered.
       </p>
       <div class="still-paths">
         <a href={href('/buyers/')}>
@@ -147,8 +166,12 @@ const scenes = [detail1, detail2, detail3, detail4];
       <br />
       <em>next move meaningful.</em>
     </h2>
-    <a class="still-text-link" href={href('/contact/')}>
-      Start a conversation <span>↗</span>
+    <p class="still-call-note">
+      You can begin with an open question, even while your plans are taking
+      shape.
+    </p>
+    <a class="still-text-link" href={phoneHref}>
+      Call {agent.phone} · find a starting point <span>↗</span>
     </a>
   </section>
 </div>

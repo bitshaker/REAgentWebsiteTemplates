@@ -52,6 +52,7 @@ export async function createSite(template, destination) {
     'docs/GITHUB-PAGES.md',
     'docs/REAL-ESTATE-DESIGN-INSPIRATION.md',
     'docs/DESIGN-COLLECTION.md',
+    'docs/CALL-CONVERSION-AUDIT.md',
     'docs/design-collection-preview.jpg',
     'docs/research-real-estate-editorial.md',
     'docs/research-real-estate-luxury.md',

@@ -272,7 +272,7 @@
   .forma-hero-top {
     top: 120px;
   }
-  .forma-hero-top span:last-child {
+  .forma-hero-top > span:last-child {
     display: none;
   }
   .forma-hero-bottom {
@@ -346,4 +346,48 @@
 .forma-gallery-controls button[aria-pressed='true'] {
   border-color: var(--ink);
   color: var(--ink);
+}
+
+/* A concise decision brief keeps the architectural composition useful. */
+.forma-hero-shade {
+  background: linear-gradient(180deg, #0009, #0002 48%, #0009);
+}
+.forma-hero-bottom > p {
+  max-width: 30ch;
+}
+.forma-hero-bottom > a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+}
+.forma-call-brief {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin-bottom: 35px;
+}
+.forma-call-brief p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.forma-call-brief p span {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+@media (max-width: 760px) {
+  .forma-hero {
+    height: calc(100svh - 110px);
+  }
+  .forma-hero-bottom {
+    align-items: start;
+    gap: 20px;
+    flex-direction: column;
+    bottom: 34vw;
+  }
+  .forma-call-brief {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
 }

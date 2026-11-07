@@ -1,6 +1,6 @@
 ---
 import HomeAgent from '../../src/components/HomeAgent.astro';
-import { agent } from '../../src/lib/agent';
+import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import hero from './media/hero.jpg?url';
@@ -23,17 +23,17 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
     <img src={hero} alt="" class="forma-hero-image" />
     <div class="forma-hero-shade"></div>
     <div class="forma-hero-top">
-      <span>Real estate, considered.</span>
+      <span>Buying &amp; selling</span>
       <span>{agent.market}</span>
     </div>
     <div class="forma-hero-bottom">
       <p>
-        Thoughtful guidance for
+        Buying or selling?
         <br />
-        where life happens.
+        Start with your next decision.
       </p>
-      <a href="#forma-intro">
-        Explore <span>↓</span>
+      <a href={phoneHref}>
+        Call to plan your move <span>↗</span>
       </a>
     </div>
     <h1 id="forma-title" style={`--wordmark-size: ${wordmarkSize}vw`}>
@@ -41,7 +41,12 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
       <span>.</span>
     </h1>
   </section>
-  <HomeAgent {previewBase} design="forma" />
+  <HomeAgent
+    {previewBase}
+    design="forma"
+    invitation="What needs to happen before you move? Call with your timing, your priorities, and the decision you’re weighing up."
+    callLabel="Talk through your next step"
+  />
   <section id="forma-intro" class="forma-intro f-wrap" data-reveal>
     <p class="f-label">01 / A sense of place</p>
     <div>
@@ -52,8 +57,9 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
       </h2>
       <div class="forma-intro-end">
         <p>
-          A home is more than a floor plan. It’s the backdrop to your everyday,
-          and finding the right one starts with a conversation.
+          Buying: which spaces and features matter most? Selling: what needs
+          attention before you list? Bring those questions to a conversation
+          with {agent.name} about your move in {agent.market}.
         </p>
         <a class="f-link" href={designHref('/about/', previewBase)}>
           Meet {agent.name} <span>↗</span>
@@ -79,7 +85,7 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
         <img src={detail1} alt="" loading="lazy" />
         <span>
           <small>01 / Buying</small>
-          <strong>Find your place</strong>
+          <strong>Define your search</strong>
           <b>↗</b>
         </span>
       </a>
@@ -91,7 +97,7 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
         <img src={detail2} alt="" loading="lazy" />
         <span>
           <small>02 / Selling</small>
-          <strong>Make your move</strong>
+          <strong>Prioritize your preparation</strong>
           <b>↗</b>
         </span>
       </a>
@@ -151,14 +157,25 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
     </div>
   </section>
   <section class="forma-contact f-wrap">
-    <p class="f-label">04 / Let’s talk</p>
+    <p class="f-label">04 / Your move, on the drawing board</p>
     <h2>
       Every move starts
       <br />
       <em>somewhere.</em>
     </h2>
-    <a href={designHref('/contact/', previewBase)}>
-      Start a conversation <span>↗</span>
+    <div class="forma-call-brief">
+      <p>
+        <span>01 / Where</span> The areas you’re considering
+      </p>
+      <p>
+        <span>02 / When</span> The dates that shape your move
+      </p>
+      <p>
+        <span>03 / What</span> The question holding you up
+      </p>
+    </div>
+    <a href={phoneHref}>
+      Call {agent.phone} — talk through the plan <span>↗</span>
     </a>
   </section>
 </div>

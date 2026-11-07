@@ -285,3 +285,27 @@
 .m-scene-controls button[aria-pressed='true'] {
   border-color: currentColor;
 }
+
+.m-film:after {
+  background: linear-gradient(90deg, #161712cf, #16171277);
+}
+.m-hero-copy .m-call-reason {
+  max-width: 44ch;
+}
+.m-fit-questions {
+  list-style: none;
+  padding: 0;
+  margin-top: 25px;
+  font-size: 0.9rem;
+}
+.m-fit-questions li {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+.m-contact .m-call-note {
+  max-width: 48ch;
+  margin: 0 auto 24px;
+}
+.m-scene-controls button {
+  min-height: 44px;
+}
