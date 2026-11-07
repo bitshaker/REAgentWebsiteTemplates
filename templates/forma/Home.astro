@@ -1,15 +1,22 @@
 ---
+import { optimizedArt } from '../../src/lib/media';
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import hero from './media/hero.jpg?url';
-import detail1 from './media/detail-1.jpg?url';
-import detail2 from './media/detail-2.jpg?url';
-import detail3 from './media/detail-3.jpg?url';
-import detail4 from './media/detail-4.jpg?url';
+import heroSource from './media/hero.jpg';
+import detail1Source from './media/detail-1.jpg';
+import detail2Source from './media/detail-2.jpg';
+import detail3Source from './media/detail-3.jpg';
+import detail4Source from './media/detail-4.jpg';
 import film from './media/film.mp4?url';
-import poster from './media/poster.jpg?url';
+import posterSource from './media/poster.jpg';
+const hero = await optimizedArt(heroSource, '');
+const detail1 = await optimizedArt(detail1Source, '');
+const detail2 = await optimizedArt(detail2Source, '');
+const detail3 = await optimizedArt(detail3Source, '');
+const detail4 = await optimizedArt(detail4Source, '');
+const poster = await optimizedArt(posterSource, '', false);
 interface Props {
   previewBase?: string;
 }
@@ -20,7 +27,18 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
 
 <div class="forma-home collection-home">
   <section class="forma-hero" aria-labelledby="forma-title">
-    <img src={hero} alt="" class="forma-hero-image" />
+    <img
+      decoding="async"
+      loading="eager"
+      width={hero.width}
+      height={hero.height}
+      fetchpriority="high"
+      src={hero.src}
+      srcset={hero.srcset}
+      sizes="100vw"
+      alt=""
+      class="forma-hero-image"
+    />
     <div class="forma-hero-shade"></div>
     <div class="forma-hero-top">
       <span>Buying &amp; selling</span>
@@ -39,6 +57,10 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
     <h1 id="forma-title" style={`--wordmark-size: ${wordmarkSize}vw`}>
       {surname}
       <span>.</span>
+      <span class="sr-only">
+        {' '}
+        {agent.role} in {agent.market}
+      </span>
     </h1>
   </section>
   <HomeAgent
@@ -82,7 +104,16 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
         href={designHref('/buyers/', previewBase)}
         data-reveal
       >
-        <img src={detail1} alt="" loading="lazy" />
+        <img
+          decoding="async"
+          width={detail1.width}
+          height={detail1.height}
+          src={detail1.src}
+          srcset={detail1.srcset}
+          sizes="100vw"
+          alt=""
+          loading="lazy"
+        />
         <span>
           <small>01 / Buying</small>
           <strong>Define your search</strong>
@@ -94,7 +125,16 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
         href={designHref('/sellers/', previewBase)}
         data-reveal
       >
-        <img src={detail2} alt="" loading="lazy" />
+        <img
+          decoding="async"
+          width={detail2.width}
+          height={detail2.height}
+          src={detail2.src}
+          srcset={detail2.srcset}
+          sizes="100vw"
+          alt=""
+          loading="lazy"
+        />
         <span>
           <small>02 / Selling</small>
           <strong>Prioritize your preparation</strong>
@@ -104,7 +144,7 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
     </div>
   </section>
   <section class="forma-film" aria-label="A moment at home">
-    <CinematicMedia src={film} poster={poster} />
+    <CinematicMedia src={film} poster={poster.src} />
     <div class="forma-film-copy">
       <p class="f-label">A closer look</p>
       <h2>
@@ -131,15 +171,26 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
     </div>
     <div class="forma-journal-gallery" data-gallery>
       <img
+        decoding="async"
+        width={detail3.width}
+        height={detail3.height}
         class="forma-gallery-main"
-        src={detail3}
+        src={detail3.src}
+        srcset={detail3.srcset}
+        sizes="100vw"
         alt="A contemporary living room with mountain views"
         loading="lazy"
       />
-      <div class="forma-gallery-controls" aria-label="Choose an image">
+      <div
+        class="forma-gallery-controls"
+        role="group"
+        hidden
+        aria-label="Choose an image"
+      >
         <button
           type="button"
-          data-image={detail3}
+          data-image={detail3.src}
+          data-srcset={detail3.srcset}
           data-alt="A contemporary living room with mountain views"
           aria-pressed="true"
         >
@@ -147,7 +198,8 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
         </button>
         <button
           type="button"
-          data-image={detail4}
+          data-image={detail4.src}
+          data-srcset={detail4.srcset}
           data-alt="Modern homes across a green lawn"
           aria-pressed="false"
         >
@@ -189,10 +241,15 @@ const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
       );
       const buttons =
         gallery.querySelectorAll<HTMLButtonElement>('button[data-image]');
+      const controls = gallery.querySelector<HTMLElement>(
+        '.forma-gallery-controls',
+      );
+      if (controls) controls.hidden = false;
       buttons.forEach((button) =>
         button.addEventListener('click', () => {
           if (!image || !button.dataset.image) return;
           image.src = button.dataset.image;
+          image.srcset = button.dataset.srcset || '';
           image.alt = button.dataset.alt || '';
           buttons.forEach((item) =>
             item.setAttribute('aria-pressed', String(item === button)),

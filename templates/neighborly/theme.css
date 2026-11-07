@@ -3,7 +3,7 @@
   --paper: #f6f0e3;
   --ink: #292924;
   --muted: #69675c;
-  --accent: #d64e3c;
+  --accent: #b84030;
   --line: #bdb5a5;
   --display: var(--font-sans);
   --nav-color: #292924;
@@ -374,7 +374,6 @@
 
 :root {
   --call-radius: 999px;
-  --accent: #b84030;
 }
 .n-questions {
   margin-top: 28px;

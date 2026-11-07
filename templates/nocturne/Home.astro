@@ -1,14 +1,20 @@
 ---
+import { optimizedArt } from '../../src/lib/media';
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
 import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import film from './media/film.mp4?url';
-import poster from './media/poster.jpg?url';
-import one from './media/detail-1.jpg?url';
-import two from './media/detail-2.jpg?url';
-import three from './media/detail-3.jpg?url';
-import four from './media/detail-4.jpg?url';
+import posterSource from './media/poster.jpg';
+import oneSource from './media/detail-1.jpg';
+import twoSource from './media/detail-2.jpg';
+import threeSource from './media/detail-3.jpg';
+import fourSource from './media/detail-4.jpg';
+const poster = await optimizedArt(posterSource, '', false);
+const one = await optimizedArt(oneSource, '');
+const two = await optimizedArt(twoSource, '');
+const three = await optimizedArt(threeSource, '');
+const four = await optimizedArt(fourSource, '');
 interface Props {
   previewBase?: string;
 }
@@ -18,7 +24,7 @@ const { previewBase = '' } = Astro.props;
 <div class="nocturne-home collection-home">
   <section class="nocturne-hero" aria-labelledby="nocturne-title">
     <div class="nocturne-film">
-      <CinematicMedia src={film} poster={poster} />
+      <CinematicMedia hero src={film} poster={poster.src} />
     </div>
     <div class="nocturne-hero-copy" data-reveal>
       <h1 id="nocturne-title">
@@ -64,18 +70,39 @@ const { previewBase = '' } = Astro.props;
   </section>
   <section class="nocturne-spread n-wrap" aria-label="The details of home">
     <figure data-reveal>
-      <img src={one} alt="" loading="lazy" data-n-scene-image />
+      <img
+        decoding="async"
+        width={one.width}
+        height={one.height}
+        src={one.src}
+        srcset={one.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        data-n-scene-image
+      />
       <figcaption>01 / Perspectives on home</figcaption>
       <div
         class="n-scene-controls"
+        role="group"
         data-n-scene-controls
         hidden
         aria-label="Choose a scene"
       >
-        <button type="button" data-scene-src={one} aria-pressed="true">
+        <button
+          type="button"
+          data-scene-src={one.src}
+          data-scene-srcset={one.srcset}
+          aria-pressed="true"
+        >
           01 / The view
         </button>
-        <button type="button" data-scene-src={two} aria-pressed="false">
+        <button
+          type="button"
+          data-scene-src={two.src}
+          data-scene-srcset={two.srcset}
+          aria-pressed="false"
+        >
           02 / The interior
         </button>
       </div>
@@ -87,7 +114,16 @@ const { previewBase = '' } = Astro.props;
         <br />
         <em>considered.</em>
       </h2>
-      <img src={two} alt="" loading="lazy" />
+      <img
+        decoding="async"
+        width={two.width}
+        height={two.height}
+        src={two.src}
+        srcset={two.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
       <p>
         Before a decision, ask about the details behind the first impression.
       </p>
@@ -133,7 +169,16 @@ const { previewBase = '' } = Astro.props;
   </section>
   <section class="nocturne-about n-wrap" data-reveal>
     <div class="n-about-photo">
-      <img src={three} alt="" loading="lazy" />
+      <img
+        decoding="async"
+        width={three.width}
+        height={three.height}
+        src={three.src}
+        srcset={three.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
     </div>
     <div>
       <p class="n-label">03 / Your guide</p>
@@ -151,7 +196,16 @@ const { previewBase = '' } = Astro.props;
       </a>
     </div>
     <div class="n-about-inset">
-      <img src={four} alt="" loading="lazy" />
+      <img
+        decoding="async"
+        width={four.width}
+        height={four.height}
+        src={four.src}
+        srcset={four.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
     </div>
   </section>
   <section class="nocturne-close">
@@ -186,6 +240,7 @@ const { previewBase = '' } = Astro.props;
         button.addEventListener('click', () => {
           if (!button.dataset.sceneSrc) return;
           sceneImage.src = button.dataset.sceneSrc;
+          sceneImage.srcset = button.dataset.sceneSrcset || '';
           sceneControls
             .querySelectorAll('button')
             .forEach((item) =>

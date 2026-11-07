@@ -47,15 +47,22 @@ git init -b main
 git add .
 git commit -m "Create real estate website"
 gh repo create OWNER/REPO --private --source=. --remote=origin --push
+gh repo view OWNER/REPO --json nameWithOwner,url,isPrivate,isFork,defaultBranchRef
 ```
 
 Replace OWNER/REPO with the verified destination, never the catalog owner. Inspect staged files before committing. Keep secrets in ignored .env files or GitHub Secrets; never use PUBLIC_ variables or public config for keys. Exclude .hostinger/ account link state. A private repository does not make the published website private, and demo noindex is not access control.
 
+Verify GitHub reports `isPrivate: true`, `isFork: false`, the intended owner/name, and the expected default branch. The `private` field in package.json prevents npm publication; it does not set GitHub visibility. Confirm the new repository has its own initial commit and only its own origin. A fresh clone must include src/design/ with the chosen design's media and credits, shared pages, public config, package-lock.json, content/launch scripts, owner guides, and one owner check/build workflow. It must exclude other designs, catalog routes and publishing workflows, active content schedules, .env secrets, .hostinger/, node_modules/ and dist/. Optional draft automation belongs in docs/examples/content-draft.yml until the owner requests activation; follow docs/CONTENT.md. GitHub Pages is not needed for the exported site. Run npm ci, npm run check and npm run build from that clone, then inspect the GitHub Actions result and website-dist artifact. Keep demo mode enabled until personalization and launch review are complete.
+
 ## Personalize and build trust
+
+Follow [the personalization recipe](PERSONALIZATION.md) for the configuration map, headshot replacement, design-specific name treatment, and handoff checks.
 
 Use src/agent.config.json as the single source for reused public details. Configure name, brand, role, tagline, market, serviceAreas, email, phone, license, brokerage, address, bio, portraitUrl, socialLinks, seoDescription, siteUrl and content preferences. Preserve the owner’s actual license/brokerage wording. Set siteUrl to the confirmed production HTTPS origin, not a guessed domain.
 
-Every design includes a homepage introduction just below its hero with a headshot, bio, credentials and direct phone link. Add the owner’s licensed headshot under public/images/ and set portraitUrl, for example /images/headshot.jpg. The About page uses that photo too. Check image loading and crop on mobile and desktop. With demo true and no portraitUrl, the homepage shows a labeled AI-generated sample portrait. With demo false and no portraitUrl, it shows no portrait; do not mistake that for completed personalization. Request the real photo or record its absence for the owner.
+Follow [SEO setup](SEO.md) for generated page metadata, optional socialImage/socialImageAlt, article covers/authors/update dates, structured data, and search submission. Every design shares this implementation. Keep demo/catalog pages crawlable so search engines can read their noindex tags; production owner builds generate the sitemap after demo mode is disabled.
+
+Every design includes a homepage introduction just below its hero with a headshot, bio, credentials and direct phone link. For automatic image optimization, add the owner’s licensed headshot under src/assets/portraits/ and set portraitUrl, for example src/assets/portraits/headshot.jpg. Existing public/remote URLs remain supported as direct assets. See [accessibility and performance defaults](OPTIMIZATION.md). The About page uses that photo too. Check image loading and crop on mobile and desktop. With demo true and no portraitUrl, the homepage shows a labeled AI-generated sample portrait. With demo false and no portraitUrl, it shows no portrait; do not mistake that for completed personalization. Request the real photo or record its absence for the owner.
 
 Use the README’s customization map. In exported sites:
 
@@ -84,6 +91,7 @@ Set demo false only when identity and content are ready, then run in the exporte
 npm run verify:launch
 npm run check
 npm run build
+npm run verify:seo
 npm run preview
 ```
 
@@ -110,4 +118,4 @@ The exported site must have its own Git history and origin in the verified owner
 
 Future maintenance must work from this repository alone. Make focused changes on a branch when practical, preview, check, build, commit and deploy under the owner’s authorization. Keep rollback artifacts; a Git revert still requires rebuilding/redeploying to change hosting. Review dependency updates with checks and previews; do not blindly copy catalog changes over a customized site.
 
-For blog tasks follow docs/CONTENT.md. Existing agents can write drafts without an API key. API generation is optional and billed separately; weekly scheduling defaults off. The included workflow produces draft artifacts, not commits, public posts or deployments. Import, review and publish explicitly, then rebuild/deploy. A future-dated post also needs a rebuild after its date arrives.
+For blog tasks follow docs/CONTENT.md. Existing agents can write drafts without an API key. API generation is optional and billed separately; weekly scheduling has no active workflow in a new export. If the owner requests it, activate the example in docs/examples/content-draft.yml as documented. It produces draft artifacts, not commits, public posts or deployments. Import, review and publish explicitly, then rebuild/deploy. A future-dated post also needs a rebuild after its date arrives.

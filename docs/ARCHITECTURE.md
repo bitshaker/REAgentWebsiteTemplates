@@ -7,8 +7,9 @@ The catalog is an Astro 7 static app using content collections with the glob loa
 - templates/ID/pages.ts: headings and image imports for buyer, seller, about, and journal layouts. A design may set an optional contact direction. Contact uses the About art and shared heading by default. The shared DesignPage component renders these with the common guides, agent identity, and blog content.
 - templates/ID/theme.css: design tokens and composition styles. Core shared CSS handles common pages, navigation, and responsive accessibility basics.
 - src/selected-template.ts: the catalog’s default design import. Preview routes select each catalog design.
+- src/lib/seo.ts and seo-policy.mjs: shared page metadata, connected JSON-LD, script-safe serialization, and route indexing policy. Layout renders this once per page. src/lib/media.ts performs build-time WebP/responsive transforms used by all eight designs. Each pages.ts exports homeArt for social previews and hero/poster preload as well as its interior-page art.
 - catalog-previews/ID/PAGE.webp: catalog-only screenshots for the expandable page preview grid. Capture the top of each rendered page at 1440×900 after fonts and images load, trim the native scrollbar, then resize to 640×400 WebP. Refresh these when a page’s design changes. The export allowlist excludes this directory.
-- scripts/create-site.mjs: deliberate export allowlist and import rewriting. The output has src/design/ and no catalog or alternate designs.
+- scripts/create-site.mjs: deliberate export allowlist and import rewriting. The output has src/design/ and no catalog or alternate designs. It copies .github/owner-workflows/ci.yml as the export's only active workflow, rather than inheriting the catalog's .github/workflows/. The optional draft workflow is copied to docs/examples/content-draft.yml and runs only after explicit activation.
 
 ## Add a design
 

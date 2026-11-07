@@ -22,7 +22,6 @@ export async function createSite(template, destination) {
     'src',
     'public',
     'docs',
-    '.github',
     'scripts',
     'astro.config.mjs',
     'tsconfig.json',
@@ -37,6 +36,18 @@ export async function createSite(template, destination) {
     '.prettierignore',
   ])
     await cp(join(root, file), join(target, file), { recursive: true });
+  // Owner repositories get only their own validation job. Catalog publishing
+  // and any future catalog workflows must never be inherited by an export.
+  await mkdir(join(target, '.github/workflows'), { recursive: true });
+  await cp(
+    join(root, '.github/owner-workflows/ci.yml'),
+    join(target, '.github/workflows/ci.yml'),
+  );
+  await mkdir(join(target, 'docs/examples'), { recursive: true });
+  await cp(
+    join(root, '.github/workflows/content-draft.yml'),
+    join(target, 'docs/examples/content-draft.yml'),
+  );
   await rm(join(target, 'src/pages/preview'), { recursive: true, force: true });
   await rm(join(target, 'src/pages/designs.astro'));
   for (const file of [
@@ -45,7 +56,6 @@ export async function createSite(template, destination) {
     'src/lib/onboarding.ts',
     'src/components/CatalogSetup.astro',
     'src/components/CatalogLinks.astro',
-    '.github/workflows/pages.yml',
     'scripts/package-catalog.mjs',
     'scripts/verify-catalog.mjs',
     'docs/GET-STARTED.md',
@@ -65,7 +75,7 @@ export async function createSite(template, destination) {
 import Layout from '../layouts/Layout.astro';
 import { Home } from '../selected-template';
 ---
-<Layout title="A place to call home"><Home /></Layout>
+<Layout><Home /></Layout>
 `,
   );
   await cp(join(root, 'templates', template), join(target, 'src/design'), {
@@ -73,11 +83,13 @@ import { Home } from '../selected-template';
     filter: (source) =>
       source !== join(root, 'templates', template, 'preview.jpg'),
   });
-  const homePath = join(target, 'src/design/Home.astro');
-  await writeFile(
-    homePath,
-    (await readFile(homePath, 'utf8')).replaceAll('../../src/', '../'),
-  );
+  for (const file of ['Home.astro', 'pages.ts']) {
+    const designPath = join(target, 'src/design', file);
+    await writeFile(
+      designPath,
+      (await readFile(designPath, 'utf8')).replaceAll('../../src/', '../'),
+    );
+  }
   await writeFile(
     join(target, 'src/selected-template.ts'),
     "export { default as Home } from './design/Home.astro';\nexport { default as design } from './design/pages';\nexport { default as theme } from './design/theme.css?inline';\n",
@@ -117,7 +129,7 @@ import { Home } from '../selected-template';
   await rm(join(target, 'scripts/catalog.mjs'));
   await writeFile(
     join(target, 'README.md'),
-    `# Your real estate website\n\nDesign: ${template}. Only this design is included.\n\nStart with [the owner guide](docs/OWNER-GUIDE.md), or give your software agent [AGENTS.md](AGENTS.md).\n\nRun npm ci, then npm run dev. Edit src/agent.config.json. Before launch, run npm run verify:launch, npm run check, and npm run build.\n`,
+    `# Your real estate website\n\nDesign: ${template}. Only this design is included.\n\nStart with [the owner guide](docs/OWNER-GUIDE.md), or give your software agent [AGENTS.md](AGENTS.md). Follow [the personalization recipe](docs/PERSONALIZATION.md) to replace the headshot and update business details in one place.\n\nGitHub Actions checks and builds this site and saves a website-dist artifact. It does not publish a GitHub Pages site or deploy to hosting. Weekly draft generation is an inactive example in docs/examples/content-draft.yml; enable it only when requested, following [the content guide](docs/CONTENT.md).\n\nRun npm ci, then npm run dev. Edit src/agent.config.json. Before launch, run npm run verify:launch, npm run check, and npm run build. Builds automatically run SEO and structural quality checks. See [SEO setup](docs/SEO.md) and [accessibility/performance defaults](docs/OPTIMIZATION.md) for configuration, optimized headshots, validation, and search submission.\n`,
   );
   console.log(
     `Created ${target} with ${template} only. Next: cd into it, npm ci, npm run dev.`,

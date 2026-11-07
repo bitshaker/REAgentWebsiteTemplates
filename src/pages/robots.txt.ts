@@ -1,8 +1,9 @@
-import { sitePath, siteOrigin } from '../lib/site';
+import { sitePath, siteOrigin, isCatalog } from '../lib/site';
 import { agent } from '../lib/agent';
 export function GET() {
   return new Response(
-    `User-agent: *\n${agent.demo ? 'Disallow: /' : 'Allow: /\nDisallow: /preview/\nDisallow: /designs/'}\nSitemap: ${new URL(sitePath('/sitemap-index.xml'), siteOrigin)}\n`,
+    // Crawlers must be able to read noindex on demo/catalog/error pages.
+    `User-agent: *\nAllow: /\n${!agent.demo && !isCatalog ? `Sitemap: ${new URL(sitePath('/sitemap-index.xml'), siteOrigin)}\n` : ''}`,
     { headers: { 'Content-Type': 'text/plain' } },
   );
 }

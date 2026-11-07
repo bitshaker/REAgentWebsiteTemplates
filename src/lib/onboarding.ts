@@ -12,7 +12,11 @@ Check for Git, Node 24 LTS, npm, GitHub CLI and an authenticated GitHub account.
 
 Inspect the starter's config, then gather missing business identity, brokerage/license wording, contact details, service areas, bio, licensed images, desired repository name, existing domain/hosting and launch approval in one concise question set. Keep demo mode until my facts and copy are reviewed. Never invent credentials, testimonials, listings or market claims.
 
+Follow docs/PERSONALIZATION.md. Update my repeated business information in src/agent.config.json. Save my approved headshot in public/images/ and set portraitUrl; verify the same photo and name on home and About at desktop and mobile sizes. Review the selected design's marketing copy and imagery with me, and check the final phone/email destinations throughout the site.
+
 Create a NEW private repository in MY verified account from the exported site. Confirm the destination does not already exist; never overwrite an unrelated folder or repository. Initialize a new Git history and origin, commit and push only my single-design site. Do not fork or retain an upstream dependency on the catalog. All future work should happen in my repository.
+
+Keep only the owner check/build workflow. The exported site does not need a public GitHub Pages site, catalog publishing jobs, or an active draft schedule. Enable the example in docs/examples/content-draft.yml only if I request automated drafts, following docs/CONTENT.md.
 
 Reuse my existing hosting/domain where appropriate. If I need Hostinger, show me ${catalog.hostingerUrl} (referral code ${catalog.hostingerCode}). Explain that current pricing, renewal charges, eligible plans and referral terms must be checked at checkout; do not promise savings. I will complete purchase and billing myself. Use hosting that can serve Astro's static dist output; confirm plan capabilities before purchase.
 

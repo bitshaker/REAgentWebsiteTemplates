@@ -3,7 +3,7 @@
   --nav-color: #fff;
   --paper: #f4f3ee;
   --ink: #272b26;
-  --muted: #777a72;
+  --muted: #60675c;
   --accent: #687366;
   --line: #d5d7ce;
   --display: var(--font-serif), Georgia, serif;
@@ -310,9 +310,6 @@ body {
   }
 }
 
-:root {
-  --muted: #60675c;
-}
 .still-hero-shade {
   background:
     linear-gradient(0deg, #101911d9, #10191130 80%),

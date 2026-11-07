@@ -48,7 +48,9 @@ npm run dev
 
 Replace `forma` with any design ID from the table. The exporter copies shared functionality and exactly one design. It excludes this repository’s history, dependencies, catalog, preview routes, and unused designs. GitHub’s “Use this template” button copies the entire catalog; use the exporter for a lean agent site.
 
-Edit **`src/agent.config.json`** for identity, brokerage, license, contact details, service areas, canonical URL, and content preferences. This is public site information, not secrets. Change the palette at the top of `src/design/theme.css`. Replace page cover art and edit its alt text in `src/design/pages.ts`. Every homepage offers a specific reason to call, followed by an agent introduction just below the hero with a headshot, bio, configured service areas, brokerage/license details, and a direct call link. Desktop headers show the phone number; a mobile call bar keeps it available while browsing. Put your licensed headshot under `public/images/` and set `portraitUrl` (for example, `/images/headshot.jpg`); the About page uses the same photo. Check the crop on mobile and desktop. Demo mode uses a labeled, AI-generated sample portrait when no photo is supplied. With demo mode off and no `portraitUrl`, the homepage keeps the introduction without a photo; supply the real agent’s headshot before handoff.
+Owner exports include one check/build workflow that saves a website-dist artifact. They have no GitHub Pages publishing job, catalog checks, or active content schedule. Optional weekly draft automation is supplied as an inactive example; enable it explicitly using docs/CONTENT.md.
+
+Edit **`src/agent.config.json`** for identity, brokerage, license, contact details, service areas, canonical URL, and content preferences. This is public site information, not secrets. Change the palette at the top of `src/design/theme.css`. Replace page cover art and edit its alt text in `src/design/pages.ts`. Every homepage offers a specific reason to call, followed by an agent introduction just below the hero with a headshot, bio, configured service areas, brokerage/license details, and a direct call link. Desktop headers show the phone number; a mobile call bar keeps it available while browsing. Put your licensed headshot under `src/assets/portraits/` and set `portraitUrl` (for example, `src/assets/portraits/headshot.jpg`) for responsive WebP processing; existing public or remote photo URLs remain supported. The About page uses the same photo. Check the crop on mobile and desktop. Demo mode uses a labeled, AI-generated sample portrait when no photo is supplied. With demo mode off and no `portraitUrl`, the homepage keeps the introduction without a photo; supply the real agent’s headshot before handoff.
 
 ```sh
 git init -b main
@@ -60,6 +62,8 @@ gh repo create my-agent-site --private --source=. --remote=origin --push
 New to GitHub or hosting? Start with [the owner guide](docs/OWNER-GUIDE.md). Using a software agent? Give it [AGENTS.md](AGENTS.md) and [the setup playbook](docs/AGENT-SETUP.md).
 
 ## Personalize for a real agent
+
+Follow [the personalization recipe](docs/PERSONALIZATION.md) to replace the headshot, update business information in one place, and verify the handoff.
 
 Gather these public facts and assets before launch. A software agent should inspect the existing configuration first, then ask for missing information in one group:
 
@@ -89,8 +93,8 @@ In the catalog, design files live in `templates/ID/` instead of `src/design/`. E
 
 - Home, introduction, buyers, sellers, contact, blog, privacy starter, accessibility statement, and 404.
 - Shared configuration, typed Markdown collections, draft/future post filtering, and RSS.
-- Canonical URLs, page descriptions, Open Graph, sitemap, robots, and factual RealEstateAgent structured data after demo mode is disabled.
-- Responsive layouts, semantic landmarks, keyboard focus, skip link, reduced-motion support, and self-hosted assets/system fonts.
+- Config-driven page titles/descriptions, canonical URLs, Open Graph/Twitter images, production sitemaps, crawlable demo noindex rules, and connected business/agent/website/page/article/breadcrumb JSON-LD. [SEO setup and validation](docs/SEO.md).
+- Responsive layouts, semantic landmarks, keyboard focus, skip link, reduced-motion/data-saving media behavior, and self-hosted WOFF2 fonts. [Accessibility and performance](docs/OPTIMIZATION.md).
 - On-demand Node draft commands, optional AI API generation, and an opt-in weekly GitHub Actions draft artifact.
 - CI checks/build artifacts and Hostinger MCP/CLI setup, deployment, and maintenance runbooks.
 
@@ -104,6 +108,7 @@ npm run content:generate -- "Questions to ask before buying a home"
 npm run content:publish -- questions-to-ask-before-buying-a-home
 npm run check
 npm run build
+npm run verify:seo
 ```
 
 Your existing agent can write Markdown drafts directly without an API subscription. Generation is build tooling; no AI key goes to the browser. [Content and schedules](docs/CONTENT.md).
@@ -120,10 +125,11 @@ npm run test:exports
 npm run verify:launch
 npm run check
 npm run build
+npm run verify:seo
 npm run preview
 ```
 
-The catalog-only `npm test` and `npm run test:exports` commands are removed from owner exports. `verify:launch` is expected to fail on the demo configuration: it checks common identity placeholders, demo mode, and the HTTPS URL. It does not verify facts, headshots, editorial review, privacy, accessibility, or working contact destinations. Complete [the launch checklist](docs/LAUNCH-CHECKLIST.md), review `dist/` through `npm run preview`, and test phone/email links on a real device. Demo mode prevents indexing; it does not make a deployed site private.
+`npm run build` automatically runs SEO and structural quality checks (`verify:site`), including in exported repositories and their GitHub Actions builds. The catalog-only `npm test` and `npm run test:exports` commands are removed from owner exports. `verify:launch` is expected to fail on the demo configuration: it checks common identity placeholders, demo mode, and the HTTPS URL. It does not verify facts, headshots, editorial review, privacy, accessibility, or working contact destinations. Complete [the launch checklist](docs/LAUNCH-CHECKLIST.md), review `dist/` through `npm run preview`, and test phone/email links on a real device. Demo mode prevents indexing; it does not make a deployed site private.
 
 Prefer Hostinger’s official MCP connection (`https://mcp.hostinger.com`, browser OAuth) so your software agent can discover hosting resources and perform supported setup, deployment, and maintenance. Local agents can also deploy `dist/` using the official Hostinger CLI. File Manager upload and compatible GitHub build integrations remain alternatives. The deployed site needs no Node process. [Deployment and rollback](docs/HOSTINGER.md) · [Launch checklist](docs/LAUNCH-CHECKLIST.md) · [Architecture and adding designs](docs/ARCHITECTURE.md).
 

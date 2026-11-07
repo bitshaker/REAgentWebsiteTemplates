@@ -11,6 +11,9 @@ export type PageKey = (typeof pageKeys)[number];
 export interface PageArt {
   src: string;
   alt: string;
+  srcset?: string;
+  width?: number;
+  height?: number;
 }
 export interface PageDirection {
   kicker: string;
@@ -20,6 +23,7 @@ export interface PageDirection {
 }
 export interface DesignPages {
   id: string;
+  homeArt: PageArt;
   pages: Record<Exclude<PageKey, 'contact'>, PageDirection> & {
     contact?: PageDirection;
   };

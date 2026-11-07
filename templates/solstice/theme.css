@@ -3,7 +3,7 @@
   --nav-color: #fff;
   --paper: #f5f1e7;
   --ink: #303a29;
-  --muted: #797f70;
+  --muted: #626a59;
   --accent: #9b855d;
   --line: #d8d5c8;
   --display: var(--font-serif), Georgia, serif;
@@ -302,7 +302,6 @@ body {
 
 :root {
   --call-radius: 999px;
-  --muted: #626a59;
 }
 .solstice-overlay {
   background: linear-gradient(180deg, #20291eb8, #20291e88 45%, #20291eb8);

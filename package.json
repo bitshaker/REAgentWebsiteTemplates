@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && npm run verify:site",
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test tests/*.test.mjs",
@@ -17,9 +17,12 @@
     "content:generate": "node --env-file-if-exists=.env scripts/content.mjs generate",
     "content:publish": "node scripts/content.mjs publish",
     "verify:launch": "node scripts/verify-launch.mjs",
+    "verify:seo": "node scripts/verify-seo.mjs",
+    "verify:quality": "node scripts/verify-quality.mjs",
+    "verify:site": "npm run verify:seo && npm run verify:quality",
     "format": "prettier --write .",
     "test:exports": "node tests/export-builds.mjs",
-    "build:catalog": "astro build && node scripts/package-catalog.mjs",
+    "build:catalog": "astro build && npm run verify:site && node scripts/package-catalog.mjs",
     "verify:catalog": "node scripts/verify-catalog.mjs"
   },
   "dependencies": {

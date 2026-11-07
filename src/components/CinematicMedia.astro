@@ -2,9 +2,10 @@
 interface Props {
   src: string;
   poster: string;
+  hero?: boolean;
   class?: string;
 }
-const { src, poster, class: className = '' } = Astro.props;
+const { src, poster, hero = false, class: className = '' } = Astro.props;
 ---
 
 <div class:list={['cinematic-media', className]} data-cinema>
@@ -15,6 +16,7 @@ const { src, poster, class: className = '' } = Astro.props;
     loop
     playsinline
     preload="none"
+    loading={hero ? 'eager' : 'lazy'}
     aria-hidden="true"
     tabindex="-1"
   ></video>
@@ -83,13 +85,25 @@ const { src, poster, class: className = '' } = Astro.props;
   }
 </style>
 <script>
+  import {
+    automaticPlaybackAllowed,
+    shouldPlayFilm,
+  } from '../lib/film-playback.mjs';
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const connection = (
+    navigator as Navigator & {
+      connection?: EventTarget & { saveData?: boolean; effectiveType?: string };
+    }
+  ).connection;
   document.querySelectorAll<HTMLElement>('[data-cinema]').forEach((frame) => {
     const video = frame.querySelector('video')!;
     const button = frame.querySelector('button')!;
     const label = frame.querySelector('[data-cinema-label]')!;
     const icon = frame.querySelector('[data-cinema-icon]')!;
     let manuallyPaused = false;
+    let startedByUser = false;
+    let inView = false;
+    let failed = false;
     const update = () => {
       const action = video.paused ? 'Play' : 'Pause';
       label.textContent = `${action} film`;
@@ -97,19 +111,41 @@ const { src, poster, class: className = '' } = Astro.props;
       button.setAttribute('aria-label', `${action} background film`);
     };
     const play = () => {
+      if (failed || !video.paused) return;
       if (!video.getAttribute('src')) video.src = video.dataset.src!;
       video.muted = true;
       void video.play().catch(update);
     };
+    const synchronize = () => {
+      const automatic = automaticPlaybackAllowed({
+        reducedMotion: motion.matches,
+        saveData: connection?.saveData ?? false,
+        effectiveType: connection?.effectiveType,
+      });
+      if (
+        shouldPlayFilm({
+          inView,
+          hidden: document.hidden,
+          pausedByUser: manuallyPaused,
+          startedByUser,
+          automatic,
+        })
+      )
+        play();
+      else video.pause();
+    };
     button.hidden = false;
     button.addEventListener('click', () => {
       manuallyPaused = !video.paused;
-      if (video.paused) play();
-      else video.pause();
+      if (video.paused) {
+        startedByUser = true;
+        play();
+      } else video.pause();
     });
     video.addEventListener('play', update);
     video.addEventListener('pause', update);
     video.addEventListener('error', () => {
+      failed = true;
       button.hidden = true;
       video.removeAttribute('src');
       video.load();
@@ -117,24 +153,22 @@ const { src, poster, class: className = '' } = Astro.props;
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (
-            entry.isIntersecting &&
-            !motion.matches &&
-            !manuallyPaused &&
-            !document.hidden
-          )
-            play();
-          else video.pause();
+          inView = entry.isIntersecting;
+          synchronize();
         });
       },
       { threshold: 0.12 },
     );
     observer.observe(frame);
     motion.addEventListener('change', () => {
-      if (motion.matches) video.pause();
+      // A newly requested motion preference also stops a manually started film.
+      if (motion.matches) startedByUser = false;
+      synchronize();
     });
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) video.pause();
+    connection?.addEventListener('change', () => {
+      startedByUser = false;
+      synchronize();
     });
+    document.addEventListener('visibilitychange', synchronize);
   });
 </script>
