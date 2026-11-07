@@ -1,6 +1,6 @@
 ---
 import CatalogLinks from '../components/CatalogLinks.astro';
-import { sitePath, siteOrigin } from '../lib/site';
+import { sitePath, siteOrigin, isCatalog } from '../lib/site';
 import { agent, phoneHref } from '../lib/agent';
 import { designHref } from '../lib/design-pages';
 import '../styles/base.css';
@@ -8,25 +8,61 @@ import '../styles/fonts.css';
 import '../styles/collection.css';
 import CollectionMotion from '../components/CollectionMotion.astro';
 import { theme as defaultTheme } from '../selected-template';
+import { design as defaultDesign } from '../selected-template';
+import { agentPortrait } from '../lib/portrait';
+import type { DesignPages } from '../lib/design-pages';
+import { absoluteUrl, pageSeo, structuredData, type Article } from '../lib/seo';
+import {
+  indexablePath,
+  withoutBase,
+  serializeSchema,
+} from '../lib/seo-policy.mjs';
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
   noindex?: boolean;
-  article?: boolean;
+  post?: Article;
+  design?: DesignPages;
   previewBase?: string;
   theme?: string;
   catalog?: boolean;
 }
 const {
-  title,
-  description = agent.seoDescription,
+  title: customTitle,
+  description: customDescription,
   noindex = false,
-  article = false,
+  post,
+  design = defaultDesign,
   previewBase = '',
   theme = defaultTheme,
   catalog = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, siteOrigin).href;
+const path = withoutBase(Astro.url.pathname, import.meta.env.BASE_URL);
+const pagePath = previewBase ? path.slice(previewBase.length) || '/' : path;
+const seo = pageSeo(pagePath, design, post);
+const title = customTitle ?? seo.title;
+const description = customDescription ?? seo.description;
+const pageTitle = `${title} | ${catalog ? 'The Real Estate Design Collection' : agent.brand}`;
+const hidden =
+  noindex ||
+  agent.demo ||
+  isCatalog ||
+  catalog ||
+  Boolean(previewBase) ||
+  !indexablePath(path);
+const image = absoluteUrl(seo.image.src);
+const schema = hidden
+  ? undefined
+  : structuredData({
+      canonical,
+      title: pageTitle,
+      description,
+      type: seo.type,
+      breadcrumbs: seo.breadcrumbs,
+      post,
+      portraitUrl: agent.portraitUrl ? (await agentPortrait())?.src : undefined,
+    });
 const collection = !catalog && /--collection-design:\s*1/.test(theme);
 const isHome = Astro.url.pathname === designHref('/', previewBase);
 const siteBrand = catalog ? 'The Real Estate Design Collection' : agent.brand;
@@ -42,24 +78,6 @@ const nav = catalog
       ['Journal', '/blog/'],
       ['Get in touch ↗', '/contact/'],
     ];
-const schema = {
-  '@context': 'https://schema.org',
-  '@type': 'RealEstateAgent',
-  name: agent.name,
-  url: agent.siteUrl,
-  telephone: agent.phone,
-  email: agent.email,
-  description: agent.seoDescription,
-  areaServed: agent.serviceAreas,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: agent.address.street,
-    addressLocality: agent.address.city,
-    addressRegion: agent.address.region,
-    postalCode: agent.address.postalCode,
-    addressCountry: agent.address.country,
-  },
-};
 ---
 
 <!doctype html>
@@ -68,22 +86,64 @@ const schema = {
     <style is:global set:html={theme} />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>{title} | {siteBrand}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     <meta
       name="robots"
-      content={noindex || agent.demo ? 'noindex, nofollow' : 'index, follow'}
+      content={
+        hidden ? 'noindex, follow' : 'index, follow, max-image-preview:large'
+      }
     />
-    <meta property="og:title" content={`${title} | ${siteBrand}`} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
-    <meta property="og:type" content={article ? 'article' : 'website'} />
-    <meta
-      property="og:image"
-      content={new URL(sitePath('/images/social-card.png'), siteOrigin).href}
-    />
+    <meta property="og:type" content={post ? 'article' : 'website'} />
+    <meta property="og:site_name" content={siteBrand} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content={seo.image.alt} />
+    {seo.image.width && (
+      <meta property="og:image:width" content={String(seo.image.width)} />
+    )}
+    {seo.image.height && (
+      <meta property="og:image:height" content={String(seo.image.height)} />
+    )}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <meta name="twitter:image:alt" content={seo.image.alt} />
+    {post && (
+      <>
+        <meta name="author" content={post.data.author || agent.name} />
+        <meta
+          property="article:published_time"
+          content={post.data.date.toISOString()}
+        />
+        <meta
+          property="article:modified_time"
+          content={(post.data.updated ?? post.data.date).toISOString()}
+        />
+      </>
+    )}
+    {isHome && !catalog && (
+      <link
+        rel="preload"
+        as="image"
+        href={design.homeArt.src}
+        imagesrcset={design.homeArt.srcset || undefined}
+        imagesizes={design.homeArt.srcset ? '100vw' : undefined}
+        fetchpriority="high"
+      />
+    )}
+    {!agent.demo && !isCatalog && !catalog && !previewBase && (
+      <link
+        rel="sitemap"
+        type="application/xml"
+        href={sitePath('/sitemap-index.xml')}
+      />
+    )}
     <link rel="icon" type="image/svg+xml" href={sitePath('/favicon.svg')} />
     <link
       rel="alternate"
@@ -91,11 +151,8 @@ const schema = {
       title={`${agent.brand} journal`}
       href={sitePath('/rss.xml')}
     />
-    {!agent.demo && (
-      <script
-        type="application/ld+json"
-        set:html={JSON.stringify(schema).replace(/</g, '\u003c')}
-      />
+    {schema && (
+      <script type="application/ld+json" set:html={serializeSchema(schema)} />
     )}
   </head>
   <body
@@ -154,14 +211,38 @@ const schema = {
             <summary>Menu</summary>
             <div class="mobile-menu-panel">
               {nav.map(([label, href]) => (
-                <a href={designHref(href, previewBase)}>{label}</a>
+                <a
+                  href={designHref(href, previewBase)}
+                  aria-current={
+                    Astro.url.pathname === designHref(href, previewBase)
+                      ? 'page'
+                      : undefined
+                  }
+                >
+                  {label}
+                </a>
               ))}
             </div>
           </details>
         )}
       </nav>
     </header>
-    <main id="main">
+    <main id="main" tabindex="-1">
+      {!catalog && indexablePath(pagePath) && seo.breadcrumbs.length > 0 && (
+        <nav class="breadcrumbs wrap" aria-label="Breadcrumb">
+          <ol>
+            {seo.breadcrumbs.map((crumb, index) => (
+              <li>
+                {index === seo.breadcrumbs.length - 1 ? (
+                  <span aria-current="page">{crumb.name}</span>
+                ) : (
+                  <a href={designHref(crumb.path, previewBase)}>{crumb.name}</a>
+                )}
+              </li>
+            ))}
+          </ol>
+        </nav>
+      )}
       <slot />
     </main>
     {collection && <CollectionMotion />}
@@ -232,3 +313,29 @@ const schema = {
     )}
   </body>
 </html>
+
+<script>
+  document
+    .querySelectorAll<HTMLDetailsElement>('.mobile-menu')
+    .forEach((menu) => {
+      const toggle = menu.querySelector('summary')!;
+      menu.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && menu.open) {
+          event.preventDefault();
+          menu.open = false;
+          toggle.focus();
+        }
+      });
+      menu.addEventListener('focusout', (event) => {
+        if (
+          event.relatedTarget instanceof Node &&
+          !menu.contains(event.relatedTarget)
+        )
+          menu.open = false;
+      });
+      document.addEventListener('click', (event) => {
+        if (event.target instanceof Node && !menu.contains(event.target))
+          menu.open = false;
+      });
+    });
+</script>

@@ -12,3 +12,6 @@ export function sitePath(path: string) {
   return base + path;
 }
 export const siteOrigin = import.meta.env.SITE || 'https://example.com';
+/** The exporter removes this file, making owner builds independent of the catalog. */
+export const isCatalog =
+  Object.keys(import.meta.glob('../catalog.config.json')).length > 0;

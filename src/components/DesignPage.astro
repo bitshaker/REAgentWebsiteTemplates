@@ -6,6 +6,7 @@ import {
   designHref,
   type DesignPages,
   type PageKey,
+  type PageArt,
 } from '../lib/design-pages';
 import { guides } from '../lib/move-guides';
 import './design-pages.css';
@@ -27,7 +28,7 @@ const direction =
         art: design.pages.about.art,
       })
     : design.pages[page];
-const art = direction.art;
+const art: PageArt = post?.data.image ?? direction.art;
 const guide =
   page === 'buyers' || page === 'sellers' ? guides[page] : undefined;
 const intro =
@@ -76,7 +77,23 @@ const imageCaption = {
             <time datetime={post.data.date.toISOString()}>
               {dateLabel(post.data.date)}
             </time>{' '}
-            · {post.data.author || agent.name}
+            ·{' '}
+            {post.data.author &&
+            post.data.author !== agent.name &&
+            !post.data.authorUrl ? (
+              <span>{post.data.author}</span>
+            ) : (
+              <a
+                href={
+                  post.data.author && post.data.author !== agent.name
+                    ? post.data.authorUrl || undefined
+                    : designHref('/about/', previewBase)
+                }
+                rel="author"
+              >
+                {post.data.author || agent.name}
+              </a>
+            )}
           </>
         ) : page === 'about' ? (
           `${direction.kicker} · ${agent.name}`
@@ -138,13 +155,17 @@ const imageCaption = {
     <figure class="design-hero-image">
       <img
         src={art.src}
+        srcset={art.srcset}
+        sizes="(min-width: 1467px) 660px, (min-width: 761px) 45vw, 90vw"
+        decoding="async"
         alt={art.alt}
-        width="768"
-        height="512"
+        width={art.width}
+        height={art.height}
         fetchpriority="high"
       />
       <figcaption class="eyebrow">
-        {imageCaption[page]} <span>Illustrative scene</span>
+        {imageCaption[page]}{' '}
+        {!post?.data.image && <span>Illustrative scene</span>}
       </figcaption>
     </figure>
   </section>
@@ -170,9 +191,12 @@ const imageCaption = {
         <div class="design-feature design-spotlight">
           <img
             src={spotlightArt.src}
+            srcset={spotlightArt.srcset}
+            sizes="(min-width: 1467px) 660px, (min-width: 761px) 45vw, 90vw"
+            decoding="async"
             alt={spotlightArt.alt}
-            width="768"
-            height="512"
+            width={spotlightArt.width}
+            height={spotlightArt.height}
             loading="lazy"
           />
           <div>
@@ -255,9 +279,12 @@ const imageCaption = {
           <article class="design-feature">
             <img
               src={design.pages.buyers.art.src}
+              srcset={design.pages.buyers.art.srcset}
+              sizes="(min-width: 1467px) 660px, (min-width: 761px) 45vw, 90vw"
+              decoding="async"
               alt=""
-              width="768"
-              height="512"
+              width={design.pages.buyers.art.width}
+              height={design.pages.buyers.art.height}
               loading="lazy"
             />
             <div>
@@ -303,6 +330,14 @@ const imageCaption = {
 
   {post && (
     <article class="design-section wrap">
+      {post.data.updated && (
+        <p class="eyebrow">
+          Updated{' '}
+          <time datetime={post.data.updated.toISOString()}>
+            {dateLabel(post.data.updated)}
+          </time>
+        </p>
+      )}
       <div class="prose article-copy">
         <slot />
       </div>

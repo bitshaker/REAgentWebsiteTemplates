@@ -3,77 +3,77 @@
   font-family: 'Cormorant Garamond';
   font-style: italic;
   font-weight: 400;
-  src: url(../assets/fonts/collection-0.ttf) format('truetype');
+  src: url(../assets/fonts/collection-0.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Cormorant Garamond';
   font-style: normal;
   font-weight: 400;
-  src: url(../assets/fonts/collection-1.ttf) format('truetype');
+  src: url(../assets/fonts/collection-1.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Cormorant Garamond';
   font-style: normal;
   font-weight: 500;
-  src: url(../assets/fonts/collection-2.ttf) format('truetype');
+  src: url(../assets/fonts/collection-2.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'DM Sans';
   font-style: normal;
   font-weight: 400;
-  src: url(../assets/fonts/collection-3.ttf) format('truetype');
+  src: url(../assets/fonts/collection-3.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'DM Sans';
   font-style: normal;
   font-weight: 500;
-  src: url(../assets/fonts/collection-4.ttf) format('truetype');
+  src: url(../assets/fonts/collection-4.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'DM Sans';
   font-style: normal;
   font-weight: 600;
-  src: url(../assets/fonts/collection-5.ttf) format('truetype');
+  src: url(../assets/fonts/collection-5.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'DM Sans';
   font-style: normal;
   font-weight: 700;
-  src: url(../assets/fonts/collection-6.ttf) format('truetype');
+  src: url(../assets/fonts/collection-6.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 200;
-  src: url(../assets/fonts/collection-7.ttf) format('truetype');
+  src: url(../assets/fonts/collection-7.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 300;
-  src: url(../assets/fonts/collection-8.ttf) format('truetype');
+  src: url(../assets/fonts/collection-8.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 400;
-  src: url(../assets/fonts/collection-9.ttf) format('truetype');
+  src: url(../assets/fonts/collection-9.woff2) format('woff2');
 }
 @font-face {
   font-display: swap;
   font-family: 'Manrope';
   font-style: normal;
   font-weight: 500;
-  src: url(../assets/fonts/collection-10.ttf) format('truetype');
+  src: url(../assets/fonts/collection-10.woff2) format('woff2');
 }
 
 :root {

@@ -2,6 +2,8 @@
 
 Posts are Markdown files in src/content/blog/. Frontmatter requires title, description, date, and draft. Author is optional and defaults to the configured agent name. Slugs come from filenames. Use lowercase words separated by hyphens. Drafts and future-dated posts are excluded from routes, RSS, and the sitemap. A date becoming current does not update a static site: rebuild and deploy to publish it.
 
+Optional `updated`, `authorUrl`, and article `image` metadata drive the visible update date, author profile link, cover, social preview, and BlogPosting schema. Use actual editorial dates and relevant licensed images. See [the SEO guide](SEO.md#optional-article-metadata) for the frontmatter format. After a build, `npm run verify:seo` checks generated metadata, schema, links, and sitemap consistency.
+
 ## Without an API key
 
 Use `npm run content:new -- "Article topic"`. Ask your software agent to write the Markdown body using your approved source material. Keep draft: true until reviewed. The generated scaffold is not a finished article.
@@ -20,9 +22,20 @@ After review, run `npm run content:publish -- your-topic-slug`, then npm run che
 
 ## Optional weekly drafts
 
-The included content-draft workflow runs each Tuesday at 16:00 UTC (8 a.m. Pacific standard time / 9 a.m. Pacific daylight time). It does not call an API on scheduled runs unless content.scheduleEnabled is true in the configuration. GitHub schedules use UTC, may be delayed, and require Actions to be enabled; availability/minutes depend on the owner’s GitHub plan and repo settings.
+New owner exports include no active content-draft workflow or weekly schedule. The example is saved outside GitHub's active workflow directory at docs/examples/content-draft.yml. On-demand content commands work without enabling it.
 
-To opt in, set the repository secret AI_API_KEY, repository variable AI_MODEL, optional variable AI_BASE_URL, and content.scheduleEnabled: true. Customize content.scheduledTopic and voice in the config. Manual workflow runs accept a topic and intentionally run even when the weekly schedule is disabled. Disable all generation by disabling the workflow in Actions.
+If the owner requests automated drafts, copy the example into place:
+
+```sh
+mkdir -p .github/workflows
+cp docs/examples/content-draft.yml .github/workflows/content-draft.yml
+```
+
+Set the repository secret AI_API_KEY, repository variable AI_MODEL, optional variable AI_BASE_URL, and content.scheduleEnabled: true. Customize content.scheduledTopic and voice in the config, then commit the configuration and workflow. The enabled example runs each Tuesday at 16:00 UTC (8 a.m. Pacific standard time / 9 a.m. Pacific daylight time). GitHub schedules use UTC, may be delayed, and require Actions to be enabled; availability/minutes depend on the owner's GitHub plan and repo settings.
+
+If the workflow was previously disabled in Actions, re-enable it there after restoring the file.
+
+Manual workflow runs accept a topic and intentionally run even when content.scheduleEnabled is false. For manual-only automation, remove the schedule trigger before committing the example. Setting content.scheduleEnabled to false skips scheduled generation but still starts the workflow; remove .github/workflows/content-draft.yml or disable it in Actions to stop those runs completely. Keep the inactive example if the owner may want to enable it later.
 
 Each enabled run uploads a content-drafts artifact retained for 30 days, containing Markdown drafts (and any existing posts). Download the artifact, copy the new draft into the repository, review it, and publish explicitly. It does not commit to the repo, open a PR, or update hosting. Default read-only repository permissions keep this usable without special PR bot permissions. Your software agent can perform the review/import steps under your instructions. For unattended publishing, design and authorize a separate reviewed policy rather than changing the draft default silently.
 

@@ -1,17 +1,45 @@
-import buyers from './media/detail-1.jpg?url';
-import sellers from './media/detail-2.jpg?url';
-import about from './media/detail-3.jpg?url';
-import blog from './media/detail-4.jpg?url';
+import { optimizedArt } from '../../src/lib/media';
+import homeSource from './media/poster.jpg';
+import buyersSource from './media/detail-1.jpg';
+import sellersSource from './media/detail-2.jpg';
+import aboutSource from './media/detail-3.jpg';
+import blogSource from './media/detail-4.jpg';
+
+const home = await optimizedArt(
+  homeSource,
+  'Illustrative scene from the Nocturne design',
+  false,
+);
+const buyers = await optimizedArt(
+  buyersSource,
+  'Illustrative scene from the Nocturne design',
+);
+const sellers = await optimizedArt(
+  sellersSource,
+  'Illustrative scene from the Nocturne design',
+);
+const about = await optimizedArt(
+  aboutSource,
+  'Illustrative scene from the Nocturne design',
+);
+const blog = await optimizedArt(
+  blogSource,
+  'Illustrative scene from the Nocturne design',
+);
 
 export default {
   id: 'nocturne',
+  homeArt: {
+    ...home,
+    alt: 'Illustrative scene from the Nocturne design',
+  },
   pages: {
     buyers: {
       kicker: 'Nocturne / Buying',
       title: 'Find your',
       emphasis: 'place.',
       art: {
-        src: buyers,
+        ...buyers,
         alt: 'An infinity pool overlooking a city at sunset',
       },
     },
@@ -19,14 +47,14 @@ export default {
       kicker: 'Nocturne / Selling',
       title: 'A thoughtful',
       emphasis: 'next move.',
-      art: { src: sellers, alt: 'A dining room opening onto a modern kitchen' },
+      art: { ...sellers, alt: 'A dining room opening onto a modern kitchen' },
     },
     about: {
       kicker: 'Nocturne / About',
       title: 'A more personal',
       emphasis: 'perspective.',
       art: {
-        src: about,
+        ...about,
         alt: 'A living room with wood floors and window blinds',
       },
     },
@@ -34,7 +62,7 @@ export default {
       kicker: 'Nocturne / Journal',
       title: 'Ideas for',
       emphasis: 'living well.',
-      art: { src: blog, alt: 'A modern multistory house with balconies' },
+      art: { ...blog, alt: 'A modern multistory house with balconies' },
     },
   },
 };

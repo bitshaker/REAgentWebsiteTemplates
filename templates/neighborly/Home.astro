@@ -1,15 +1,22 @@
 ---
+import { optimizedArt } from '../../src/lib/media';
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import hero from './media/hero.jpg?url';
-import detail1 from './media/detail-1.jpg?url';
-import detail2 from './media/detail-2.jpg?url';
-import detail3 from './media/detail-3.jpg?url';
-import detail4 from './media/detail-4.jpg?url';
+import heroSource from './media/hero.jpg';
+import detail1Source from './media/detail-1.jpg';
+import detail2Source from './media/detail-2.jpg';
+import detail3Source from './media/detail-3.jpg';
+import detail4Source from './media/detail-4.jpg';
 import film from './media/film.mp4?url';
-import poster from './media/poster.jpg?url';
+import posterSource from './media/poster.jpg';
+const hero = await optimizedArt(heroSource, '');
+const detail1 = await optimizedArt(detail1Source, '');
+const detail2 = await optimizedArt(detail2Source, '');
+const detail3 = await optimizedArt(detail3Source, '');
+const detail4 = await optimizedArt(detail4Source, '');
+const poster = await optimizedArt(posterSource, '', false);
 interface Props {
   previewBase?: string;
 }
@@ -34,7 +41,7 @@ const { previewBase = '' } = Astro.props;
       </a>
     </div>
     <div class="n-hero-media">
-      <CinematicMedia src={film} poster={poster} />
+      <CinematicMedia hero src={film} poster={poster.src} />
       <span class="n-stamp">
         HERE’S TO
         <br />
@@ -60,7 +67,16 @@ const { previewBase = '' } = Astro.props;
       <em>Let’s find yours.</em>
     </h2>
     <div class="n-intro-row">
-      <img src={hero} alt="" loading="lazy" />
+      <img
+        decoding="async"
+        width={hero.width}
+        height={hero.height}
+        src={hero.src}
+        srcset={hero.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
       <p>
         “Where do I begin?” is a useful first question. So is “What should I do
         before I sell?” You don’t need a finished plan to ask about your next
@@ -93,7 +109,16 @@ const { previewBase = '' } = Astro.props;
           class="n-card"
           data-reveal
         >
-          <img src={detail1} alt="" loading="lazy" />
+          <img
+            decoding="async"
+            width={detail1.width}
+            height={detail1.height}
+            src={detail1.src}
+            srcset={detail1.srcset}
+            sizes="100vw"
+            alt=""
+            loading="lazy"
+          />
           <div>
             <span>01 / BUYING</span>
             <h3>
@@ -109,7 +134,16 @@ const { previewBase = '' } = Astro.props;
           class="n-card"
           data-reveal
         >
-          <img src={detail2} alt="" loading="lazy" />
+          <img
+            decoding="async"
+            width={detail2.width}
+            height={detail2.height}
+            src={detail2.src}
+            srcset={detail2.srcset}
+            sizes="100vw"
+            alt=""
+            loading="lazy"
+          />
           <div>
             <span>02 / SELLING</span>
             <h3>
@@ -125,8 +159,26 @@ const { previewBase = '' } = Astro.props;
   </section>
   <section class="n-notes n-wrap">
     <div class="n-collage" data-reveal>
-      <img src={detail3} alt="" loading="lazy" />
-      <img src={detail4} alt="" loading="lazy" />
+      <img
+        decoding="async"
+        width={detail3.width}
+        height={detail3.height}
+        src={detail3.src}
+        srcset={detail3.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
+      <img
+        decoding="async"
+        width={detail4.width}
+        height={detail4.height}
+        src={detail4.src}
+        srcset={detail4.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+      />
       <span>
         GOOD
         <br />

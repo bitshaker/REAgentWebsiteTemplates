@@ -84,7 +84,8 @@ const title =
 <Layout
   title={`${title} | ${name} preview`}
   description={post?.data.description}
-  article={Boolean(post)}
+  {post}
+  {design}
   {previewBase}
   theme={css}
   noindex

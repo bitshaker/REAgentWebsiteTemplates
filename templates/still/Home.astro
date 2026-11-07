@@ -1,15 +1,22 @@
 ---
+import { optimizedArt } from '../../src/lib/media';
 import HomeAgent from '../../src/components/HomeAgent.astro';
 import { agent, phoneHref } from '../../src/lib/agent';
 import { designHref } from '../../src/lib/design-pages';
 import CinematicMedia from '../../src/components/CinematicMedia.astro';
-import hero from './media/hero.jpg?url';
-import detail1 from './media/detail-1.jpg?url';
-import detail2 from './media/detail-2.jpg?url';
-import detail3 from './media/detail-3.jpg?url';
-import detail4 from './media/detail-4.jpg?url';
-import poster from './media/poster.jpg?url';
+import heroSource from './media/hero.jpg';
+import detail1Source from './media/detail-1.jpg';
+import detail2Source from './media/detail-2.jpg';
+import detail3Source from './media/detail-3.jpg';
+import detail4Source from './media/detail-4.jpg';
+import posterSource from './media/poster.jpg';
 import film from './media/film.mp4?url';
+const hero = await optimizedArt(heroSource, '');
+const detail1 = await optimizedArt(detail1Source, '');
+const detail2 = await optimizedArt(detail2Source, '');
+const detail3 = await optimizedArt(detail3Source, '');
+const detail4 = await optimizedArt(detail4Source, '');
+const poster = await optimizedArt(posterSource, '', false);
 interface Props {
   previewBase?: string;
 }
@@ -26,7 +33,18 @@ const prompts = [
 
 <div class="still-home collection-home">
   <section class="still-hero">
-    <img src={hero} alt="" class="still-hero-image" fetchpriority="high" />
+    <img
+      decoding="async"
+      loading="eager"
+      width={hero.width}
+      height={hero.height}
+      src={hero.src}
+      srcset={hero.srcset}
+      sizes="100vw"
+      alt=""
+      class="still-hero-image"
+      fetchpriority="high"
+    />
     <div class="still-hero-shade"></div>
     <div class="still-hero-copy" data-reveal>
       <h1>
@@ -94,10 +112,24 @@ const prompts = [
         details would you want to discuss before a move?
       </p>
     </div>
-    <div class="still-track" tabindex="0" aria-label="Editorial image gallery">
+    <div
+      class="still-track"
+      role="region"
+      tabindex="0"
+      aria-label="Editorial image gallery"
+    >
       {scenes.map((scene, i) => (
         <figure>
-          <img src={scene} alt="" loading="lazy" />
+          <img
+            decoding="async"
+            width={scene.width}
+            height={scene.height}
+            src={scene.src}
+            srcset={scene.srcset}
+            sizes="100vw"
+            alt=""
+            loading="lazy"
+          />
           <figcaption>
             <span>
               0{i + 1} / {prompts[i]}
@@ -107,7 +139,12 @@ const prompts = [
         </figure>
       ))}
     </div>
-    <div class="still-gallery-controls">
+    <div
+      class="still-gallery-controls"
+      role="group"
+      aria-label="Gallery controls"
+      hidden
+    >
       <span data-gallery-count aria-live="polite">
         Photography / 01 of 04
       </span>
@@ -123,7 +160,17 @@ const prompts = [
   </section>
   <section class="still-story" data-reveal>
     <div class="still-story-image">
-      <img src={detail2} alt="" loading="lazy" data-parallax />
+      <img
+        decoding="async"
+        width={detail2.width}
+        height={detail2.height}
+        src={detail2.src}
+        srcset={detail2.srcset}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        data-parallax
+      />
     </div>
     <div class="still-story-copy">
       <p class="still-label">03 / The way forward</p>
@@ -148,7 +195,7 @@ const prompts = [
     </div>
   </section>
   <section class="still-film" aria-label="A study in living">
-    <CinematicMedia src={film} poster={poster} />
+    <CinematicMedia src={film} poster={poster.src} />
     <div class="still-film-copy">
       <p class="still-label">04 / In the moment</p>
       <h2>
@@ -177,6 +224,10 @@ const prompts = [
 </div>
 <script>
   document.querySelectorAll('.still-gallery').forEach((gallery) => {
+    const controls = gallery.querySelector<HTMLElement>(
+      '.still-gallery-controls',
+    );
+    if (controls) controls.hidden = false;
     const track = gallery.querySelector('.still-track');
     const scroll = (direction: number) => {
       if (!track) return;

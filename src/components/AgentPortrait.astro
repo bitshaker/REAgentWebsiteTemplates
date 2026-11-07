@@ -1,26 +1,30 @@
 ---
-import { sitePath } from '../lib/site';
-import { agent } from '../lib/agent';
-import demoPortrait from '../assets/demo-agent-portrait.jpg?url';
+import { agentPortrait } from '../lib/portrait';
 
 interface Props {
   wide?: boolean;
 }
 const { wide = false } = Astro.props;
-const isSample = agent.demo && !agent.portraitUrl;
-const portrait = agent.portraitUrl || (isSample ? demoPortrait : '');
+const portrait = await agentPortrait();
 ---
 
 {portrait ? (
   <figure class:list={['agent-portrait', { wide }]}>
     <img
-      src={sitePath(portrait)}
-      alt={isSample ? 'AI-generated sample portrait' : agent.name}
-      width="720"
-      height="900"
+      src={portrait.src}
+      srcset={portrait.srcset}
+      sizes={
+        wide
+          ? '(min-width: 761px) 45vw, 90vw'
+          : '(min-width: 601px) 280px, 180px'
+      }
+      alt={portrait.alt}
+      width={portrait.width}
+      height={portrait.height}
       loading="lazy"
+      decoding="async"
     />
-    {isSample && <figcaption>Sample portrait</figcaption>}
+    {portrait.isSample && <figcaption>Sample portrait</figcaption>}
   </figure>
 ) : (
   <slot />
