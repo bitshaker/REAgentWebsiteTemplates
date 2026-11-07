@@ -82,9 +82,7 @@ try {
           });
           assert.equal(
             assets.filter((asset) => asset.endsWith('.mp4')).length,
-            ['threshold', 'golden-hour', 'workshop-golden-hour'].includes(theme)
-              ? 1
-              : 0,
+            1,
           );
           const robots = await readFile(
             join(target, 'dist/robots.txt'),

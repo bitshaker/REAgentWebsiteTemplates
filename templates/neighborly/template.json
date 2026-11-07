@@ -1,0 +1,9 @@
+{
+  "id": "neighborly",
+  "name": "Neighborly",
+  "description": "A bright, welcoming take on the places and people behind a move.",
+  "version": 1,
+  "featured": true,
+  "order": 2,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

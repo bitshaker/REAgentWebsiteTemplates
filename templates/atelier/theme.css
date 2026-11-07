@@ -1,0 +1,329 @@
+:root {
+  --collection-design: 1;
+  --paper: #f4f2eb;
+  --ink: #171714;
+  --muted: #6e6b64;
+  --accent: #8d4937;
+  --line: #b9b7ad;
+  --display: var(--font-serif);
+  --nav-color: #fff;
+}
+.atelier-home {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.atelier-home * {
+  box-sizing: border-box;
+}
+.atelier-home h1,
+.atelier-home h2,
+.atelier-home h3,
+.atelier-home p {
+  margin: 0;
+}
+.atelier-home a {
+  color: inherit;
+  text-decoration: none;
+}
+.atelier-home img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+.a-wrap {
+  width: min(92%, 1500px);
+  margin: auto;
+}
+.a-hero {
+  height: calc(100svh - 32px);
+  min-height: 650px;
+  background: #555;
+  position: relative;
+  color: white;
+  overflow: hidden;
+}
+.a-hero > div:first-child,
+.a-hero video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.a-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0006, transparent 45%, #0008);
+  pointer-events: none;
+}
+.a-hero-meta,
+.a-hero-foot {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.a-hero-meta {
+  top: 145px;
+}
+.a-hero-foot {
+  bottom: 30px;
+}
+.a-hero h1 {
+  position: absolute;
+  left: 3.5%;
+  bottom: 12%;
+  font-family: var(--font-serif);
+  font-size: clamp(5.2rem, 12vw, 13rem);
+  line-height: 0.75;
+  letter-spacing: -0.06em;
+  font-weight: 400;
+}
+.a-hero h1 em,
+.atelier-home h2 em,
+.atelier-home h3 em {
+  font-weight: 400;
+}
+.a-story {
+  padding: 150px 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 35px;
+}
+.a-story-label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+}
+.atelier-home h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(4.5rem, 8.5vw, 9rem);
+  line-height: 0.86;
+  font-weight: 400;
+  letter-spacing: -0.055em;
+}
+.a-story-bottom {
+  margin: 65px 0 0 auto;
+  max-width: 480px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.a-story-bottom a,
+.a-journal-copy a {
+  display: block;
+  border-bottom: 1px solid;
+  padding: 25px 0 12px;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.a-image-feature {
+  height: 80vh;
+  min-height: 550px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+.a-image-feature > img {
+  height: 100%;
+}
+.a-image-feature:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #0008, transparent 70%);
+}
+.a-image-feature > div {
+  position: absolute;
+  z-index: 1;
+  bottom: 8%;
+  left: 4%;
+}
+.a-image-feature span,
+.a-section-head > p,
+.a-journal-copy > p:first-child,
+.a-contact > p {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+}
+.a-image-feature h2 {
+  margin-top: 25px;
+}
+.a-services {
+  padding: 145px 0;
+}
+.a-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 80px;
+}
+.a-services-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8%;
+  align-items: start;
+}
+.a-services-grid > a:nth-child(2) {
+  margin-top: 170px;
+}
+.a-services-grid img {
+  aspect-ratio: 4/5;
+  transition: filter 0.35s;
+}
+.a-services-grid a:hover img {
+  filter: brightness(0.8);
+}
+.a-services-grid a > div {
+  position: relative;
+  border-top: 1px solid;
+  margin-top: 18px;
+  padding-top: 15px;
+}
+.a-services-grid span {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+}
+.a-services-grid h3 {
+  font: 400 clamp(2.8rem, 5vw, 5rem)/0.9 var(--font-serif);
+  letter-spacing: -0.04em;
+  margin-top: 25px;
+}
+.a-services-grid b {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.a-journal {
+  background: #24231f;
+  color: #f3f0e7;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  min-height: 700px;
+}
+.a-journal-art {
+  position: relative;
+  overflow: hidden;
+}
+.a-journal-art img:first-child {
+  height: 100%;
+  position: absolute;
+}
+.a-journal-art img:last-child {
+  position: absolute;
+  width: 38%;
+  aspect-ratio: 3/4;
+  right: -1px;
+  bottom: 0;
+  border: 12px solid #24231f;
+}
+.a-journal-copy {
+  align-self: center;
+  padding: 12%;
+}
+.a-journal-copy h2 {
+  margin: 45px 0;
+}
+.a-journal-copy > p:not(:first-child) {
+  max-width: 300px;
+  line-height: 1.6;
+}
+.a-contact {
+  padding: 140px 0;
+}
+.a-contact h2 {
+  margin: 60px 0;
+}
+.a-contact > a {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  padding-bottom: 15px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.designed-page[data-design='atelier'] h1,
+.designed-page[data-design='atelier'] h2 {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+.designed-page[data-design='atelier'] h1 em {
+  color: var(--accent);
+}
+@media (max-width: 760px) {
+  .a-hero {
+    min-height: 620px;
+  }
+  .a-hero-meta {
+    top: 125px;
+  }
+  .a-hero-meta span:last-child {
+    display: none;
+  }
+  .a-hero h1 {
+    font-size: 18vw;
+    bottom: 18%;
+  }
+  .a-story {
+    padding: 90px 0;
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+  .a-story-label span {
+    display: none;
+  }
+  .a-story-bottom {
+    margin-top: 40px;
+  }
+  .a-image-feature {
+    height: 65vh;
+    min-height: 470px;
+  }
+  .a-services {
+    padding: 90px 0;
+  }
+  .a-section-head {
+    display: block;
+  }
+  .a-section-head h2 {
+    margin-top: 35px;
+  }
+  .a-services-grid {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+  .a-services-grid > a:nth-child(2) {
+    margin-top: 0;
+  }
+  .a-journal {
+    grid-template-columns: 1fr;
+  }
+  .a-journal-art {
+    min-height: 500px;
+  }
+  .a-journal-copy {
+    padding: 80px 5%;
+  }
+  .a-contact {
+    padding: 90px 0;
+  }
+}
+
+/* Reserve room for the film control without covering the discovery link. */
+.a-hero-foot {
+  right: 175px;
+}
+@media (max-width: 760px) {
+  .a-hero-foot {
+    right: 80px;
+  }
+}

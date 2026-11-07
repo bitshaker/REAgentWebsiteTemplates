@@ -1,0 +1,230 @@
+---
+import HomeAgent from '../../src/components/HomeAgent.astro';
+import CinematicMedia from '../../src/components/CinematicMedia.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import film from './media/film.mp4?url';
+import poster from './media/poster.jpg?url';
+import one from './media/detail-1.jpg?url';
+import two from './media/detail-2.jpg?url';
+import three from './media/detail-3.jpg?url';
+import four from './media/detail-4.jpg?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+const chapters = [
+  {
+    title: 'Find your place',
+    label: 'Buying',
+    image: one,
+    href: '/buyers/',
+    description: 'A thoughtful path to a home that feels right.',
+  },
+  {
+    title: 'Make your move',
+    label: 'Selling',
+    image: two,
+    href: '/sellers/',
+    description: 'A clear perspective for the chapter ahead.',
+  },
+  {
+    title: 'A personal connection',
+    label: 'About',
+    image: three,
+    href: '/about/',
+    description: `Get to know ${agent.name} and the approach behind the work.`,
+  },
+  {
+    title: 'A little inspiration',
+    label: 'Journal',
+    image: four,
+    href: '/blog/',
+    description: 'Ideas and perspectives for life at home.',
+  },
+];
+---
+
+<div class="panorama-home collection-home">
+  <section class="p-hero" aria-labelledby="p-title">
+    <div class="p-film">
+      <CinematicMedia src={film} poster={poster} />
+    </div>
+    <div class="p-hero-copy" data-reveal>
+      <p class="p-label">
+        {agent.name} / {agent.market}
+      </p>
+      <h1 id="p-title">
+        Live
+        <br />
+        beautifully.
+      </h1>
+      <p>A fresh perspective on finding your place.</p>
+      <a href={designHref('/about/', previewBase)}>Discover more ↗</a>
+    </div>
+    <div class="p-hero-bottom">
+      <span>Real estate, thoughtfully considered</span>
+      <span>Scroll to explore ↓</span>
+    </div>
+  </section>
+  <HomeAgent {previewBase} design="panorama" />
+  <section class="p-intro" data-reveal>
+    <p class="p-label">A new perspective / 01</p>
+    <h2>
+      For the places
+      <br />
+      life happens.
+    </h2>
+    <div>
+      <p>
+        From a first conversation to the next set of keys, every move is
+        personal. Discover a more considered way to navigate yours.
+      </p>
+      <a href={designHref('/about/', previewBase)}>Our approach ↗</a>
+    </div>
+  </section>
+  <section
+    class="p-chapters"
+    aria-labelledby="p-chapters-title"
+    data-scroll-gallery
+  >
+    <div class="p-chapters-stage" data-gallery-stage>
+      <div class="p-chapters-top">
+        <div>
+          <p class="p-label">Explore / 02</p>
+          <h2 id="p-chapters-title">A wider view.</h2>
+        </div>
+      </div>
+      <div
+        class="p-track"
+        data-p-track
+        tabindex="0"
+        aria-label="Explore real estate chapters"
+      >
+        {chapters.map((chapter, i) => (
+          <article class="p-card">
+            <img src={chapter.image} alt="" loading="lazy" />
+            <div>
+              <p class="p-label">
+                0{i + 1} / {chapter.label}
+              </p>
+              <h3>{chapter.title}</h3>
+              <p>{chapter.description}</p>
+              <a href={designHref(chapter.href, previewBase)}>
+                Explore {chapter.label.toLowerCase()} ↗
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="p-feature" data-reveal>
+    <img src={three} alt="" loading="lazy" />
+    <div>
+      <p class="p-label">A personal approach / 03</p>
+      <h2>
+        Good moves
+        <br />
+        start here.
+      </h2>
+      <p>
+        With your priorities as the starting point, {agent.name} is here to help
+        you navigate the possibilities.
+      </p>
+      <a href={designHref('/about/', previewBase)}>Meet {agent.name} ↗</a>
+    </div>
+  </section>
+  <section class="p-close" data-reveal>
+    <p class="p-label">Your next chapter / 04</p>
+    <h2>
+      Let’s talk
+      <br />
+      about home.
+    </h2>
+    <a href={designHref('/contact/', previewBase)}>Get in touch ↗</a>
+  </section>
+</div>
+<script>
+  const gallery = document.querySelector<HTMLElement>('[data-scroll-gallery]');
+  const stage = gallery?.querySelector<HTMLElement>('[data-gallery-stage]');
+  const track = gallery?.querySelector<HTMLElement>('[data-p-track]');
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+
+  if (gallery && stage && track) {
+    let travel = 0;
+    let frame = 0;
+    const render = () => {
+      frame = 0;
+      if (!gallery.hasAttribute('data-scroll-ready')) return;
+      const progress = Math.max(
+        0,
+        Math.min(1, -gallery.getBoundingClientRect().top / travel),
+      );
+      track.scrollLeft = progress * travel;
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+    const disable = () => {
+      gallery.removeAttribute('data-scroll-ready');
+      gallery.style.height = '';
+      track.scrollLeft = 0;
+      travel = 0;
+    };
+    const measure = () => {
+      if (reducedMotion.matches) {
+        disable();
+        return;
+      }
+      gallery.setAttribute('data-scroll-ready', '');
+      travel = track.scrollWidth - track.clientWidth;
+      // Short viewports get the complete stacked gallery instead of clipped content.
+      if (travel <= 1 || stage.offsetHeight > innerHeight + 2) {
+        disable();
+        return;
+      }
+      gallery.style.height = `${stage.offsetHeight + travel}px`;
+      render();
+    };
+    const moveTo = (distance: number) => {
+      window.scrollTo({
+        top:
+          scrollY +
+          gallery.getBoundingClientRect().top +
+          Math.max(0, Math.min(travel, distance)),
+        behavior: 'instant',
+      });
+    };
+    // Keep every chapter reachable when tabbing through links or using arrow keys.
+    track.addEventListener('focusin', (event) => {
+      if (
+        !gallery.hasAttribute('data-scroll-ready') ||
+        !(event.target instanceof Element)
+      )
+        return;
+      const card = event.target.closest<HTMLElement>('.p-card');
+      if (card) moveTo(card.offsetLeft - track.offsetLeft);
+    });
+    track.addEventListener('keydown', (event) => {
+      if (event.target !== track || !gallery.hasAttribute('data-scroll-ready'))
+        return;
+      const step = track.clientWidth * 0.75;
+      const destination = {
+        ArrowRight: track.scrollLeft + step,
+        ArrowLeft: track.scrollLeft - step,
+        Home: 0,
+        End: travel,
+      }[event.key];
+      if (destination === undefined) return;
+      event.preventDefault();
+      moveTo(destination);
+    });
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', measure);
+    reducedMotion.addEventListener('change', measure);
+    new ResizeObserver(measure).observe(stage);
+    void document.fonts.ready.then(measure);
+    measure();
+  }
+</script>

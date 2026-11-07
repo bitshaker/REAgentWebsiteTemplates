@@ -1,0 +1,9 @@
+{
+  "id": "still",
+  "name": "Still",
+  "description": "A quiet architectural journal with cinematic imagery and a considered editorial rhythm.",
+  "version": 1,
+  "featured": true,
+  "order": 3,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

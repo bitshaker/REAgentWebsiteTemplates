@@ -1,0 +1,24 @@
+# Personal and lifestyle real estate site references
+
+Research snapshot: November 3, 2026. These are inspiration candidates, not endorsements or verified performance claims. All ten official homepages were visually inspected at desktop hero size and reviewed through extracted page text; no mobile or interaction testing was done. Listing data, claims, imagery, and testimonials belong to their owners and should not be copied.
+
+| Site | Direction and transferable idea | Caveat / inspection confidence |
+| --- | --- | --- |
+| [McCabe & Co](https://www.mccabeandcompany.com/) — Portland | **Welcoming personal brand:** a relaxed group portrait fills the hero, with a fine white serif welcome and outlined contact button. Adapt the friendly welcome and human introductions. | Desktop hero visually inspected; text and page structure verified. White text over the photograph merits a contrast check. |
+| [Reeves Realty Group](https://reevesrealtypdx.com/) — Portland area | **Design-minded partnership:** a seated couple anchors the hero under a large serif headline; separate buyer, seller, and design paths explain complementary roles. Adapt the clear explanation of who does what. | Desktop hero visually inspected; extracted counters display zero. Claims are theirs, not verified. |
+| [Ginger Martin + Co](https://gingermartin.com/) — Napa and Sonoma | **Regional lifestyle film:** full-bleed footage of a tree-lined wine-country approach, transparent navigation, and a delicate stacked wordmark establish place before the property content. Adapt locally specific imagery alongside useful guides. | Desktop hero visually inspected; privacy banner obscured lower hero. Luxury film requires suitable licensed material. |
+| [Fox Marin](https://foxmarin.ca/) — Toronto | **Urban fashion editorial:** a candid team image fills the hero; oversized high-contrast serif type, an italic accent, condensed wordmark, and fine outlined button give it magazine character. Conversational contact wording and buyer/seller resources add utility. | Desktop hero visually inspected; larger brokerage and extensive menu would need simplification for an individual. |
+| [Living Room Realty](https://www.livingroomre.com/) — Portland | **Lifestyle-first and playful:** a colorful everyday street scene fills the screen, with a stacked sans-serif headline and coral buttons on a dark left edge. Adapt the human-scale photography and two clear paths. | Brokerage rather than a single team; desktop hero visually inspected. |
+| [Modern Homes Collective](https://moderncollectivere.com/) — Portland | **Architecture niche:** a full-bleed wooded modern home anchors a restrained search-first hero. Adapt imagery that immediately signals a real specialty. | Founder-led brokerage; desktop hero visually inspected. Search and navigation have low contrast in the captured view. |
+| [Keri White](https://keriwhite.com/) — Santa Monica | **Personal video and media brand:** a Santa Monica street-sign and palm video sits behind a centered serif location heading and outlined consultation button; #KeriTV has a dedicated section. Adapt the local imagery and recognizable content series. | Desktop hero visually inspected; video initially appeared black, so account for loading latency and check navigation contrast. |
+| [Cindy Raney & Team](https://cindyraney.com/) — Fairfield County | **Framed coastal film:** a white outer border frames autumn aerial footage of a coastal home, with a centered thin sans-serif regional title and outlined search action. Adapt the framing and sense of place. | Desktop hero visually inspected; review motion and readability across its slides. |
+| [Noble Black & Partners](https://nobleblackandpartners.com/) — New York | **Minimal fashion typography:** a personal rooftop, pool, and skyline film sits behind a serif-and-italic statement, while numbered portfolio links span the lower hero. Adapt the editorial type and simple portfolio choices. | Desktop hero visually inspected; film initially appeared black and a cookie banner obscured the lower edge. |
+| [Tim Smith Real Estate Group](https://timsmithrealestategroup.com/) — Newport Beach | **Spare typographic luxury:** lifestyle and interior film sits behind a large, left-aligned, thin sans-serif title. Adapt the asymmetrical placement and restrained hierarchy. | Desktop hero visually inspected; film initially appeared dark, secondary text had low contrast, and a consent banner covered the lower edge. |
+
+## Three to review first
+
+1. **Fox Marin** for fashion-editorial typography and a candid team portrait.
+2. **Living Room Realty** for bright, everyday lifestyle photography and bold coral accents.
+3. **Ginger Martin + Co** for place-led wine-country imagery and restrained navigation.
+
+For a warmer personal-team portrait, review McCabe & Co. Verify the current mobile experience before choosing finalists.

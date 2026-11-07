@@ -1,0 +1,161 @@
+---
+import HomeAgent from '../../src/components/HomeAgent.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import CinematicMedia from '../../src/components/CinematicMedia.astro';
+import hero from './media/hero.jpg?url';
+import detail1 from './media/detail-1.jpg?url';
+import detail2 from './media/detail-2.jpg?url';
+import detail3 from './media/detail-3.jpg?url';
+import detail4 from './media/detail-4.jpg?url';
+import film from './media/film.mp4?url';
+import poster from './media/poster.jpg?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+---
+
+<div class="neighborly-home collection-home">
+  <section class="n-hero">
+    <div class="n-hero-copy">
+      <p class="n-kicker">A little more at home in {agent.market}</p>
+      <h1>
+        Let’s find
+        <br />
+        your <em>place.</em>
+      </h1>
+      <p>
+        Good moves start with good people. Let’s make your next chapter feel
+        like you.
+      </p>
+      <a class="n-button" href={designHref('/contact/', previewBase)}>
+        Say hello <span>↗</span>
+      </a>
+    </div>
+    <div class="n-hero-media">
+      <CinematicMedia src={film} poster={poster} />
+      <span class="n-stamp">
+        HERE’S TO
+        <br />
+        HOME ✳
+      </span>
+    </div>
+    <div class="n-hero-footer">
+      <span>
+        {agent.name} / {agent.role}
+      </span>
+      <span>Scroll for the good stuff ↓</span>
+    </div>
+  </section>
+  <HomeAgent {previewBase} design="neighborly" />
+  <section class="n-intro n-wrap" data-reveal>
+    <p class="n-kicker">Hey, neighbor ✳</p>
+    <h2>
+      Home is a feeling.
+      <br />
+      <em>Let’s find yours.</em>
+    </h2>
+    <div class="n-intro-row">
+      <img src={hero} alt="" loading="lazy" />
+      <p>
+        Whether you’re dreaming, searching, or getting ready to sell, you
+        deserve a thoughtful partner and a plan that fits your life.
+      </p>
+      <a
+        class="n-round"
+        href={designHref('/about/', previewBase)}
+        aria-label={`Meet ${agent.name}`}
+      >
+        Meet
+        <br />
+        your agent ↗
+      </a>
+    </div>
+  </section>
+  <section class="n-paths">
+    <div class="n-wrap">
+      <div class="n-paths-heading">
+        <p class="n-kicker">Your move, your way</p>
+        <h2>
+          What’s next
+          <br />
+          <em>for you?</em>
+        </h2>
+      </div>
+      <div class="n-cards">
+        <a
+          href={designHref('/buyers/', previewBase)}
+          class="n-card"
+          data-reveal
+        >
+          <img src={detail1} alt="" loading="lazy" />
+          <div>
+            <span>01 / BUYING</span>
+            <h3>
+              Find a place
+              <br />
+              to land.
+            </h3>
+            <b>↗</b>
+          </div>
+        </a>
+        <a
+          href={designHref('/sellers/', previewBase)}
+          class="n-card"
+          data-reveal
+        >
+          <img src={detail2} alt="" loading="lazy" />
+          <div>
+            <span>02 / SELLING</span>
+            <h3>
+              Make room
+              <br />
+              for what’s next.
+            </h3>
+            <b>↗</b>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="n-notes n-wrap">
+    <div class="n-collage" data-reveal>
+      <img src={detail3} alt="" loading="lazy" />
+      <img src={detail4} alt="" loading="lazy" />
+      <span>
+        GOOD
+        <br />
+        TO KNOW ✳
+      </span>
+    </div>
+    <div data-reveal>
+      <p class="n-kicker">A few good reads</p>
+      <h2>
+        Thoughts for
+        <br />
+        <em>the journey.</em>
+      </h2>
+      <p>
+        Questions, ideas, and practical guidance for wherever you are in the
+        process.
+      </p>
+      <a
+        class="n-button n-button-dark"
+        href={designHref('/blog/', previewBase)}
+      >
+        Visit the journal <span>↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="n-contact">
+    <p class="n-kicker">The door is open</p>
+    <h2>
+      Let’s make
+      <br />
+      <em>your move.</em>
+    </h2>
+    <a href={designHref('/contact/', previewBase)}>Get in touch ↗</a>
+    <span>✳</span>
+  </section>
+</div>

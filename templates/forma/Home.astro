@@ -1,0 +1,186 @@
+---
+import HomeAgent from '../../src/components/HomeAgent.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import CinematicMedia from '../../src/components/CinematicMedia.astro';
+import hero from './media/hero.jpg?url';
+import detail1 from './media/detail-1.jpg?url';
+import detail2 from './media/detail-2.jpg?url';
+import detail3 from './media/detail-3.jpg?url';
+import detail4 from './media/detail-4.jpg?url';
+import film from './media/film.mp4?url';
+import poster from './media/poster.jpg?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+const surname = agent.name.trim().split(/\s+/).at(-1) || agent.name;
+const wordmarkSize = Math.min(21.5, 125 / Math.max(surname.length, 1));
+---
+
+<div class="forma-home collection-home">
+  <section class="forma-hero" aria-labelledby="forma-title">
+    <img src={hero} alt="" class="forma-hero-image" />
+    <div class="forma-hero-shade"></div>
+    <div class="forma-hero-top">
+      <span>Real estate, considered.</span>
+      <span>{agent.market}</span>
+    </div>
+    <div class="forma-hero-bottom">
+      <p>
+        Thoughtful guidance for
+        <br />
+        where life happens.
+      </p>
+      <a href="#forma-intro">
+        Explore <span>↓</span>
+      </a>
+    </div>
+    <h1 id="forma-title" style={`--wordmark-size: ${wordmarkSize}vw`}>
+      {surname}
+      <span>.</span>
+    </h1>
+  </section>
+  <HomeAgent {previewBase} design="forma" />
+  <section id="forma-intro" class="forma-intro f-wrap" data-reveal>
+    <p class="f-label">01 / A sense of place</p>
+    <div>
+      <h2>
+        Good spaces.
+        <br />
+        <em>Good moves.</em>
+      </h2>
+      <div class="forma-intro-end">
+        <p>
+          A home is more than a floor plan. It’s the backdrop to your everyday,
+          and finding the right one starts with a conversation.
+        </p>
+        <a class="f-link" href={designHref('/about/', previewBase)}>
+          Meet {agent.name} <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="forma-study f-wrap" aria-label="Ways to work together">
+    <div class="forma-study-head">
+      <p class="f-label">02 / The next chapter</p>
+      <p>
+        Consider every
+        <br />
+        possibility.
+      </p>
+    </div>
+    <div class="forma-grid">
+      <a
+        class="forma-tile forma-tile-large"
+        href={designHref('/buyers/', previewBase)}
+        data-reveal
+      >
+        <img src={detail1} alt="" loading="lazy" />
+        <span>
+          <small>01 / Buying</small>
+          <strong>Find your place</strong>
+          <b>↗</b>
+        </span>
+      </a>
+      <a
+        class="forma-tile forma-tile-small"
+        href={designHref('/sellers/', previewBase)}
+        data-reveal
+      >
+        <img src={detail2} alt="" loading="lazy" />
+        <span>
+          <small>02 / Selling</small>
+          <strong>Make your move</strong>
+          <b>↗</b>
+        </span>
+      </a>
+    </div>
+  </section>
+  <section class="forma-film" aria-label="A moment at home">
+    <CinematicMedia src={film} poster={poster} />
+    <div class="forma-film-copy">
+      <p class="f-label">A closer look</p>
+      <h2>
+        Space to
+        <br />
+        <em>live well.</em>
+      </h2>
+    </div>
+  </section>
+  <section class="forma-journal f-wrap" data-reveal>
+    <div>
+      <p class="f-label">03 / Notes &amp; ideas</p>
+      <h2>
+        A little
+        <br />
+        <em>perspective.</em>
+      </h2>
+      <p>
+        Useful ideas for the decisions, details, and discoveries along the way.
+      </p>
+      <a class="f-link" href={designHref('/blog/', previewBase)}>
+        Read the journal <span>↗</span>
+      </a>
+    </div>
+    <div class="forma-journal-gallery" data-gallery>
+      <img
+        class="forma-gallery-main"
+        src={detail3}
+        alt="A contemporary living room with mountain views"
+        loading="lazy"
+      />
+      <div class="forma-gallery-controls" aria-label="Choose an image">
+        <button
+          type="button"
+          data-image={detail3}
+          data-alt="A contemporary living room with mountain views"
+          aria-pressed="true"
+        >
+          01 <span>Interior</span>
+        </button>
+        <button
+          type="button"
+          data-image={detail4}
+          data-alt="Modern homes across a green lawn"
+          aria-pressed="false"
+        >
+          02 <span>Exterior</span>
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="forma-contact f-wrap">
+    <p class="f-label">04 / Let’s talk</p>
+    <h2>
+      Every move starts
+      <br />
+      <em>somewhere.</em>
+    </h2>
+    <a href={designHref('/contact/', previewBase)}>
+      Start a conversation <span>↗</span>
+    </a>
+  </section>
+</div>
+
+<script>
+  document
+    .querySelectorAll<HTMLElement>('[data-gallery]')
+    .forEach((gallery) => {
+      const image = gallery.querySelector<HTMLImageElement>(
+        '.forma-gallery-main',
+      );
+      const buttons =
+        gallery.querySelectorAll<HTMLButtonElement>('button[data-image]');
+      buttons.forEach((button) =>
+        button.addEventListener('click', () => {
+          if (!image || !button.dataset.image) return;
+          image.src = button.dataset.image;
+          image.alt = button.dataset.alt || '';
+          buttons.forEach((item) =>
+            item.setAttribute('aria-pressed', String(item === button)),
+          );
+        }),
+      );
+    });
+</script>

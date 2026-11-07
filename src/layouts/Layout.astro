@@ -4,6 +4,9 @@ import { sitePath, siteOrigin } from '../lib/site';
 import { agent, phoneHref } from '../lib/agent';
 import { designHref } from '../lib/design-pages';
 import '../styles/base.css';
+import '../styles/fonts.css';
+import '../styles/collection.css';
+import CollectionMotion from '../components/CollectionMotion.astro';
 import { theme as defaultTheme } from '../selected-template';
 interface Props {
   title: string;
@@ -24,6 +27,8 @@ const {
   catalog = false,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, siteOrigin).href;
+const collection = !catalog && /--collection-design:\s*1/.test(theme);
+const isHome = Astro.url.pathname === designHref('/', previewBase);
 const siteBrand = catalog ? 'The Real Estate Design Collection' : agent.brand;
 const nav = catalog
   ? [
@@ -93,13 +98,27 @@ const schema = {
       />
     )}
   </head>
-  <body>
+  <body
+    class:list={{
+      'collection-site': collection,
+      'home-view': collection && isHome,
+    }}
+  >
+    {collection && (
+      <div
+        class="reading-progress"
+        data-reading-progress
+        aria-hidden="true"
+      ></div>
+    )}
     <a class="skip" href="#main">
       Skip to content
     </a>
     {agent.demo && (
       <div class="demo">
-        Demonstration website · Sample identity and content{' '}
+        <span class="demo-message">
+          Demonstration website · Sample identity and content
+        </span>{' '}
         <CatalogLinks {previewBase} />
       </div>
     )}
@@ -123,15 +142,25 @@ const schema = {
             </a>
           ))}
         </div>
+        {collection && (
+          <details class="mobile-menu">
+            <summary>Menu</summary>
+            <div class="mobile-menu-panel">
+              {nav.map(([label, href]) => (
+                <a href={designHref(href, previewBase)}>{label}</a>
+              ))}
+            </div>
+          </details>
+        )}
       </nav>
     </header>
     <main id="main">
       <slot />
     </main>
+    {collection && <CollectionMotion />}
     {catalog ? (
       <footer class="site-footer">
         <div class="wrap">
-          <p>One design. Your repository. A site of your own.</p>
           <p>
             Sample sites use a demonstration identity.{' '}
             <a href={sitePath('/start/')}>Start your own site ↗</a>

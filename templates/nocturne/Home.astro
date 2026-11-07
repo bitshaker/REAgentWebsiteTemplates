@@ -1,0 +1,171 @@
+---
+import HomeAgent from '../../src/components/HomeAgent.astro';
+import CinematicMedia from '../../src/components/CinematicMedia.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import film from './media/film.mp4?url';
+import poster from './media/poster.jpg?url';
+import one from './media/detail-1.jpg?url';
+import two from './media/detail-2.jpg?url';
+import three from './media/detail-3.jpg?url';
+import four from './media/detail-4.jpg?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+---
+
+<div class="nocturne-home collection-home">
+  <section class="nocturne-hero" aria-labelledby="nocturne-title">
+    <div class="nocturne-film">
+      <CinematicMedia src={film} poster={poster} />
+    </div>
+    <div class="nocturne-hero-copy" data-reveal>
+      <p class="n-label">{agent.market} / Real estate</p>
+      <h1 id="nocturne-title">
+        The art of
+        <br />
+        <em>coming home.</em>
+      </h1>
+      <a class="n-link" href={designHref('/about/', previewBase)}>
+        Discover our approach <span>↗</span>
+      </a>
+    </div>
+    <div class="nocturne-hero-foot">
+      <span>{agent.name}</span>
+      <span>Homes &amp; the lives within them</span>
+      <span>Scroll to explore ↓</span>
+    </div>
+  </section>
+  <HomeAgent {previewBase} design="nocturne" />
+  <section class="nocturne-intro n-wrap" data-reveal>
+    <p class="n-label">01 / A considered perspective</p>
+    <div>
+      <h2>
+        Some places simply <em>stay with you.</em>
+      </h2>
+      <p>
+        A home is more than its walls. It is the setting for everyday rituals,
+        new chapters, and everything in between. Let’s find the one that feels
+        like yours.
+      </p>
+      <a class="n-link" href={designHref('/buyers/', previewBase)}>
+        The buying journey <span>↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="nocturne-spread n-wrap" aria-label="The details of home">
+    <figure data-reveal>
+      <img src={one} alt="" loading="lazy" data-n-scene-image />
+      <figcaption>01 / Perspectives on home</figcaption>
+      <div
+        class="n-scene-controls"
+        data-n-scene-controls
+        hidden
+        aria-label="Choose a scene"
+      >
+        <button type="button" data-scene-src={one} aria-pressed="true">
+          01 / The view
+        </button>
+        <button type="button" data-scene-src={two} aria-pressed="false">
+          02 / The interior
+        </button>
+      </div>
+    </figure>
+    <div class="nocturne-spread-side" data-reveal>
+      <p class="n-label">A sense of place</p>
+      <h2>
+        Beautifully
+        <br />
+        <em>considered.</em>
+      </h2>
+      <img src={two} alt="" loading="lazy" />
+      <p>
+        Thoughtful guidance for the places and possibilities that matter most.
+      </p>
+    </div>
+  </section>
+  <section class="nocturne-services" aria-labelledby="n-services" data-reveal>
+    <div class="n-wrap">
+      <p class="n-label">02 / How we can work together</p>
+      <h2 id="n-services">
+        A considered move,
+        <br />
+        <em>from beginning to end.</em>
+      </h2>
+      <div class="n-service-grid">
+        <a href={designHref('/buyers/', previewBase)}>
+          <span>01</span>
+          <h3>Buying</h3>
+          <p>Explore the path to a place that feels right.</p>
+          <b>Explore buying ↗</b>
+        </a>
+        <a href={designHref('/sellers/', previewBase)}>
+          <span>02</span>
+          <h3>Selling</h3>
+          <p>Prepare for your next chapter with intention.</p>
+          <b>Explore selling ↗</b>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="nocturne-about n-wrap" data-reveal>
+    <div class="n-about-photo">
+      <img src={three} alt="" loading="lazy" />
+    </div>
+    <div>
+      <p class="n-label">03 / Your guide</p>
+      <h2>
+        A personal
+        <br />
+        <em>point of view.</em>
+      </h2>
+      <p>
+        Real estate is personal. {agent.name} is here to listen, understand your
+        priorities, and help you navigate what comes next.
+      </p>
+      <a class="n-link" href={designHref('/about/', previewBase)}>
+        Meet {agent.name} <span>↗</span>
+      </a>
+    </div>
+    <div class="n-about-inset">
+      <img src={four} alt="" loading="lazy" />
+    </div>
+  </section>
+  <section class="nocturne-close">
+    <p class="n-label">The next chapter starts here</p>
+    <h2>
+      Let’s make room
+      <br />
+      <em>for what’s next.</em>
+    </h2>
+    <a class="n-link" href={designHref('/contact/', previewBase)}>
+      Start a conversation <span>↗</span>
+    </a>
+  </section>
+</div>
+
+<script>
+  const sceneControls = document.querySelector<HTMLElement>(
+    '[data-n-scene-controls]',
+  );
+  const sceneImage = document.querySelector<HTMLImageElement>(
+    '[data-n-scene-image]',
+  );
+  if (sceneControls && sceneImage) {
+    sceneControls.hidden = false;
+    sceneControls
+      .querySelectorAll<HTMLButtonElement>('button')
+      .forEach((button) => {
+        button.addEventListener('click', () => {
+          if (!button.dataset.sceneSrc) return;
+          sceneImage.src = button.dataset.sceneSrc;
+          sceneControls
+            .querySelectorAll('button')
+            .forEach((item) =>
+              item.setAttribute('aria-pressed', String(item === button)),
+            );
+        });
+      });
+  }
+</script>

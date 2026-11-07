@@ -1,0 +1,9 @@
+{
+  "id": "forma",
+  "name": "Forma",
+  "description": "Architectural calm, generous proportions, and a considered approach to home.",
+  "version": 1,
+  "featured": true,
+  "order": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

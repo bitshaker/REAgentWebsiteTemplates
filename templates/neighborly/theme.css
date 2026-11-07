@@ -1,0 +1,369 @@
+:root {
+  --collection-design: 1;
+  --paper: #f6f0e3;
+  --ink: #292924;
+  --muted: #69675c;
+  --accent: #d64e3c;
+  --line: #bdb5a5;
+  --display: var(--font-sans);
+  --nav-color: #292924;
+}
+.neighborly-home {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.neighborly-home * {
+  box-sizing: border-box;
+}
+.neighborly-home h1,
+.neighborly-home h2,
+.neighborly-home h3,
+.neighborly-home p {
+  margin: 0;
+}
+.neighborly-home a {
+  color: inherit;
+  text-decoration: none;
+}
+.neighborly-home img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+.n-wrap {
+  width: min(90%, 1450px);
+  margin: auto;
+}
+.n-kicker {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.n-hero {
+  min-height: calc(100svh - 32px);
+  padding: 130px 4% 25px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr auto;
+  gap: 30px;
+}
+.n-hero-copy {
+  align-self: center;
+  padding: 40px 0;
+}
+.n-hero h1,
+.neighborly-home h2 {
+  font-size: clamp(4rem, 8vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.075em;
+  font-weight: 700;
+}
+.neighborly-home h1 em,
+.neighborly-home h2 em {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  color: var(--accent);
+}
+.n-hero h1 {
+  margin: 35px 0;
+}
+.n-hero-copy > p:not(.n-kicker) {
+  max-width: 360px;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+.n-button {
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 60px;
+  padding: 18px 22px;
+  background: var(--accent);
+  color: white !important;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 35px;
+}
+.n-button:hover {
+  background: #a5372b;
+}
+.n-hero-media {
+  position: relative;
+  min-height: 530px;
+  overflow: hidden;
+  border-radius: 45% 45% 2px 2px;
+  background: #b7b5a8;
+}
+.n-hero-media > div:first-child,
+.n-hero-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.n-stamp {
+  position: absolute;
+  bottom: 25px;
+  right: 25px;
+  background: #f6f0e3;
+  color: #cf4d3b;
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  transform: rotate(12deg);
+}
+.n-hero-footer {
+  grid-column: 1/-1;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.n-intro {
+  padding: 140px 0;
+}
+.n-intro h2 {
+  margin: 30px 0 60px;
+}
+.n-intro-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr auto;
+  align-items: end;
+  gap: 8%;
+}
+.n-intro-row img {
+  aspect-ratio: 1.25;
+  border-radius: 45% 45% 0 0;
+}
+.n-intro-row p {
+  max-width: 360px;
+  line-height: 1.6;
+  font-size: 1.2rem;
+}
+.n-round {
+  width: 145px;
+  height: 145px;
+  background: #e3b8a5;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  transform: rotate(-12deg);
+}
+.n-paths {
+  background: #e9b29e;
+  padding: 120px 0;
+}
+.n-paths-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 70px;
+}
+.n-paths h2 em {
+  color: #8d332a;
+}
+.n-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 25px;
+}
+.n-card {
+  background: var(--paper);
+  padding: 15px;
+  border-radius: 180px 180px 0 0;
+  overflow: hidden;
+}
+.n-card img {
+  aspect-ratio: 1/1;
+  border-radius: 170px 170px 0 0;
+}
+.n-card > div {
+  padding: 25px 15px 15px;
+  position: relative;
+}
+.n-card span {
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+}
+.n-card h3 {
+  font-size: clamp(2rem, 4vw, 4rem);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  margin: 20px 0;
+  font-weight: 600;
+}
+.n-card b {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  font-size: 2rem;
+}
+.n-card:hover img {
+  filter: saturate(0.7);
+}
+.n-notes {
+  padding: 150px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10%;
+  align-items: center;
+}
+.n-collage {
+  position: relative;
+  min-height: 560px;
+}
+.n-collage img:first-child {
+  width: 70%;
+  aspect-ratio: 3/4;
+}
+.n-collage img:nth-child(2) {
+  width: 48%;
+  aspect-ratio: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border: 10px solid var(--paper);
+  border-radius: 50%;
+}
+.n-collage span {
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  background: #d6ddaa;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transform: rotate(15deg);
+}
+.n-notes h2 {
+  margin: 28px 0;
+}
+.n-notes > div:last-child > p:not(.n-kicker) {
+  max-width: 360px;
+  line-height: 1.6;
+}
+.n-button-dark {
+  background: var(--ink);
+}
+.n-contact {
+  background: #d44e3e;
+  color: #fff4e5;
+  padding: 100px 5%;
+  position: relative;
+  overflow: hidden;
+}
+.n-contact h2 {
+  margin: 50px 0;
+}
+.n-contact h2 em {
+  color: #fff4e5;
+}
+.n-contact > a {
+  display: inline-block;
+  border-bottom: 1px solid;
+  padding-bottom: 12px;
+}
+.n-contact > span {
+  position: absolute;
+  font-size: 20vw;
+  right: 5%;
+  bottom: -8%;
+  line-height: 1;
+}
+.designed-page[data-design='neighborly'] {
+  font-family: var(--font-sans);
+}
+.designed-page[data-design='neighborly'] h1,
+.designed-page[data-design='neighborly'] h2 {
+  letter-spacing: -0.06em;
+  font-weight: 700;
+}
+.designed-page[data-design='neighborly'] h1 em {
+  font-family: var(--font-serif);
+}
+.designed-page[data-design='neighborly'] .design-hero-image img {
+  border-radius: 45% 45% 0 0;
+}
+@media (max-width: 760px) {
+  .n-hero {
+    grid-template-columns: 1fr;
+    padding-top: 120px;
+  }
+  .n-hero-copy {
+    padding: 15px 0;
+  }
+  .n-hero-media {
+    min-height: 500px;
+  }
+  .n-hero-footer {
+    gap: 15px;
+  }
+  .n-intro {
+    padding: 90px 0;
+  }
+  .n-intro-row {
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+  .n-intro-row img {
+    grid-column: 1/-1;
+  }
+  .n-round {
+    width: 110px;
+    height: 110px;
+  }
+  .n-paths {
+    padding: 80px 0;
+  }
+  .n-paths-heading {
+    display: block;
+  }
+  .n-paths-heading h2 {
+    margin-top: 30px;
+  }
+  .n-cards {
+    grid-template-columns: 1fr;
+  }
+  .n-notes {
+    padding: 90px 0;
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+  .n-collage {
+    min-height: 450px;
+  }
+  .n-contact {
+    padding: 80px 5%;
+  }
+  .n-contact > span {
+    font-size: 35vw;
+  }
+}
+
+.n-hero-media .cinema-toggle {
+  right: auto;
+  left: 18px;
+}
+
+/* Keep the shared film control compact when placing it beside the stamp. */
+.neighborly-home .n-hero-media .cinema-toggle {
+  right: auto;
+  left: 18px;
+  width: max-content;
+}

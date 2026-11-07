@@ -1,0 +1,140 @@
+---
+interface Props {
+  src: string;
+  poster: string;
+  class?: string;
+}
+const { src, poster, class: className = '' } = Astro.props;
+---
+
+<div class:list={['cinematic-media', className]} data-cinema>
+  <video
+    data-src={src}
+    poster={poster}
+    muted
+    loop
+    playsinline
+    preload="none"
+    aria-hidden="true"
+    tabindex="-1"
+  ></video>
+  <button
+    class="cinema-toggle"
+    type="button"
+    hidden
+    aria-label="Play background film"
+  >
+    <span data-cinema-icon aria-hidden="true">
+      ▶
+    </span>
+    <span data-cinema-label>Play film</span>
+  </button>
+</div>
+<style>
+  .cinematic-media {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    background: #252b26;
+  }
+  video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .cinema-toggle {
+    position: absolute;
+    z-index: 6;
+    bottom: 26px;
+    right: 28px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 1px solid #ffffff80;
+    border-radius: 40px;
+    background: #141914a8;
+    color: #fff;
+    font: 500 11px var(--font-sans);
+    cursor: pointer;
+    backdrop-filter: blur(12px);
+  }
+  .cinema-toggle[hidden] {
+    display: none;
+  }
+  .cinema-toggle:hover {
+    background: #141914;
+  }
+  @media (max-width: 600px) {
+    .cinema-toggle {
+      bottom: 16px;
+      right: 16px;
+      padding: 10px 12px;
+    }
+    [data-cinema-label] {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+  }
+</style>
+<script>
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  document.querySelectorAll<HTMLElement>('[data-cinema]').forEach((frame) => {
+    const video = frame.querySelector('video')!;
+    const button = frame.querySelector('button')!;
+    const label = frame.querySelector('[data-cinema-label]')!;
+    const icon = frame.querySelector('[data-cinema-icon]')!;
+    let manuallyPaused = false;
+    const update = () => {
+      const action = video.paused ? 'Play' : 'Pause';
+      label.textContent = `${action} film`;
+      icon.textContent = video.paused ? '▶' : 'Ⅱ';
+      button.setAttribute('aria-label', `${action} background film`);
+    };
+    const play = () => {
+      if (!video.getAttribute('src')) video.src = video.dataset.src!;
+      video.muted = true;
+      void video.play().catch(update);
+    };
+    button.hidden = false;
+    button.addEventListener('click', () => {
+      manuallyPaused = !video.paused;
+      if (video.paused) play();
+      else video.pause();
+    });
+    video.addEventListener('play', update);
+    video.addEventListener('pause', update);
+    video.addEventListener('error', () => {
+      button.hidden = true;
+      video.removeAttribute('src');
+      video.load();
+    });
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (
+            entry.isIntersecting &&
+            !motion.matches &&
+            !manuallyPaused &&
+            !document.hidden
+          )
+            play();
+          else video.pause();
+        });
+      },
+      { threshold: 0.12 },
+    );
+    observer.observe(frame);
+    motion.addEventListener('change', () => {
+      if (motion.matches) video.pause();
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) video.pause();
+    });
+  });
+</script>

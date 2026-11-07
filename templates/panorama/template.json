@@ -1,0 +1,9 @@
+{
+  "id": "panorama",
+  "name": "Panorama",
+  "description": "A spacious contemporary perspective on home and possibility.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"],
+  "featured": true,
+  "order": 7
+}

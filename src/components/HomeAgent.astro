@@ -1,0 +1,138 @@
+---
+import AgentPortrait from './AgentPortrait.astro';
+import { agent, phoneHref } from '../lib/agent';
+import { designHref } from '../lib/design-pages';
+
+interface Props {
+  previewBase?: string;
+  design: string;
+}
+const { previewBase = '', design } = Astro.props;
+const hasPortrait = Boolean(agent.portraitUrl || agent.demo);
+---
+
+<section
+  id="meet-agent"
+  class:list={['home-agent', { 'has-portrait': hasPortrait }]}
+  data-agent-design={design}
+  aria-labelledby="home-agent-name"
+>
+  <div class="home-agent-inner">
+    {hasPortrait && (
+      <div class="home-agent-photo">
+        <AgentPortrait />
+      </div>
+    )}
+    <div class="home-agent-copy">
+      <p class="home-agent-kicker">
+        {agent.role} · {agent.market}
+      </p>
+      <h2 id="home-agent-name">Meet {agent.name}.</h2>
+      <p class="home-agent-bio">{agent.bio}</p>
+      <p class="home-agent-credentials">
+        {agent.brokerage} · License: {agent.license}
+      </p>
+      <div class="home-agent-actions">
+        <a class="home-agent-call" href={phoneHref}>
+          Call {agent.phone}
+        </a>
+        <a class="home-agent-about" href={designHref('/about/', previewBase)}>
+          More about {agent.name} ↗
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-agent {
+    padding: clamp(48px, 7vw, 100px) 6%;
+    color: var(--ink);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .home-agent-inner {
+    max-width: 1120px;
+    margin-inline: auto;
+  }
+  .has-portrait .home-agent-inner {
+    display: grid;
+    grid-template-columns: minmax(180px, 280px) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 88px);
+    align-items: center;
+  }
+  .home-agent-photo :global(.agent-portrait) {
+    margin: 0;
+  }
+  .home-agent-kicker {
+    margin: 0 0 16px;
+    font-size: 0.75rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  .home-agent h2 {
+    margin: 0 0 24px;
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.8rem);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    overflow-wrap: anywhere;
+  }
+  .home-agent-bio {
+    max-width: 60ch;
+    margin: 0 0 20px;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .home-agent-credentials {
+    margin: 0 0 24px;
+    font-size: 0.8rem;
+    overflow-wrap: anywhere;
+  }
+  .home-agent-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 24px;
+  }
+  .home-agent-actions a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
+  }
+  .home-agent-call {
+    padding: 12px 22px;
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+    border: 1px solid var(--ink);
+  }
+  .home-agent-about {
+    color: inherit;
+    text-underline-offset: 5px;
+  }
+  [data-agent-design='neighborly'] .home-agent-photo :global(img),
+  [data-agent-design='solstice'] .home-agent-photo :global(img) {
+    border-radius: 140px 140px 0 0;
+  }
+  [data-agent-design='neighborly'] .home-agent-photo :global(figure),
+  [data-agent-design='solstice'] .home-agent-photo :global(figure) {
+    border: none;
+  }
+  [data-agent-design='neighborly'] .home-agent-call,
+  [data-agent-design='solstice'] .home-agent-call {
+    border-radius: 999px;
+  }
+  @media (max-width: 600px) {
+    .has-portrait .home-agent-inner {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 28px;
+    }
+    .home-agent-photo {
+      width: min(70%, 240px);
+    }
+  }
+</style>

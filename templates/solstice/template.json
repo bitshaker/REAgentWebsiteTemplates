@@ -1,0 +1,9 @@
+{
+  "id": "solstice",
+  "name": "Solstice",
+  "description": "A sunlit Mediterranean mood with cinematic film, graceful arches, and an airy editorial story.",
+  "version": 1,
+  "featured": true,
+  "order": 4,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

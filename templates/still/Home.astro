@@ -1,0 +1,197 @@
+---
+import HomeAgent from '../../src/components/HomeAgent.astro';
+import { agent } from '../../src/lib/agent';
+import { designHref } from '../../src/lib/design-pages';
+import CinematicMedia from '../../src/components/CinematicMedia.astro';
+import hero from './media/hero.jpg?url';
+import detail1 from './media/detail-1.jpg?url';
+import detail2 from './media/detail-2.jpg?url';
+import detail3 from './media/detail-3.jpg?url';
+import detail4 from './media/detail-4.jpg?url';
+import poster from './media/poster.jpg?url';
+import film from './media/film.mp4?url';
+interface Props {
+  previewBase?: string;
+}
+const { previewBase = '' } = Astro.props;
+const href = (path: string) => designHref(path, previewBase);
+const scenes = [detail1, detail2, detail3, detail4];
+---
+
+<div class="still-home collection-home">
+  <section class="still-hero">
+    <img src={hero} alt="" class="still-hero-image" fetchpriority="high" />
+    <div class="still-hero-shade"></div>
+    <div class="still-hero-copy" data-reveal>
+      <p class="still-label">A more considered way to move / {agent.market}</p>
+      <h1>
+        Room to
+        <br />
+        <em>be yourself.</em>
+      </h1>
+      <div class="still-hero-bottom">
+        <p>
+          Thoughtful real estate, guided by what makes a place feel like yours.
+        </p>
+        <a
+          class="still-circle"
+          href="#still-intro"
+          aria-label="Explore the introduction"
+        >
+          ↓
+        </a>
+      </div>
+    </div>
+    <span class="still-vertical">A study in living · 01</span>
+  </section>
+  <HomeAgent {previewBase} design="still" />
+  <section id="still-intro" class="still-intro" data-reveal>
+    <p class="still-label">01 / A little perspective</p>
+    <div>
+      <h2>
+        A home is more than
+        <br />
+        <em>an address.</em>
+      </h2>
+      <p>
+        It’s the light at the end of the day. The familiar corner. The
+        possibilities you can already imagine. Wherever you are in your journey,
+        let’s make space for what matters to you.
+      </p>
+      <a class="still-text-link" href={href('/about/')}>
+        Meet {agent.name} <span>↗</span>
+      </a>
+    </div>
+  </section>
+  <section class="still-gallery" aria-labelledby="still-gallery-title">
+    <div class="still-gallery-head" data-reveal>
+      <div>
+        <p class="still-label">02 / A study in living</p>
+        <h2 id="still-gallery-title">
+          The beauty of
+          <br />
+          <em>looking closer.</em>
+        </h2>
+      </div>
+      <p>
+        Form, texture, light. A collection of illustrative scenes to inspire the
+        way we think about home.
+      </p>
+    </div>
+    <div class="still-track" tabindex="0" aria-label="Editorial image gallery">
+      {scenes.map((scene, i) => (
+        <figure>
+          <img src={scene} alt="" loading="lazy" />
+          <figcaption>
+            <span>0{i + 1} / A study in living</span>
+            <span>Illustrative scene</span>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+    <div class="still-gallery-controls">
+      <span data-gallery-count aria-live="polite">
+        Photography / 01 of 04
+      </span>
+      <div>
+        <button type="button" data-still-prev aria-label="Previous image">
+          ←
+        </button>
+        <button type="button" data-still-next aria-label="Next image">
+          →
+        </button>
+      </div>
+    </div>
+  </section>
+  <section class="still-story" data-reveal>
+    <div class="still-story-image">
+      <img src={detail2} alt="" loading="lazy" data-parallax />
+    </div>
+    <div class="still-story-copy">
+      <p class="still-label">03 / The way forward</p>
+      <h2>
+        Good decisions
+        <br />
+        <em>start with care.</em>
+      </h2>
+      <p>
+        Buying or selling is personal. You deserve a clear conversation, room to
+        ask questions, and guidance shaped around your next chapter.
+      </p>
+      <div class="still-paths">
+        <a href={href('/buyers/')}>
+          <span>01</span> Buying <span>↗</span>
+        </a>
+        <a href={href('/sellers/')}>
+          <span>02</span> Selling <span>↗</span>
+        </a>
+      </div>
+    </div>
+  </section>
+  <section class="still-film" aria-label="A study in living">
+    <CinematicMedia src={film} poster={poster} />
+    <div class="still-film-copy">
+      <p class="still-label">04 / In the moment</p>
+      <h2>
+        Take your time.
+        <br />
+        <em>Find your place.</em>
+      </h2>
+      <span>Illustrative film</span>
+    </div>
+  </section>
+  <section class="still-end" data-reveal>
+    <p class="still-label">A note from {agent.name}</p>
+    <h2>
+      Let’s make your
+      <br />
+      <em>next move meaningful.</em>
+    </h2>
+    <a class="still-text-link" href={href('/contact/')}>
+      Start a conversation <span>↗</span>
+    </a>
+  </section>
+</div>
+<script>
+  document.querySelectorAll('.still-gallery').forEach((gallery) => {
+    const track = gallery.querySelector('.still-track');
+    const scroll = (direction: number) => {
+      if (!track) return;
+      const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth';
+      track.scrollBy({ left: direction * track.clientWidth * 0.7, behavior });
+    };
+    gallery
+      .querySelector('[data-still-prev]')
+      ?.addEventListener('click', () => scroll(-1));
+    gallery
+      .querySelector('[data-still-next]')
+      ?.addEventListener('click', () => scroll(1));
+    track?.addEventListener(
+      'scroll',
+      () => {
+        const figures = Array.from(track.querySelectorAll('figure'));
+        const first = figures[0];
+        if (!first) return;
+        const position =
+          track.getBoundingClientRect().left +
+          (first.getBoundingClientRect().left -
+            track.getBoundingClientRect().left +
+            track.scrollLeft);
+        const index = figures.reduce(
+          (closest, figure, i) =>
+            Math.abs(figure.getBoundingClientRect().left - position) <
+            Math.abs(figures[closest].getBoundingClientRect().left - position)
+              ? i
+              : closest,
+          0,
+        );
+        const count = gallery.querySelector('[data-gallery-count]');
+        if (count)
+          count.textContent = `Photography / ${String(index + 1).padStart(2, '0')} of 04`;
+      },
+      { passive: true },
+    );
+  });
+</script>

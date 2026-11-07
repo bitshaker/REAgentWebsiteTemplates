@@ -16,14 +16,14 @@ The starter includes source code, sample content, documentation and one design. 
 
 ## Agent fallback: fetch only the selected design
 
-Prefer the design ZIP; it needs no catalog clone or catalog dependencies. If it is unavailable, use a temporary sparse checkout. Substitute the actual design ID and a NEW destination; `coastal` is only an example. Check for existing directories before running.
+Prefer the design ZIP; it needs no catalog clone or catalog dependencies. If it is unavailable, use a temporary sparse checkout. Substitute the actual design ID and a NEW destination; `forma` is only an example. Check for existing directories before running.
 
 ```sh
 git clone --depth 1 --filter=blob:none --sparse https://github.com/bitshaker/REAgentWebsiteTemplates.git catalog-bootstrap
 cd catalog-bootstrap
-git sparse-checkout set src public docs scripts .github templates/coastal
+git sparse-checkout set src public docs scripts .github templates/forma
 npm ci
-npm run create-site -- coastal ../my-agent-site
+npm run create-site -- forma ../my-agent-site
 cd ../my-agent-site
 npm ci
 npm run dev

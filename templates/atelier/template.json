@@ -1,0 +1,9 @@
+{
+  "id": "atelier",
+  "name": "Atelier",
+  "description": "A cinematic editorial perspective on finding your place.",
+  "version": 1,
+  "featured": true,
+  "order": 8,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
+}

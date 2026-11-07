@@ -1,7 +1,0 @@
-{
-  "id": "workshop-editorial",
-  "name": "Workshop Editorial",
-  "description": "Oversized magazine type, rotating photo headlines and stacked feature cards.",
-  "version": 1,
-  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
-}

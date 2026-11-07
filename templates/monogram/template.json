@@ -1,0 +1,9 @@
+{
+  "id": "monogram",
+  "name": "Monogram",
+  "description": "Sculptural typography and a collected editorial point of view.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"],
+  "featured": true,
+  "order": 6
+}

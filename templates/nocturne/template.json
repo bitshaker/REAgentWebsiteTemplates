@@ -1,0 +1,9 @@
+{
+  "id": "nocturne",
+  "name": "Nocturne",
+  "description": "A cinematic study in architecture, shadow, and considered living.",
+  "version": 1,
+  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"],
+  "featured": true,
+  "order": 5
+}

@@ -1,7 +1,0 @@
-{
-  "id": "blueprint",
-  "name": "Blueprint",
-  "description": "An architectural elevation with drafting notes and interactive plan sheets.",
-  "version": 1,
-  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
-}

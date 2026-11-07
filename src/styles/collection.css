@@ -1,0 +1,205 @@
+/* Common chrome for the new collection; individual themes own art direction. */
+.collection-site {
+  font-family: var(--font-sans);
+}
+.collection-site .demo {
+  height: 32px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  background: #1b211e;
+  color: #f8f4e9;
+  position: relative;
+  z-index: 30;
+}
+.collection-site .demo .catalog-links {
+  white-space: nowrap;
+}
+.collection-site .demo .catalog-links a {
+  padding: 2px 4px;
+}
+.collection-site > header {
+  width: 100%;
+  max-width: none;
+  padding: 0 4%;
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid var(--line);
+}
+.collection-site.home-view > header {
+  position: absolute;
+  top: 32px;
+  color: var(--nav-color, #fff);
+  border-bottom: 1px solid #ffffff30;
+}
+.collection-site:not(:has(.demo)).home-view > header {
+  top: 0;
+}
+.collection-site:not(:has(.demo)) .collection-home > section:first-child {
+  min-height: 100svh;
+}
+.collection-site .site-nav {
+  min-height: 96px;
+  gap: 30px;
+}
+.collection-site .site-nav > .brand {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.1vw, 2rem);
+  line-height: 1.1;
+}
+.collection-site .brand > span {
+  display: none;
+}
+.collection-site .nav-links {
+  gap: clamp(16px, 2.2vw, 34px);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.collection-site .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  position: relative;
+}
+.collection-site .nav-links a:after {
+  content: '';
+  height: 1px;
+  width: 100%;
+  background: currentColor;
+  position: absolute;
+  bottom: 8px;
+  left: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s;
+}
+.collection-site .nav-links a:hover:after {
+  transform: scaleX(1);
+}
+.mobile-menu {
+  display: none;
+}
+.collection-site .site-footer {
+  padding: 70px 0 25px;
+}
+.collection-site .site-footer .brand {
+  font-size: 2rem;
+}
+.collection-site .footer-bottom {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+.reading-progress {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  z-index: 60;
+  pointer-events: none;
+}
+.collection-home img {
+  transition: transform 0.9s cubic-bezier(0.2, 0.75, 0.3, 1);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .collection-home [data-parallax] {
+    animation: collection-drift linear both;
+    animation-timeline: view();
+    animation-range: entry 0% exit 100%;
+  }
+}
+@keyframes collection-drift {
+  from {
+    transform: scale(1.06) translateY(-1.5%);
+  }
+  to {
+    transform: scale(1.06) translateY(1.5%);
+  }
+}
+@media (max-width: 760px) {
+  .collection-site .demo {
+    font-size: 9px;
+    padding-inline: 5px;
+    letter-spacing: 0;
+  }
+  .collection-site .demo a {
+    margin-left: 6px;
+  }
+  .collection-site .demo-message {
+    font-size: 0;
+  }
+  .collection-site .demo-message:after {
+    content: 'Demo site';
+    font-size: 9px;
+  }
+  .collection-site .site-nav {
+    min-height: 78px;
+    flex-direction: row;
+    align-items: center;
+    padding-block: 12px;
+    gap: 12px;
+  }
+  .collection-site .site-nav > .brand {
+    font-size: 1.55rem;
+    max-width: 75%;
+  }
+  .collection-site .nav-links {
+    display: none;
+  }
+  .collection-site .mobile-menu {
+    display: block;
+    position: static;
+  }
+  .mobile-menu summary {
+    cursor: pointer;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    list-style: none;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .mobile-menu summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-menu summary:after {
+    content: '☰';
+    font-size: 20px;
+    font-weight: 200;
+  }
+  .mobile-menu[open] summary:after {
+    content: '×';
+  }
+  .mobile-menu-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    padding: 22px 6% 30px;
+    background: var(--paper);
+    color: var(--ink);
+    display: grid;
+    box-shadow: 0 15px 25px #0002;
+    border-top: 1px solid var(--line);
+  }
+  .mobile-menu-panel a {
+    font-family: var(--display);
+    font-size: 1.9rem;
+    padding: 9px 0;
+    text-decoration: none;
+    border-bottom: 1px solid var(--line);
+  }
+  .collection-site .footer-top {
+    gap: 28px;
+  }
+}

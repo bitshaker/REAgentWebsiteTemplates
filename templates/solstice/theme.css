@@ -1,0 +1,301 @@
+:root {
+  --collection-design: 1;
+  --nav-color: #fff;
+  --paper: #f5f1e7;
+  --ink: #303a29;
+  --muted: #797f70;
+  --accent: #9b855d;
+  --line: #d8d5c8;
+  --display: var(--font-serif), Georgia, serif;
+}
+body {
+  font-family: var(--font-sans), sans-serif;
+}
+.solstice-home {
+  overflow: hidden;
+}
+.solstice-home h1,
+.solstice-home h2 {
+  font-family: var(--font-serif), Georgia, serif;
+  font-weight: 400;
+}
+.solstice-label {
+  text-transform: uppercase;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  font-weight: 600;
+}
+.solstice-hero {
+  position: relative;
+  min-height: calc(100svh - 32px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: #fff;
+  padding: 160px 6% 100px;
+  background: #596353;
+}
+.solstice-hero > :first-child {
+  position: absolute;
+  inset: 0;
+}
+.solstice-hero video,
+.solstice-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.solstice-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #20291e77, #20291e33 45%, #20291e77);
+  pointer-events: none;
+}
+.solstice-hero-copy {
+  position: relative;
+  z-index: 1;
+}
+.solstice-hero h1 {
+  font-size: clamp(4.8rem, 9vw, 10rem);
+  line-height: 0.88;
+  letter-spacing: -0.055em;
+  margin: 35px 0;
+}
+.solstice-hero-copy > p:not(.solstice-label) {
+  font-size: 0.85rem;
+  margin-bottom: 35px;
+}
+.solstice-pill {
+  border: 1px solid currentColor;
+  border-radius: 50px;
+  padding: 15px 23px;
+  display: inline-flex;
+  gap: 45px;
+  align-items: center;
+  text-decoration: none;
+  font-size: 0.72rem;
+}
+.solstice-pill:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+.solstice-pill.light:hover {
+  background: white;
+  color: var(--ink);
+}
+.solstice-hero-caption {
+  position: absolute;
+  bottom: 30px;
+  left: 5%;
+  font-size: 0.6rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.solstice-welcome {
+  text-align: center;
+  padding: 160px 8%;
+}
+.solstice-welcome h2,
+.solstice-arch h2,
+.solstice-arch-copy h2,
+.solstice-stories h2,
+.solstice-paths h2,
+.solstice-end h2 {
+  font-size: clamp(3.5rem, 6.7vw, 7rem);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+}
+.solstice-welcome-bottom {
+  max-width: 520px;
+  margin: 50px auto 0;
+  color: var(--muted);
+}
+.solstice-welcome-bottom .solstice-pill {
+  color: var(--ink);
+  margin-top: 20px;
+}
+.solstice-arch-section {
+  background: #e9e4d5;
+  padding: 120px 10%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12%;
+  align-items: center;
+}
+.solstice-arch-copy > p:not(.solstice-label) {
+  max-width: 400px;
+  color: #74796c;
+  margin: 35px 0;
+}
+.solstice-arch {
+  margin: 0;
+}
+.solstice-arch img {
+  width: 100%;
+  height: 660px;
+  object-fit: cover;
+  border-radius: 50% 50% 0 0;
+}
+.solstice-arch figcaption,
+.solstice-track figcaption {
+  font-size: 0.58rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin-top: 14px;
+}
+.solstice-stories {
+  padding: 150px 0;
+}
+.solstice-stories-head {
+  padding: 0 8%;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  align-items: end;
+}
+.solstice-stories-head > p {
+  max-width: 300px;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.solstice-track {
+  display: flex;
+  overflow-x: auto;
+  gap: 25px;
+  padding: 45px 8% 10px;
+  scroll-snap-type: x mandatory;
+}
+.solstice-track figure {
+  margin: 0;
+  flex: 0 0 38%;
+  scroll-snap-align: start;
+}
+.solstice-track figure:nth-child(even) {
+  margin-top: 70px;
+}
+.solstice-track img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+}
+.solstice-track figcaption {
+  display: flex;
+  justify-content: space-between;
+}
+.solstice-controls {
+  padding: 25px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.solstice-controls button {
+  border: 1px solid var(--ink);
+  background: transparent;
+  color: var(--ink);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+.solstice-paths {
+  background: #e9e4d5;
+  text-align: center;
+  padding: 130px 8%;
+}
+.solstice-paths > div {
+  max-width: 900px;
+  margin: 70px auto 0;
+  text-align: left;
+}
+.solstice-paths a {
+  display: grid;
+  grid-template-columns: 1fr 2fr auto;
+  align-items: center;
+  border-top: 1px solid #c8c9bd;
+  padding: 24px 0;
+  text-decoration: none;
+}
+.solstice-paths a span {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.solstice-paths strong {
+  font:
+    400 clamp(1.6rem, 3vw, 2.6rem) var(--font-serif),
+    serif;
+}
+.solstice-end {
+  background: #34402e;
+  color: #f5f1e7;
+  text-align: center;
+  padding: 160px 6%;
+}
+.solstice-end h2 {
+  margin: 35px 0 45px;
+}
+.designed-page[data-design='solstice'] .design-hero h1 {
+  font-size: clamp(4rem, 8vw, 8rem);
+  line-height: 0.95;
+}
+.designed-page[data-design='solstice'] .design-hero-image img {
+  border-radius: 48% 48% 0 0;
+}
+.designed-page[data-design='solstice'] .button {
+  border-radius: 50px;
+}
+.designed-page[data-design='solstice'] .design-next {
+  background: #e9e4d5;
+}
+.designed-page[data-design='solstice'] .design-hero {
+  padding-top: 70px;
+}
+@media (max-width: 760px) {
+  .solstice-hero {
+    padding: 200px 5% 100px;
+  }
+  .solstice-hero h1 {
+    font-size: clamp(4rem, 14vw, 6.5rem);
+  }
+  .solstice-welcome {
+    padding: 100px 6%;
+  }
+  .solstice-arch-section {
+    grid-template-columns: 1fr;
+    padding: 85px 6%;
+    gap: 50px;
+  }
+  .solstice-arch img {
+    height: 500px;
+  }
+  .solstice-stories {
+    padding: 90px 0;
+  }
+  .solstice-stories-head {
+    display: block;
+    padding: 0 6%;
+  }
+  .solstice-track {
+    padding-left: 6%;
+  }
+  .solstice-track figure {
+    flex-basis: 78%;
+  }
+  .solstice-track img {
+    height: 400px;
+  }
+  .solstice-paths,
+  .solstice-end {
+    padding: 90px 6%;
+  }
+  .solstice-paths a {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+  }
+  .solstice-paths a span:first-child {
+    grid-column: 1/-1;
+  }
+}

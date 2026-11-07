@@ -1,0 +1,349 @@
+:root {
+  --collection-design: 1;
+  --paper: #eae9e2;
+  --ink: #191a17;
+  --muted: #696b63;
+  --accent: #686f5a;
+  --line: #bcbdb3;
+  --display: var(--font-sans);
+  --nav-color: #fff;
+}
+.forma-home {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+}
+.forma-home * {
+  box-sizing: border-box;
+}
+.forma-home h1,
+.forma-home h2,
+.forma-home h3,
+.forma-home p {
+  margin: 0;
+}
+.forma-home a {
+  color: inherit;
+  text-decoration: none;
+}
+.forma-home img {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+.f-wrap {
+  width: min(92%, 1500px);
+  margin: auto;
+}
+.f-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.forma-hero {
+  height: calc(100svh - 32px);
+  min-height: 650px;
+  position: relative;
+  color: white;
+  overflow: hidden;
+  background: #777;
+}
+.forma-hero-image,
+.forma-hero-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.forma-hero-shade {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.35),
+    transparent 45%,
+    rgba(0, 0, 0, 0.35)
+  );
+}
+.forma-hero-top,
+.forma-hero-bottom {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  font-size: 0.8rem;
+}
+.forma-hero-top {
+  top: 140px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.forma-hero-bottom {
+  bottom: 22vw;
+}
+.forma-hero-bottom a span {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid white;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin-left: 15px;
+}
+.forma-hero h1 {
+  position: absolute;
+  bottom: -0.12em;
+  left: 2%;
+  font-size: min(var(--wordmark-size), 25rem);
+  line-height: 0.8;
+  font-weight: 700;
+  letter-spacing: -0.085em;
+  text-transform: uppercase;
+  max-width: 96%;
+  overflow-wrap: anywhere;
+}
+.forma-hero h1 span {
+  color: #d7dcce;
+}
+.forma-intro {
+  padding: 140px 0;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  gap: 30px;
+}
+.forma-home h2 {
+  font-size: clamp(3.8rem, 7.7vw, 8rem);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+  font-weight: 500;
+}
+.forma-home h2 em {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+}
+.forma-intro-end {
+  margin: 55px 0 0 auto;
+  max-width: 430px;
+}
+.forma-intro-end p,
+.forma-journal p:not(.f-label) {
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+.f-link {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  padding: 22px 0 12px;
+  margin-top: 25px;
+  font-size: 0.85rem;
+}
+.forma-study {
+  padding-bottom: 130px;
+}
+.forma-study-head {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid var(--line);
+  padding: 20px 0 55px;
+}
+.forma-study-head > p:last-child {
+  font-size: 1.1rem;
+}
+.forma-grid {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 6%;
+  align-items: end;
+}
+.forma-tile img {
+  height: 42vw;
+  max-height: 670px;
+  transition:
+    filter 0.35s,
+    transform 0.5s;
+}
+.forma-tile-small img {
+  height: 29vw;
+}
+.forma-tile span {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  padding-top: 15px;
+}
+.forma-tile small {
+  grid-column: 1/-1;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.forma-tile strong {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+.forma-tile:hover img {
+  filter: brightness(0.85);
+}
+.forma-film {
+  height: 75vh;
+  min-height: 520px;
+  position: relative;
+  overflow: hidden;
+  background: #777;
+  color: white;
+}
+.forma-film > div:first-child,
+.forma-film video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.forma-film:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, #0007, transparent);
+  pointer-events: none;
+}
+.forma-film-copy {
+  position: absolute;
+  z-index: 1;
+  left: 4%;
+  bottom: 10%;
+  pointer-events: none;
+}
+.forma-film-copy h2 {
+  margin-top: 25px;
+}
+.forma-journal {
+  padding: 150px 0;
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 10%;
+  align-items: center;
+}
+.forma-journal h2 {
+  margin: 30px 0;
+}
+.forma-journal-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  align-items: center;
+}
+.forma-journal-images img:first-child {
+  aspect-ratio: 3/4;
+}
+.forma-journal-images img:last-child {
+  aspect-ratio: 3/4;
+  transform: translateY(45px);
+}
+.forma-contact {
+  border-top: 1px solid var(--line);
+  padding: 35px 0 130px;
+}
+.forma-contact h2 {
+  margin: 55px 0;
+}
+.forma-contact > a {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid;
+  padding: 20px 0;
+  font-size: 1.1rem;
+}
+.designed-page[data-design='forma'] {
+  font-family: var(--font-sans);
+}
+.designed-page[data-design='forma'] h1,
+.designed-page[data-design='forma'] h2 {
+  letter-spacing: -0.055em;
+  font-weight: 500;
+}
+.designed-page[data-design='forma'] h1 em {
+  font-family: var(--font-serif);
+}
+@media (max-width: 760px) {
+  .forma-hero {
+    min-height: 620px;
+  }
+  .forma-hero-top {
+    top: 120px;
+  }
+  .forma-hero-top span:last-child {
+    display: none;
+  }
+  .forma-hero-bottom {
+    bottom: 31vw;
+  }
+  .forma-hero h1 {
+    bottom: 0;
+  }
+  .forma-intro {
+    padding: 90px 0;
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
+  .forma-grid {
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+  .forma-tile img,
+  .forma-tile-small img {
+    height: 110vw;
+    max-height: none;
+  }
+  .forma-tile-small {
+    width: 85%;
+    margin-left: auto;
+  }
+  .forma-study {
+    padding-bottom: 80px;
+  }
+  .forma-film {
+    min-height: 480px;
+  }
+  .forma-journal {
+    padding: 90px 0 130px;
+    grid-template-columns: 1fr;
+    gap: 55px;
+  }
+  .forma-contact {
+    padding-bottom: 80px;
+  }
+}
+
+.forma-journal-gallery {
+  min-width: 0;
+}
+.forma-gallery-main {
+  aspect-ratio: 1.15;
+  object-fit: cover;
+}
+.forma-gallery-controls {
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid var(--line);
+}
+.forma-gallery-controls button {
+  appearance: none;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: 16px 0;
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.forma-gallery-controls button span {
+  margin-left: 7px;
+}
+.forma-gallery-controls button[aria-pressed='true'] {
+  border-color: var(--ink);
+  color: var(--ink);
+}

@@ -66,7 +66,7 @@ const { template } = Astro.params;
 const folder = `../../../../templates/${template}`;
 const Home = homes[
   `${folder}/Home.astro`
-] as typeof import('../../../../templates/coastal/Home.astro').default;
+] as typeof import('../../../../templates/forma/Home.astro').default;
 const css = styles[`${folder}/theme.css`] as string;
 const design = designs[`${folder}/pages.ts`]!;
 const previewBase = `/preview/${template}`;

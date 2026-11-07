@@ -297,62 +297,6 @@
   }
 }
 
-/* Give the cover room on phones, with the headline and image in the first view. */
-@media (max-width: 760px) {
-  :is(
-      [data-design='coastal'],
-      [data-design='editorial'],
-      [data-design='threshold'],
-      [data-design='open-house'],
-      [data-design='listing-studio']
-    )
-    .design-hero {
-    gap: 12px;
-  }
-  :is(
-      [data-design='coastal'],
-      [data-design='editorial'],
-      [data-design='threshold'],
-      [data-design='open-house'],
-      [data-design='listing-studio']
-    )
-    .design-hero-copy {
-    display: contents;
-  }
-  :is(
-      [data-design='coastal'],
-      [data-design='editorial'],
-      [data-design='threshold'],
-      [data-design='open-house'],
-      [data-design='listing-studio']
-    )
-    .design-hero
-    :is(.design-kicker, h1, .design-lede) {
-    margin-bottom: 0;
-  }
-  :is(
-      [data-design='coastal'],
-      [data-design='editorial'],
-      [data-design='threshold'],
-      [data-design='open-house'],
-      [data-design='listing-studio']
-    )
-    .design-hero-image {
-    order: 1;
-  }
-  :is(
-      [data-design='coastal'],
-      [data-design='editorial'],
-      [data-design='threshold'],
-      [data-design='open-house'],
-      [data-design='listing-studio']
-    )
-    .design-hero
-    :is(.design-lede, .design-actions, a[href='#journal-entries']) {
-    order: 2;
-  }
-}
-
 .design-contact {
   margin-block: 24px 0;
   border-top: 1px solid currentColor;

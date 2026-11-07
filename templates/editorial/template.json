@@ -1,7 +1,0 @@
-{
-  "id": "editorial",
-  "name": "Editorial",
-  "description": "An architectural journal: ink, warm paper, oversized type, and precise rules.",
-  "version": 1,
-  "pages": ["home", "about", "buyers", "sellers", "contact", "blog"]
-}
